@@ -1,0 +1,282 @@
+/* ---------------------------------------------
+ * CSS · Chapter 11 — page-only styles (English comments)
+ * --------------------------------------------- */
+@layer pages {
+  /* ---------------------------------------------
+   * Page background
+   * --------------------------------------------- */
+  body.page--css-ch11 {
+    background: var(--gradient-bg-mist) fixed;
+    background-color: var(--color-bg);
+  }
+
+  /* ---------------------------------------------
+   * Chapter layout
+   * --------------------------------------------- */
+  .chapter {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0; /* allow shrinking on ultra-narrow devices */
+  }
+
+  /* ---------------------------------------------
+   * Hero
+   * --------------------------------------------- */
+  .hero .hero__title {
+    margin: 0 0 var(--space-2);
+  }
+  .hero .hero__lead {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------------------------------------------
+   * Cards / pre/code consistency
+   * --------------------------------------------- */
+  .chapter .c-card {
+    min-width: 0;
+    overflow: hidden; /* confine any internal overflow */
+  }
+  .chapter .c-card pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto; /* inner scroll when needed */
+  }
+  .code {
+    max-width: 100%;
+    overflow: auto;
+    margin: 0;
+  }
+
+  /* ---------------------------------------------
+   * Demo stage
+   * --------------------------------------------- */
+  .stage {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    padding: var(--space-4);
+    min-height: 144px;
+    min-width: 0;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+
+  /* Flag pills (default hidden; MQs will toggle them on) */
+  .flags {
+    display: grid;
+    grid-auto-flow: row;
+    gap: 0.5rem;
+    width: 100%;
+    justify-items: center;
+  }
+  @media (min-width: 700px) {
+    .flags {
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+    }
+  }
+  .flag {
+    display: none;
+    padding: 0.35rem 0.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+    border: 1px solid color-mix(in srgb, var(--color-border) 90%, transparent);
+    background: var(--gradient-badge-c);
+    color: var(--badge-text);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* --- 3) Breakpoints flags --- */
+  @media (max-width: 480px) {
+    .flag--max480 {
+      display: inline-flex;
+    }
+  }
+  @media (min-width: 481px) {
+    .flag--min481 {
+      display: inline-flex;
+    }
+  }
+  @media (min-width: 768px) {
+    .flag--min768 {
+      display: inline-flex;
+    }
+  }
+  /* Modern range + fallback */
+  @media (768px <= width <= 1024px) {
+    .flag--range {
+      display: inline-flex;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .flag--range {
+      display: inline-flex;
+    }
+  }
+
+  /* --- 4) Orientation & aspect-ratio flags --- */
+  @media (orientation: portrait) {
+    .flag--portrait {
+      display: inline-flex;
+    }
+  }
+  @media (orientation: landscape) {
+    .flag--landscape {
+      display: inline-flex;
+    }
+  }
+  @media (min-aspect-ratio: 16/9) {
+    .flag--wide169 {
+      display: inline-flex;
+    }
+  }
+  @media (max-aspect-ratio: 4/3) {
+    .flag--tall43 {
+      display: inline-flex;
+    }
+  }
+
+  /* --- 5) DPI flags --- */
+  @media (min-resolution: 2dppx) {
+    .flag--retina {
+      display: inline-flex;
+      background: var(--gradient-badge-b);
+    }
+  }
+  /* Non-retina: show a neutral flag only when retina is not matched */
+  @media not all and (min-resolution: 2dppx) {
+    .flag--nonretina {
+      display: inline-flex;
+      background: var(--gradient-badge-e);
+    }
+  }
+
+  /* --- 6) User preferences --- */
+  .pref-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    padding: var(--space-4);
+  }
+  .pref-card .swatch {
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    text-align: center;
+    border: 1px dashed var(--color-border);
+    background: #f3f5f7;
+    color: #111;
+  }
+  @media (prefers-color-scheme: dark) {
+    .pref-card {
+      background: #111;
+      color: #eee;
+    }
+    .pref-card .swatch {
+      background: #1a1a1a;
+      color: #e8e8e8;
+      border-color: #333;
+    }
+  }
+
+  .motion-demo {
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-sm);
+    height: 56px;
+    display: grid;
+    align-items: center;
+    padding-inline: 0.5rem;
+    overflow: hidden;
+  }
+  .ball {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--gradient-badge-d);
+    display: inline-block;
+    animation: bob 1.2s ease-in-out infinite alternate;
+  }
+  @keyframes bob {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(220px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ball {
+      animation: none;
+    }
+  }
+
+  /* --- 7) Combine conditions flags --- */
+  @media screen and (min-width: 768px) and (orientation: landscape) {
+    .flag--and {
+      display: inline-flex;
+    }
+  }
+  @media screen and (max-width: 480px), (orientation: portrait) {
+    .flag--or {
+      display: inline-flex;
+    }
+  }
+  @media (48em <= width <= 64em) {
+    .flag--range2 {
+      display: inline-flex;
+    }
+  }
+  @media (min-width: 48em) and (max-width: 64em) {
+    .flag--range2 {
+      display: inline-flex;
+    }
+  }
+
+  /* ---------------------------------------------
+   * Ultra-narrow safety (<= 360px)
+   * --------------------------------------------- */
+  @media (max-width: 360px) {
+    .chapter .c-card pre,
+    .code {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .c-button {
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+  }
+
+  /* ---------------------------------------------
+   * Anchor jump safety (sticky nav offset)
+   * --------------------------------------------- */
+  .chapter section[id] {
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+  }
+
+  /* ---------------------------------------------
+   * Responsive type scale
+   * --------------------------------------------- */
+  .chapter h1 {
+    font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+  }
+  .chapter h2 {
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+  }
+  .chapter p,
+  .chapter li {
+    font-size: clamp(0.95rem, 1.8vw, 1rem);
+  }
+
+  /* ---------------------------------------------
+   * Horizontal overflow guard (belt-and-suspenders)
+   * --------------------------------------------- */
+  .page--css-ch11 main {
+    overflow-x: hidden;
+  }
+  .page--css-ch11 :where(p, li, code, pre) {
+    overflow-wrap: anywhere;
+  }
+}

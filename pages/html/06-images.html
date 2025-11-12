@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML · Chapter 6 · Images</title>
+    <meta
+      name="description"
+      content="HTML Chapter 6: &lt;img&gt; attributes (src, alt, title, width, height, loading), and figure/figcaption with live demos."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link rel="stylesheet" href="../../styles/pages/html/06-images.css" />
+  </head>
+  <body class="page--html-ch6">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a
+            class="c-nav__link is-active"
+            href="./index.html"
+            aria-current="page"
+            >HTML</a
+          >
+          <a class="c-nav__link" href="../css/index.html">CSS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item"><a href="./index.html">HTML</a></li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 6</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card chapter__hero">
+        <div class="l-cluster">
+          <span class="c-badge c-badge--a">Chapter 6</span>
+          <span class="c-badge c-badge--b">Images</span>
+        </div>
+        <h1 class="chapter__title">Images &amp; Figure</h1>
+        <p class="chapter__lead">
+          Core attributes (<code>src</code>, <code>alt</code>,
+          <code>title</code>, <code>width</code>, <code>height</code>,
+          <code>loading</code>) and <code>&lt;figure&gt;</code>/<code
+            >&lt;figcaption&gt;</code
+          >
+          — with live previews.
+        </p>
+      </header>
+
+      <article class="l-stack">
+        <!-- 1) <img> attributes -->
+        <section class="c-card" id="attributes">
+          <h2><code>&lt;img&gt;</code> attributes</h2>
+          <ul>
+            <li>
+              <strong>src</strong>: absolute or relative URL to the image file.
+            </li>
+            <li>
+              <strong>alt</strong>: alternative text for accessibility /
+              fallback.
+            </li>
+            <li>
+              <strong>title</strong>: optional tooltip on hover; less important
+              than <code>alt</code>.
+            </li>
+            <li>
+              <strong>width</strong> &amp; <strong>height</strong>: reserve
+              space to prevent CLS (use the file’s intrinsic dimensions).
+            </li>
+            <li>
+              <strong>loading</strong>: <code>eager</code> (default) or
+              <code>lazy</code> (load near viewport).
+            </li>
+          </ul>
+
+          <div class="demo-sbs">
+            <div class="demo__code">
+              <pre><code>&lt;!-- Figure wrapping an image and its caption --&gt;
+&lt;figure&gt;
+  &lt;img
+    src="/assets/html-6.png"
+    alt="Working Cat"
+    title="Learn adding image"
+    width="1271"   &lt;!-- replace with your image's intrinsic width --&gt;
+    height="1271"  &lt;!-- replace with your image's intrinsic height --&gt;
+    loading="eager"
+  &gt;
+  &lt;figcaption&gt;Hello — this is the demo image.&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+            </div>
+            <div class="demo__render">
+              <figure>
+                <img
+                  src="/assets/html-6.png"
+                  alt="Ocean-blue HTML icon"
+                  title="Learn adding image"
+                  width="1271"
+                  height="1271"
+                  loading="eager"
+                />
+                <figcaption>Hello — this is the demo image.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2) figcaption before/after + code snippet inside figure -->
+        <section class="c-card" id="figure-variants">
+          <h2><code>&lt;figure&gt;</code> variants</h2>
+          <div class="demo-sbs">
+            <div class="demo__code">
+              <pre><code>&lt;figure&gt;
+  &lt;figcaption&gt;Caption can come before the content&lt;/figcaption&gt;
+  &lt;p&gt;&lt;code&gt;&amp;lt;h1&amp;gt;Hello World!&amp;lt;/h1&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;/figure&gt;</code></pre>
+            </div>
+            <div class="demo__render">
+              <figure>
+                <figcaption>Caption can come before the content</figcaption>
+                <p><code>&lt;h1&gt;Hello World!&lt;/h1&gt;</code></p>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3) loading="lazy" demo -->
+        <section class="c-card" id="loading">
+          <h2>Lazy loading</h2>
+          <div class="demo-sbs">
+            <div class="demo__code">
+              <pre><code>&lt;img
+  src="/assets/html-6.png"
+  alt="Lazy-loaded image"
+  width="800" height="600"
+  loading="lazy"
+/&gt;</code></pre>
+            </div>
+            <div class="demo__render">
+              <p class="note u-mb-2">
+                Scroll down near the image area to trigger loading.
+              </p>
+              <img
+                src="/assets/html-6.png"
+                alt="Lazy-loaded image"
+                width="800"
+                height="600"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- 4) Useful links -->
+        <section class="c-card" id="resources">
+          <h2>Useful image links</h2>
+          <ul>
+            <li>
+              Placeholder collections:
+              <em>“21 of the best placeholder images”</em> (article title; pick
+              any list you like).
+            </li>
+            <li>
+              Free images:
+              <a href="https://unsplash.com/" target="_blank" rel="noopener"
+                >Unsplash</a
+              >,
+              <a href="https://www.pexels.com/" target="_blank" rel="noopener"
+                >Pexels</a
+              >,
+              <a
+                href="https://gratisography.com/"
+                target="_blank"
+                rel="noopener"
+                >Gratisography</a
+              >,
+              <a href="https://pixabay.com/" target="_blank" rel="noopener"
+                >Pixabay</a
+              >
+            </li>
+            <li>
+              Simple tooling:
+              <a
+                href="https://www.irfanview.com/"
+                target="_blank"
+                rel="noopener"
+                >IrfanView</a
+              >
+              (crop/convert),
+              <a href="https://tinypng.com/" target="_blank" rel="noopener"
+                >TinyPNG</a
+              >
+              (compress).
+            </li>
+          </ul>
+        </section>
+      </article>
+
+      <!-- Pager (global pattern) -->
+      <nav class="c-pager u-mt-5" aria-label="Page navigation">
+        <a class="c-button c-button--outline" rel="prev" href="./05-links.html"
+          >← Prev: Links</a
+        >
+        <a
+          class="c-button c-button--primary"
+          rel="next"
+          href="./07-semantics.html"
+          >Next: Semantics →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer (global pattern) -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · HTML · Chapter 6</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same on all pages)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

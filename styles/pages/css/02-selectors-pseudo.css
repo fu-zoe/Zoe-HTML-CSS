@@ -1,0 +1,330 @@
+/* ---------------------------------------------
+ * CSS · Chapter 2 — page-only styles
+ * --------------------------------------------- */
+@layer pages {
+  /* ---------------------------------------------
+   * Page background
+   * --------------------------------------------- */
+  body.page--css-ch2 {
+    background: var(--gradient-bg-mist) fixed;
+    background-color: var(--color-bg);
+  }
+
+  /* ---------------------------------------------
+   * Chapter layout
+   * --------------------------------------------- */
+  .chapter {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0; /* allow shrink on very narrow devices */
+  }
+
+  /* ---------------------------------------------
+   * Hero
+   * --------------------------------------------- */
+  .hero .hero__title {
+    margin: 0 0 var(--space-2);
+  }
+  .hero .hero__lead {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------------------------------------------
+   * In-page demo nav
+   * --------------------------------------------- */
+  /* .demo-nav .demo-nav__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-2) 0 0;
+  } */
+
+  /* ---------------------------------------------
+   * Demos grid & helpers
+   * --------------------------------------------- */
+  .demos .demo-card {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .demo {
+    margin-top: var(--space-2);
+  }
+  .u-help {
+    color: var(--color-muted);
+    font-size: var(--fs-5);
+  }
+
+  /* ---------------------------------------------
+   * Code blocks (local scroll; avoid page overflow)
+   * --------------------------------------------- */
+  pre.code {
+    max-width: 100%;
+    overflow: auto;
+    white-space: pre;
+    margin: 0;
+  }
+  @media (max-width: 360px) {
+    pre.code {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  }
+
+  /* ---------------------------------------------
+   * Demo visuals (the rules used inside the examples)
+   * --------------------------------------------- */
+
+  /* Element / group / descendant */
+  .demo-el p {
+    margin-block: 1rem;
+  }
+
+  .demo-el h2,
+  h3 {
+    color: var(--color-primary);
+  }
+
+  .demo-el p span {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  /* Class selector */
+  .note {
+    color: var(--slate-600);
+    font-style: italic;
+  }
+
+  /* Attribute selectors */
+  input[type="text"] {
+    outline: 2px dashed var(--color-primary);
+  }
+
+  button[data-role="admin"] {
+    background: color-mix(in srgb, var(--color-primary) 15%, transparent);
+  }
+
+  [data-role] {
+    border: 3px solid var(--color-border);
+  }
+
+  [data-role^="ad"] {
+    font-weight: 700;
+  } /* starts with "ad" */
+  [data-role$="er"] {
+    text-decoration: underline;
+  } /* ends with "er" */
+  [data-role*="se"] {
+    letter-spacing: 0.2px;
+  } /* contains "se" */
+
+  /* ID */
+  #second {
+    border: 1px solid var(--color-border);
+    padding: 0.25rem 0.5rem;
+  }
+
+  /* Universal */
+  .universal-demo > * {
+    outline: 1px dotted var(--color-border);
+    padding: 0.25rem;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Specificity & source order demo */
+  .spec-demo .demo-text {
+    color: steelblue;
+  }
+  .spec-demo .demo-text.note {
+    color: tomato;
+  }
+
+  /* Inheritance box */
+  .inherit-demo .box {
+    font-size: 1.05rem; /* parent sets text size */
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    background: var(--color-surface);
+  }
+
+  /* Chips + !important demo */
+  .chip {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+  }
+  .chip.urgent {
+    background: tomato !important;
+    color: #061019;
+  }
+
+  /* Interactive states */
+  .chip:is(:hover, :focus) {
+    transform: translateY(-1px);
+  }
+  .chip:active {
+    transform: translateY(0);
+  }
+
+  /* :target */
+  .target-box {
+    margin-top: 0.6rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+  }
+  #target-box:target {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  /* :is() / :where() */
+  .menu {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .menu :is(a, button):is(:hover, :focus) {
+    text-decoration: underline;
+  }
+  .cards .mini-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 0.6rem 0.75rem;
+    background: var(--color-surface);
+  }
+  .cards :where(h3, p) {
+    margin: 0;
+  }
+
+  /* Link states — scoped to demo ONLY (avoid affecting navbar & pager) */
+  .demo a:any-link {
+    color: var(--ocean-700);
+  }
+  .demo a:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  /* Attribute presence & :not() for images */
+  .img-demo {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  img[alt],
+  img:not([alt]) {
+    border-radius: var(--radius-sm);
+  }
+  img[alt] {
+    outline: 2px solid #69b;
+  }
+  img:not([alt]) {
+    outline: 2px solid tomato;
+  }
+
+  /* nth-child vs nth-of-type */
+  .mix {
+    display: grid;
+    gap: 0.35rem;
+  }
+  .mix :nth-child(2),
+  .mix p:nth-of-type(2) {
+    border-radius: var(--radius-sm);
+    padding: 0.15rem 0.25rem;
+  }
+  .mix :nth-child(2) {
+    background: color-mix(in srgb, var(--color-primary) 15%, transparent);
+  }
+  .mix p:nth-of-type(2) {
+    background: color-mix(in srgb, var(--color-accent) 20%, transparent);
+  }
+  
+  /* before/after: simple generated content badges */
+  .tag::before {
+    content: "★ ";
+  }
+  .tag::after {
+    content: " · badge";
+  }
+
+  /* first-letter / first-line: classic editorial effects */
+  .dropcap::first-letter {
+    font-size: 180%;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .excerpt::first-line {
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  /* ---------------------------------------------
+   * Cards / code blocks consistency
+   * --------------------------------------------- */
+  .chapter .c-card {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .chapter .c-card pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+  .chapter .c-card code {
+    word-break: normal;
+  }
+
+  /* ---------------------------------------------
+   * Ultra-narrow safety (<= 360px)
+   * --------------------------------------------- */
+  @media (max-width: 360px) {
+    .chapter .c-card pre,
+    pre.code {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .c-button {
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+  }
+
+  /* ---------------------------------------------
+   * Anchor jump safety (sticky nav offset)
+   * --------------------------------------------- */
+  .chapter section[id] {
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+  }
+
+  /* ---------------------------------------------
+   * Responsive type scale
+   * --------------------------------------------- */
+  .chapter h1 {
+    font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+  }
+  .chapter h2 {
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+  }
+  .chapter p,
+  .chapter li {
+    font-size: clamp(0.95rem, 1.8vw, 1rem);
+  }
+
+  /* ---------------------------------------------
+   * Horizontal overflow guard (belt-and-suspenders)
+   * --------------------------------------------- */
+  .page--css-ch2 main {
+    overflow-x: hidden;
+  }
+  .page--css-ch2 :where(p, li, code, pre) {
+    overflow-wrap: anywhere;
+  }
+}

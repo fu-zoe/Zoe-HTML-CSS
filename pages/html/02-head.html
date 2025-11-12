@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML · Chapter 2 · &lt;head&gt; Element</title>
+    <meta
+      name="description"
+      content="HTML Chapter 2: the &lt;head&gt; element — meta essentials, favicons & app icons, stylesheets, preload/preconnect, alternates & canonical, modulepreload, social preview basics."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link rel="stylesheet" href="../../styles/pages/html/02-head.css" />
+  </head>
+  <body class="page--html-ch2">
+    <!-- Global skip link -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a
+            class="c-nav__link is-active"
+            aria-current="page"
+            href="./index.html"
+            >HTML</a
+          >
+          <a class="c-nav__link" href="../css/index.html">CSS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item"><a href="./index.html">HTML</a></li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 2</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card chapter__hero">
+        <div class="l-cluster">
+          <span class="c-badge c-badge--a">Chapter 2</span>
+          <span class="c-badge c-badge--c">&lt;head&gt;</span>
+        </div>
+        <h1 class="chapter__title">The <code>&lt;head&gt;</code> Element</h1>
+        <p class="chapter__lead">
+          Metadata, styles, icons, performance hints, alternates, and social
+          preview. Mostly code — copy, paste, and tweak.
+        </p>
+      </header>
+
+      <article class="l-stack">
+        <!-- 1. Minimal document incl. head -->
+        <section class="c-card" id="minimal">
+          <h2>Minimal document (with <code>&lt;head&gt;</code>)</h2>
+          <pre><code>&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;!-- Character encoding --&gt;
+    &lt;meta charset="UTF-8"&gt;
+
+    &lt;!-- Responsive viewport --&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+
+    &lt;!-- Author &amp; short description (used by search/snippets) --&gt;
+    &lt;meta name="author" content="Zoe Fu"&gt;
+    &lt;meta name="description" content="This page contains all the things I am learning as I learn HTML"&gt;
+
+    &lt;!-- Title (browser tab) --&gt;
+    &lt;title&gt;My First Web Page&lt;/title&gt;
+
+    &lt;!-- Favicon --&gt;
+    &lt;link rel="icon" href="html-5.png" type="image/x-icon"&gt;
+
+    &lt;!-- Stylesheet (type is optional in HTML5) --&gt;
+    &lt;link rel="stylesheet" href="main.css"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </section>
+
+        <!-- 2. Common <link> rel reference -->
+        <section class="c-card" id="link-rel">
+          <h2>Common <code>&lt;link&gt;</code> rel reference</h2>
+          <pre><code>&lt;!-- CSS stylesheet --&gt;
+&lt;link rel="stylesheet" href="main.css"&gt;
+&lt;!-- Optional: media-specific styles --&gt;
+&lt;link rel="stylesheet" href="print.css" media="print"&gt;
+
+&lt;!-- Favicon / app icons --&gt;
+&lt;link rel="icon" href="favicon.ico" type="image/x-icon"&gt;
+&lt;link rel="icon" href="favicon.png" type="image/png"&gt;
+&lt;link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180"&gt;
+&lt;link rel="manifest" href="/site.webmanifest"&gt;
+
+&lt;!-- Preload critical resources --&gt;
+&lt;link rel="preload" href="main.css" as="style"&gt;
+&lt;link rel="preload" href="app.js" as="script"&gt;
+
+&lt;!-- Preconnect / DNS-prefetch (network hints) --&gt;
+&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
+&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+&lt;link rel="dns-prefetch" href="//example-cdn.com"&gt;
+
+&lt;!-- Alternate versions (feeds, translations) --&gt;
+&lt;link rel="alternate" href="feed.xml" type="application/rss+xml" title="RSS"&gt;
+&lt;link rel="alternate" href="page-fr.html" hreflang="fr"&gt;
+
+&lt;!-- Canonical URL (avoid duplicate content) --&gt;
+&lt;link rel="canonical" href="https://example.com/page"&gt;
+
+&lt;!-- Module preload (for ESM) --&gt;
+&lt;link rel="modulepreload" href="main.mjs"&gt;</code></pre>
+        </section>
+
+        <!-- 3. Meta: quick cookbook -->
+        <section class="c-card" id="meta">
+          <h2>Meta tags — quick cookbook</h2>
+          <pre><code>&lt;!-- Basics --&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;meta name="author" content="Zoe Fu"&gt;
+&lt;meta name="description" content="Short description for search/snippets."&gt;
+
+&lt;!-- Robots (indexing control) --&gt;
+&lt;meta name="robots" content="index,follow"&gt;
+
+&lt;!-- Theme color (browser UI tint on mobile) --&gt;
+&lt;meta name="theme-color" content="#6fb0d8"&gt;
+
+&lt;!-- Open Graph (social preview) --&gt;
+&lt;meta property="og:title" content="My First Web Page"&gt;
+&lt;meta property="og:description" content="A simple demo of HTML head tags."&gt;
+&lt;meta property="og:type" content="website"&gt;
+&lt;meta property="og:url" content="https://example.com"&gt;
+&lt;meta property="og:image" content="https://example.com/preview.png"&gt;
+
+&lt;!-- Twitter Card (summary preview) --&gt;
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+&lt;meta name="twitter:title" content="My First Web Page"&gt;
+&lt;meta name="twitter:description" content="A simple demo of HTML head tags."&gt;
+&lt;meta name="twitter:image" content="https://example.com/preview.png"&gt;</code></pre>
+        </section>
+
+        <!-- 4. Stylesheet loading patterns -->
+        <section class="c-card" id="stylesheets">
+          <h2>Stylesheets — loading patterns</h2>
+          <pre><code>&lt;!-- Regular blocking stylesheet (simple & reliable) --&gt;
+&lt;link rel="stylesheet" href="main.css"&gt;
+
+&lt;!-- Print-only CSS --&gt;
+&lt;link rel="stylesheet" href="print.css" media="print"&gt;
+
+&lt;!-- Optional: preload + swap (advanced; test before using) --&gt;
+&lt;link rel="preload" href="critical.css" as="style" onload="this.onload=null;this.rel='stylesheet'"&gt;
+&lt;noscript&gt;&lt;link rel="stylesheet" href="critical.css"&gt;&lt;/noscript&gt;</code></pre>
+        </section>
+
+        <!-- 5. Scripts in head (when needed) -->
+        <section class="c-card" id="scripts">
+          <h2>Scripts in <code>&lt;head&gt;</code> (only if needed)</h2>
+          <pre><code>&lt;!-- Defer classic scripts so they don't block HTML parsing --&gt;
+&lt;script src="app.js" defer&gt;&lt;/script&gt;
+
+&lt;!-- ES modules are deferred by default --&gt;
+&lt;script type="module" src="main.mjs"&gt;&lt;/script&gt;
+
+&lt;!-- Inline critical config (keep small) --&gt;
+&lt;script&gt;window.__CONFIG__ = { lang: 'en' };&lt;/script&gt;</code></pre>
+        </section>
+
+        <!-- 6. Validation reminder -->
+        <section class="c-card" id="validation">
+          <h2>Validate <em>as you go</em></h2>
+          <p>
+            Use the W3C Markup Validation Service to catch syntax issues in
+            <code>&lt;head&gt;</code> (duplicate tags, invalid attributes,
+            etc.).
+          </p>
+          <p class="u-mb-0">
+            <a
+              class="c-button c-button--outline"
+              href="https://validator.w3.org/"
+              target="_blank"
+              rel="noopener"
+              >Open W3C Validator ↗</a
+            >
+          </p>
+        </section>
+      </article>
+
+      <!-- Pager -->
+      <nav class="c-pager u-mt-5" aria-label="Page navigation">
+        <a
+          class="c-button c-button--outline"
+          rel="prev"
+          href="./01-start-here.html"
+          >← Prev: Start Here</a
+        >
+        <a class="c-button c-button--primary" rel="next" href="./03-text.html"
+          >Next: Text →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · HTML · Chapter 2</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same on all pages)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

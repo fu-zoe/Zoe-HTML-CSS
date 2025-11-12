@@ -1,0 +1,152 @@
+/* ---------------------------------------------
+ * Playground · Tokens — page-only styles
+ * --------------------------------------------- */
+@layer pages {
+  /* Page background */
+  body.page--playground-tokens {
+    background: var(--gradient-bg-mist) fixed;
+    background-color: var(--color-bg);
+  }
+
+  /* Chapter layout (consistent with other pages) */
+  .chapter {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0; /* allow shrink on very narrow devices */
+  }
+
+  /* Hero */
+  .chapter__hero {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .chapter__title {
+    margin: 0;
+  }
+  .chapter__lead {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* Swatch grid */
+  .swatches {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    margin-top: var(--space-3);
+  }
+  .swatches--fit {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  /* Swatch card */
+  .swatch {
+    position: relative;
+    min-height: 96px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--token);
+    box-shadow: var(--shadow-1);
+    overflow: hidden;
+    display: grid;
+    place-items: end start;
+  }
+  .swatch figcaption {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: var(--fs-5);
+    padding: 0.45rem 0.6rem;
+    background: color-mix(in srgb, var(--color-surface) 82%, transparent);
+    color: var(--color-text);
+    border-top: 1px solid var(--color-border);
+  }
+  .swatch--gradient {
+    background: var(--token);
+  }
+
+  /* Mist demo band */
+  .mist-demo {
+    height: 120px;
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--color-border);
+    background: var(--gradient-bg-mist);
+  }
+
+  /* Cards / code blocks consistency */
+  .chapter .c-card {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .chapter .c-card pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto; /* inner scroll if needed, never page-wide */
+  }
+  .chapter .c-card code {
+    word-break: normal;
+  }
+
+  /* Attribute-based theme override (takes precedence over prefers-color-scheme) */
+  :root[data-theme="light"] {
+    /* pick your light-side tokens here */
+    --color-bg: var(--surface-0, #fff);
+    --color-text: var(--ink-900, #0b0f19);
+    --color-surface: var(--surface-1, #fff);
+    --color-border: var(--border-200, #dde1e6);
+    --nav-glass-bg: color-mix(in srgb, var(--ocean-050, #eaf2ff) 70%, transparent);
+    --nav-glass-bg-scrolled: color-mix(in srgb, var(--ocean-100, #d8e6ff) 80%, transparent);
+    --gradient-bg-mist: radial-gradient(1200px 800px at 50% -200px, rgba(255,255,255,.8), transparent 60%);
+  }
+  :root[data-theme="dark"] {
+    /* pick your dark-side tokens here */
+    --color-bg: var(--surface-900, #0b0f19);
+    --color-text: var(--ink-050, #f5f7fa);
+    --color-surface: var(--surface-800, #121826);
+    --color-border: var(--border-700, #2a3343);
+    --nav-glass-bg: color-mix(in srgb, var(--ocean-900, #081224) 22%, transparent);
+    --nav-glass-bg-scrolled: color-mix(in srgb, var(--ocean-900, #081224) 32%, transparent);
+    --gradient-bg-mist: radial-gradient(1200px 800px at 50% -200px, rgba(8,18,36,.7), transparent 60%);
+  }
+
+  /* (optional) button state */
+  [data-theme].is-active { outline: 2px solid var(--color-border); }
+
+
+
+  /* Ultra-narrow safety */
+  @media (max-width: 360px) {
+    .chapter .c-card pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .chapter .c-card code {
+      overflow-wrap: anywhere;
+    }
+    .c-button {
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+  }
+
+  /* Anchor jump safety (sticky nav offset) */
+  .chapter section[id] {
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+  }
+
+  /* Responsive type scale */
+  .chapter h1 {
+    font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+  }
+  .chapter h2 {
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+  }
+  .chapter p,
+  .chapter li {
+    font-size: clamp(0.95rem, 1.8vw, 1rem);
+  }
+
+  /* Horizontal overflow guard */
+  .page--playground-tokens main {
+    overflow-x: hidden;
+  }
+}

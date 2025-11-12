@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSS · Chapter 6 · Flexbox</title>
+    <meta
+      name="description"
+      content="CSS Chapter 6: Flexbox — container & item properties, alignment, wrapping, growth/shrink, shorthand, order, and interactive demos."
+    />
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link rel="stylesheet" href="../../styles/pages/css/06-flexbox.css" />
+  </head>
+  <body class="page--css-ch6">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a class="c-nav__link" href="../html/index.html">HTML</a>
+          <a
+            class="c-nav__link is-active"
+            href="../css/index.html"
+            aria-current="page"
+            >CSS</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item">
+            <a href="../css/index.html">CSS</a>
+          </li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 6</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card hero">
+        <div class="l-cluster u-mb-2">
+          <span class="c-badge c-badge--b">CSS</span>
+          <span class="c-badge c-badge--a">Chapter 6</span>
+        </div>
+        <h1 class="hero__title">Flexbox</h1>
+        <p class="hero__lead">
+          Container properties (direction, alignment, wrapping, gap) and item
+          properties (grow, shrink, basis, order, align-self) — with live demos.
+        </p>
+      </header>
+
+      <article class="l-stack">
+        <!-- 1) Container properties -->
+        <section class="c-card" id="container">
+          <h2>Container properties</h2>
+          <ul>
+            <li><code>display: flex</code> (enable flex)</li>
+            <li>
+              <code>flex-direction</code>: row | column | row-reverse |
+              column-reverse
+            </li>
+            <li><code>justify-content</code> (main axis)</li>
+            <li><code>align-items</code> (cross axis, single-line)</li>
+            <li><code>gap</code>: spacing between items</li>
+            <li><code>flex-wrap</code>: nowrap | wrap | wrap-reverse</li>
+            <li><code>align-content</code> (multi-line only)</li>
+          </ul>
+
+          <!-- Live playground -->
+          <div class="playground l-stack l-stack--sm">
+            <form
+              class="controls l-grid l-grid--fit-300"
+              aria-label="Flex container controls"
+            >
+              <label class="control">
+                <span>flex-direction</span>
+                <select id="dir">
+                  <option value="row" selected>row</option>
+                  <option value="row-reverse">row-reverse</option>
+                  <option value="column">column</option>
+                  <option value="column-reverse">column-reverse</option>
+                </select>
+              </label>
+
+              <label class="control">
+                <span>justify-content</span>
+                <select id="justify">
+                  <option>flex-start</option>
+                  <option>center</option>
+                  <option>flex-end</option>
+                  <option>space-between</option>
+                  <option>space-around</option>
+                  <option>space-evenly</option>
+                </select>
+              </label>
+
+              <label class="control">
+                <span>align-items</span>
+                <select id="align">
+                  <option>stretch</option>
+                  <option>flex-start</option>
+                  <option>center</option>
+                  <option>flex-end</option>
+                  <option>baseline</option>
+                </select>
+              </label>
+
+              <label class="control">
+                <span>gap</span>
+                <select id="gap">
+                  <option value="0">0</option>
+                  <option value="0.5rem">0.5rem</option>
+                  <option value="1rem" selected>1rem</option>
+                  <option value="1.5rem">1.5rem</option>
+                </select>
+              </label>
+
+              <label class="control">
+                <span>flex-wrap</span>
+                <select id="wrap">
+                  <option>nowrap</option>
+                  <option selected>wrap</option>
+                  <option>wrap-reverse</option>
+                </select>
+              </label>
+            </form>
+
+            <div
+              class="stage stage--container"
+              id="stage1"
+              aria-label="Flex container demo"
+            >
+              <div class="box">1</div>
+              <div class="box">2</div>
+              <div class="box">3</div>
+              <div class="box">4</div>
+              <div class="box">5</div>
+              <div class="box">6</div>
+            </div>
+          </div>
+
+          <pre class="code"><code>/* Typical container setup */
+.container {
+  display: flex;
+  flex-direction: row;     /* or column */
+  justify-content: center; /* main axis */
+  align-items: center;     /* cross axis */
+  gap: 1rem;
+  flex-wrap: wrap;         /* allow multiple rows */
+}</code></pre>
+        </section>
+
+        <!-- 2) Item properties -->
+        <section class="c-card" id="items">
+          <h2>Item properties</h2>
+          <ul>
+            <li><code>display: flex</code> (enable flex)</li>
+            <li><code>justify-content</code>: flex-start</li>
+            <li><code>flex-basis</code>: initial size</li>
+            <li><code>flex-grow</code>: how much to grow</li>
+            <li><code>flex-shrink</code>: how much to shrink</li>
+            <li><code>flex</code>: shorthand <code>grow shrink basis</code></li>
+            <li>
+              <code>align-self</code>: override cross-axis alignment per item
+            </li>
+            <li><code>order</code>: item ordering (default 0)</li>
+          </ul>
+
+          <!-- Live playground -->
+          <div class="playground l-stack l-stack--sm">
+            <form
+              class="controls l-grid l-grid--fit-300"
+              aria-label="Flex item controls"
+            >
+              <label class="control">
+                <span>Item #2 flex</span>
+                <select id="flex2">
+                  <option value="0 1 140px">0 1 140px (no grow)</option>
+                  <option value="1 1 140px" selected>
+                    1 1 140px (equal share)
+                  </option>
+                  <option value="2 1 140px">2 1 140px (double share)</option>
+                  <option value="3 1 140px">3 1 140px (triple share)</option>
+                </select>
+              </label>
+
+              <label class="control">
+                <span>Item #3 align-self</span>
+                <select id="align3">
+                  <option value="auto" selected>auto</option>
+                  <option value="flex-start">flex-start</option>
+                  <option value="center">center</option>
+                  <option value="flex-end">flex-end</option>
+                  <option value="stretch">stretch</option>
+                  <option value="baseline">baseline</option>
+                </select>
+              </label>
+
+              <label class="control">
+                <span>Order: 1 / 2 / 3</span>
+                <select id="orderMode">
+                  <option value="000" selected>default (0,0,0)</option>
+                  <option value="100">1 → last</option>
+                  <option value="010">2 → last</option>
+                  <option value="001">3 → last</option>
+                  <option value="210">reverse</option>
+                </select>
+              </label>
+            </form>
+
+            <div
+              class="stage stage--items"
+              id="stage2"
+              aria-label="Flex items demo"
+            >
+              <div class="box" data-i="1">1</div>
+              <div class="box" data-i="2">2</div>
+              <div class="box" data-i="3">3</div>
+            </div>
+            <p class="u-help u-mb-0">
+              Tip: #1 and #3 default to <code>flex: 1 1 140px</code>. Change
+              #2’s flex (no/equal/double/triple grow) to see proportional width
+              changes. Narrow the window to also observe shrinking.
+            </p>
+          </div>
+
+          <pre class="code"><code>/* Item examples */
+.item-2 { flex: 2 1 250px; }     /* grows twice as much as siblings with flex-grow:1 */
+.item-3 { align-self: center; }  /* overrides container's align-items */
+/* Order: larger shows later (to the end) */
+.item-2 { order: 1; }</code></pre>
+        </section>
+
+        <!-- 3) Shorthand & tips -->
+        <section class="c-card" id="shorthand">
+          <h2>Shorthand &amp; tips</h2>
+          <ul>
+            <li><code>flex: 1</code> → <code>1 1 0%</code></li>
+            <li><code>flex: auto</code> → <code>1 1 auto</code></li>
+            <li>
+              <code>flex-flow</code> → shorthand for <code>direction</code> +
+              <code>wrap</code>
+            </li>
+            <li>Prefer <code>gap</code> over margins for spacing items</li>
+          </ul>
+          <pre class="code"><code>.cards {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+}
+.card { flex: 1 1 260px; }</code></pre>
+        </section>
+
+        <!-- 4) Resource -->
+        <section class="c-card" id="resource">
+          <h2>Practice game</h2>
+          <p class="u-mb-0">
+            <a
+              class="c-button c-button--outline"
+              href="https://flexboxfroggy.com"
+              target="_blank"
+              rel="noopener"
+              >Flexbox Froggy ↗</a
+            >
+          </p>
+        </section>
+      </article>
+
+      <!-- Pager -->
+      <nav class="c-pager u-mt-5" aria-label="Page navigation">
+        <a
+          class="c-button c-button--outline"
+          rel="prev"
+          href="./05-box-display-position.html"
+          >← Prev: Layout</a
+        >
+        <a class="c-button c-button--primary" rel="next" href="./07-grid.html"
+          >Next: Grid →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · CSS · Chapter 6</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same on all pages)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+
+        // ---------- Flexbox demos ----------
+        (function () {
+          // Container playground
+          var stage1 = document.getElementById("stage1");
+          var dir = document.getElementById("dir");
+          var justify = document.getElementById("justify");
+          var align = document.getElementById("align");
+          var wrap = document.getElementById("wrap");
+          var gap = document.getElementById("gap");
+
+          function syncContainer() {
+            stage1.style.display = "flex";
+            stage1.style.flexDirection = dir.value;
+            stage1.style.justifyContent = justify.value;
+            stage1.style.alignItems = align.value;
+            stage1.style.flexWrap = wrap.value;
+            stage1.style.gap = gap.value;
+          }
+          [dir, justify, align, wrap, gap].forEach(function (el) {
+            el.addEventListener("change", syncContainer);
+          });
+          syncContainer();
+
+          // Item playground
+          var stage2 = document.getElementById("stage2");
+          var item2 = stage2.querySelector('[data-i="2"]');
+          var item3 = stage2.querySelector('[data-i="3"]');
+          var flex2 = document.getElementById("flex2");
+          var align3 = document.getElementById("align3");
+          var orderMode = document.getElementById("orderMode");
+
+          function syncItems() {
+            // Item #2 flex from the select
+            item2.style.flex = flex2.value;
+            // Item #3 align-self
+            item3.style.alignSelf = align3.value;
+
+            // Order preset decoding: "abc" => order1=a, order2=b, order3=c
+            var v = orderMode.value; // e.g. "210"
+            var order = { 1: +v[0], 2: +v[1], 3: +v[2] };
+            Array.prototype.forEach.call(stage2.children, function (el) {
+              var i = el.getAttribute("data-i");
+              el.style.order = order[i];
+            });
+          }
+          [flex2, align3, orderMode].forEach(function (el) {
+            el.addEventListener("change", syncItems);
+          });
+          syncItems();
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

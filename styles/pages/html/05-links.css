@@ -1,0 +1,171 @@
+/* ---------------------------------------------
+ * HTML · Chapter 5 (Links) — page-only styles
+ * --------------------------------------------- */
+@layer pages {
+  /* ---------------------------------------------
+   * Page background
+   * --------------------------------------------- */
+  body.page--html-ch5 {
+    background: var(--gradient-bg-mist) fixed;
+    background-color: var(--color-bg);
+  }
+
+  /* ---------------------------------------------
+   * Chapter layout
+   * --------------------------------------------- */
+  .chapter {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0; /* allow shrink on very narrow devices */
+  }
+
+  /* ---------------------------------------------
+   * Hero
+   * --------------------------------------------- */
+  .chapter__hero {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .chapter__title {
+    margin: 0;
+  }
+  .chapter__lead {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------------------------------------------
+   * In-page demo nav
+   * --------------------------------------------- */
+  .demo-nav .demo-nav__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-2) 0 0;
+  }
+
+  /* ---------------------------------------------
+   * Side-by-side demo layout (code ↔ render)
+   * --------------------------------------------- */
+  .demo-sbs {
+    display: grid;
+    gap: var(--space-4);
+    min-width: 0; /* allow the grid to shrink */
+  }
+  .demo-sbs > * {
+    min-width: 0;
+  } /* critical for grid children */
+  @media (min-width: 900px) {
+    .demo-sbs {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+
+  /* Code pane */
+  .demo__code pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto; /* inner scroll on normal widths */
+  }
+
+  /* Render pane */
+  .demo__render {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    min-width: 0; /* shrink-friendly */
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+  .note {
+    color: var(--color-muted);
+    margin-left: 0.5rem;
+    font-size: var(--fs-5);
+  }
+  .link-list {
+    margin: 0;
+    padding: 0;
+  }
+  .link-list dt {
+    font-weight: 600;
+    margin-top: 0.4rem;
+  }
+  .link-list dd {
+    margin: 0 0 0.4rem 0;
+  }
+
+  /* Local status (relative link simulation) */
+  .demo-status {
+    opacity: 0;
+    transition: opacity var(--dur-2) var(--ease);
+    font-size: var(--fs-5);
+    color: var(--color-muted);
+    margin-top: 0.5rem;
+  }
+  .demo-status.is-visible {
+    opacity: 1;
+  }
+
+  /* ---------------------------------------------
+   * Cards / code blocks
+   * --------------------------------------------- */
+  .chapter .c-card {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .chapter .c-card pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+  .chapter .c-card code {
+    word-break: normal;
+  }
+
+  /* ---------------------------------------------
+   * Ultra-narrow safety
+   * --------------------------------------------- */
+  @media (max-width: 600px) {
+    .chapter .c-card pre,
+    .demo__code pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .c-button {
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+  }
+
+  /* ---------------------------------------------
+   * Anchor jump safety (sticky nav offset)
+   * --------------------------------------------- */
+  .chapter section[id] {
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+  }
+
+  /* ---------------------------------------------
+   * Responsive type scale
+   * --------------------------------------------- */
+  .chapter h1 {
+    font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+  }
+  .chapter h2 {
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+  }
+  .chapter p,
+  .chapter li {
+    font-size: clamp(0.95rem, 1.8vw, 1rem);
+  }
+
+  /* ---------------------------------------------
+   * Horizontal overflow guard (belt & suspenders)
+   * --------------------------------------------- */
+  .page--html-ch5 main {
+    overflow-x: hidden;
+  }
+}

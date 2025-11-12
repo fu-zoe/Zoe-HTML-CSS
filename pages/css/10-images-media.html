@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>CSS · Chapter 10 — Images & Media</title>
+    <meta
+      name="description"
+      content="Responsive sizing, fixing the baseline gap for inline images, and layered backgrounds/overlays with gradients and image filters."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link rel="stylesheet" href="../../styles/pages/css/10-images-media.css" />
+  </head>
+  <body class="page--css-ch10">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a class="c-nav__link" href="../html/index.html">HTML</a>
+          <a
+            class="c-nav__link is-active"
+            href="../css/index.html"
+            aria-current="page"
+            >CSS</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item"><a href="./index.html">CSS</a></li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 10</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card hero">
+        <div class="l-cluster u-mb-2">
+          <span class="c-badge c-badge--b">CSS</span>
+          <span class="c-badge c-badge--a">Chapter 10</span>
+        </div>
+        <h1 class="hero__title">Images &amp; Media</h1>
+        <p class="hero__lead">
+          Responsive sizing, fixing the baseline gap on inline images, and
+          layered backgrounds (gradients + image) done on the container.
+        </p>
+      </header>
+
+      <article class="l-stack">
+        <!-- 1) Responsive sizing -->
+        <section class="c-card" id="responsive">
+          <h2 class="u-mt-0">1) Responsive sizing</h2>
+
+          <div class="playground l-stack l-stack--sm">
+            <label
+              class="control control--full"
+              aria-label="Percent width control"
+            >
+              <span>Percent width (left)</span>
+              <input type="range" id="pct" min="10" max="90" value="25" />
+            </label>
+
+            <div class="demo-sbs">
+              <div class="pane">
+                <p class="c-help u-mt-0">
+                  <code class="code"
+                    >img { width: <span id="pctVal">25</span>%; height: auto;
+                    }</code
+                  >
+                </p>
+                <div class="box">
+                  <img
+                    id="imgPct"
+                    src="../../assets/html-10.png"
+                    alt="demo"
+                    width="400"
+                    height="300"
+                  />
+                </div>
+              </div>
+
+              <div class="pane">
+                <p class="c-help u-mt-0">
+                  <code class="code"
+                    >img { max-width: 100%; height: auto; }</code
+                  >
+                </p>
+                <div class="box box--narrow" id="rightBox">
+                  <img
+                    id="imgMax"
+                    src="../../assets/html-10.png"
+                    alt="demo"
+                    width="400"
+                    height="300"
+                    style="max-width: 100%; height: auto"
+                  />
+                </div>
+                <p class="u-mt-1 u-mb-0">
+                  Right container width:
+                  <strong><span id="rbw">360</span>px</strong>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2) Display & baseline gap -->
+        <section class="c-card" id="baseline">
+          <h2 class="u-mt-0">2) Display &amp; baseline gap</h2>
+
+          <form
+            class="controls l-grid l-grid--fit-300"
+            aria-label="Baseline options"
+          >
+            <label class="control">
+              <span>Mode</span>
+              <select id="baselineMode">
+                <option value="inline">inline (baseline)</option>
+                <option value="block">display: block</option>
+                <option value="middle">vertical-align: middle</option>
+                <option value="bottom">vertical-align: bottom</option>
+              </select>
+            </label>
+          </form>
+
+          <div class="baseline-demo">
+            <p class="baseline-line">
+              <img
+                id="imgBase"
+                class="inline-fix"
+                src="../../assets/html-10.png"
+                alt=""
+                width="100"
+                height="75"
+              />
+              This sentence sits on the <em>baseline</em>. Notice the thin strip
+              below the inline image when mode = <code>inline</code>.
+            </p>
+          </div>
+
+          <pre class="code u-mt-2 u-mb-0"><code id="codeBaseline">/* Fixes */
+img { display: block; }                 /* removes the baseline gap entirely */
+/* or keep inline and align differently */
+img.inline-fix { vertical-align: middle; /* or: bottom */ }</code></pre>
+        </section>
+
+        <!-- 3) Overlays on the container -->
+        <section class="c-card" id="overlays">
+          <h2 class="u-mt-0">3) Overlays on the container</h2>
+          <p class="u-mt-0">
+            Put gradients/filters on the <strong>container</strong> (or its
+            pseudo-element), not on the <code>&lt;img&gt;</code>. This preserves
+            the image and gives you flexible layering.
+          </p>
+
+          <form
+            class="controls l-grid l-grid--fit-300"
+            aria-label="Overlay controls"
+          >
+            <label class="control">
+              <span>Layer</span>
+              <select id="layerType">
+                <option value="none">none</option>
+                <option value="linear" selected>linear-gradient</option>
+                <option value="radial">radial-gradient</option>
+              </select>
+            </label>
+
+            <label class="control">
+              <span>repeat</span>
+              <select id="bgRepeat">
+                <option>no-repeat</option>
+                <option>repeat</option>
+                <option>repeat-x</option>
+                <option>repeat-y</option>
+              </select>
+            </label>
+
+            <label class="control">
+              <span>position</span>
+              <select id="bgPos">
+                <option>center</option>
+                <option>top right</option>
+                <option>bottom</option>
+                <option>left top</option>
+              </select>
+            </label>
+
+            <label class="control">
+              <span>size</span>
+              <select id="bgSize">
+                <option>cover</option>
+                <option>contain</option>
+                <option>100%</option>
+                <option>120px 120px</option>
+              </select>
+            </label>
+          </form>
+
+          <div class="overlay-stage">
+            <figure
+              class="profile-pic"
+              id="overlayBox"
+              aria-label="Overlay demo"
+            >
+              <img
+                src="../../assets/html-10.png"
+                alt="profile"
+                width="800"
+                height="600"
+              />
+              <figcaption>Profile pic with layered backgrounds</figcaption>
+            </figure>
+          </div>
+
+          <pre
+            class="code u-mt-2 u-mb-0"
+          ><code id="codeOverlay">.profile-pic::after {
+  background-image: linear-gradient(135deg, rgba(141,221,221,.55), rgba(159,247,127,.55));
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.45;
+}</code></pre>
+
+          <p class="c-help u-mt-2">
+            <strong>Tip:</strong> Multiple backgrounds are comma-separated; the
+            first is painted <em>on top</em>.
+          </p>
+        </section>
+
+        <!-- 4) Text fill via background-clip -->
+        <section class="c-card" id="cliptext">
+          <h2 class="u-mt-0">
+            4) Text fill via <code>background-clip: text</code>
+          </h2>
+          <div class="clip-wrap">
+            <h3 class="clip-title">Beautiful Gradient Text</h3>
+          </div>
+
+          <pre class="code u-mt-2 u-mb-0"><code>.clip-title {
+  background-image: linear-gradient(90deg, #7bd, #e59);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent; /* let the background show through */
+  display: inline-block;
+}</code></pre>
+        </section>
+
+        <!-- 5) Object-fit cover (if using <img> as hero) -->
+        <section class="c-card" id="objectfit">
+          <h2 class="u-mt-0">
+            5) <code>object-fit: cover</code> on &lt;img&gt;
+          </h2>
+          <div class="objectfit-demo">
+            <img
+              src="../../assets/html-10.png"
+              alt="cover demo"
+              class="hero-img"
+            />
+          </div>
+
+          <pre class="code u-mt-2 u-mb-0"><code>img.hero-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover; /* fills and crops if needed */
+}</code></pre>
+        </section>
+      </article>
+
+      <!-- Pager (global component; no extra container) -->
+      <nav class="c-pager" aria-label="Page navigation">
+        <a
+          class="c-button c-button--subtle"
+          rel="prev"
+          href="./09-typography-links-lists.html"
+          >← Prev: Typography &amp; Links &amp; Lists</a
+        >
+        <a
+          class="c-button c-button--primary"
+          rel="next"
+          href="./11-responsive-media-queries.html"
+          >Next: Responsive →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · CSS · Chapter 10</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same pattern)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+
+        // ------- JS for the three demos -------
+        // 1) Responsive sizing
+        (function () {
+          var pct = document.getElementById("pct");
+          var pctVal = document.getElementById("pctVal");
+          var imgPct = document.getElementById("imgPct");
+          var rightBox = document.getElementById("rightBox");
+          var rbw = document.getElementById("rbw");
+
+          function sync() {
+            pctVal.textContent = pct.value;
+            imgPct.style.width = pct.value + "%";
+            imgPct.style.height = "auto";
+            rbw.textContent = Math.round(
+              rightBox.getBoundingClientRect().width
+            );
+          }
+          window.addEventListener("resize", sync, { passive: true });
+          pct.addEventListener("input", sync);
+          sync();
+        })();
+
+        // 2) Baseline gap
+        (function () {
+          var sel = document.getElementById("baselineMode");
+          var img = document.getElementById("imgBase");
+          var code = document.getElementById("codeBaseline");
+
+          function apply() {
+            img.style.display = "";
+            img.style.verticalAlign = "";
+            var v = sel.value;
+
+            if (v === "inline") {
+              img.style.display = "inline";
+              img.style.verticalAlign = "baseline";
+              code.textContent = `/* Inline image aligns to the baseline → a small gap appears below */
+img { display: inline; vertical-align: baseline; }`;
+            } else if (v === "block") {
+              img.style.display = "block";
+              code.textContent = `/* Make the image a block → the baseline gap disappears */
+img { display: block; }`;
+            } else if (v === "middle") {
+              img.style.display = "inline";
+              img.style.verticalAlign = "middle";
+              code.textContent = `/* Keep inline, align to middle → no extra strip below */
+img { display: inline; vertical-align: middle; }`;
+            } else {
+              img.style.display = "inline";
+              img.style.verticalAlign = "bottom";
+              code.textContent = `/* Keep inline, align bottoms → no strip below */
+img { display: inline; vertical-align: bottom; }`;
+            }
+          }
+
+          sel.addEventListener("change", apply);
+          apply();
+        })();
+
+        // 3) Overlays on the container
+        (function () {
+          var box = document.getElementById("overlayBox");
+          var layer = document.getElementById("layerType");
+          var rep = document.getElementById("bgRepeat");
+          var pos = document.getElementById("bgPos");
+          var size = document.getElementById("bgSize");
+          var code = document.getElementById("codeOverlay");
+
+          function overlayValue() {
+            if (layer.value === "linear") {
+              return "linear-gradient(135deg, rgba(141,221,221,.55), rgba(159,247,127,.55))";
+            }
+            if (layer.value === "radial") {
+              return `radial-gradient(circle at ${pos.value}, rgba(141,221,221,.55), rgba(159,247,127,.55))`;
+            }
+            return "none";
+          }
+
+          function update() {
+            var ovl = overlayValue();
+
+            box.style.setProperty("--overlay", ovl);
+            box.style.setProperty("--rep", rep.value);
+            box.style.setProperty("--pos", pos.value);
+            box.style.setProperty("--size", size.value);
+            box.style.setProperty("--ovl-alpha", "0.45");
+
+            code.textContent = `.profile-pic::after {
+  background-image: ${ovl};
+  background-repeat: ${rep.value};
+  background-position: ${pos.value};
+  background-size: ${size.value};
+  opacity: 0.45;
+}`;
+          }
+
+          [layer, rep, pos, size].forEach(function (el) {
+            el.addEventListener("change", update);
+          });
+          update();
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

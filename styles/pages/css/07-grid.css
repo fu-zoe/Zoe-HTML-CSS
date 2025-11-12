@@ -1,0 +1,185 @@
+/* ---------------------------------------------
+ * CSS · Chapter 7 — page-only styles
+ * --------------------------------------------- */
+@layer pages {
+  /* ---------------------------------------------
+   * Page background
+   * --------------------------------------------- */
+  body.page--css-ch7 {
+    background: var(--gradient-bg-mist) fixed;
+    background-color: var(--color-bg);
+  }
+
+  /* ---------------------------------------------
+   * Chapter layout
+   * --------------------------------------------- */
+  .chapter {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0; /* allow shrink on very narrow devices */
+  }
+
+  /* ---------------------------------------------
+   * Hero
+   * --------------------------------------------- */
+  .hero .hero__title {
+    margin: 0 0 var(--space-2);
+  }
+  .hero .hero__lead {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------------------------------------------
+   * Code blocks (local scroll; avoid page overflow)
+   * --------------------------------------------- */
+  .code {
+    max-width: 100%;
+    overflow: auto;
+    margin: 0;
+  }
+
+  /* ---------------------------------------------
+   * Cards / pre/code consistency
+   * --------------------------------------------- */
+  .chapter .c-card {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .chapter .c-card pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+  .chapter .c-card code {
+    word-break: normal;
+  }
+
+  /* ---------------------------------------------
+   * Controls layout
+   * --------------------------------------------- */
+  .controls {
+    align-items: end;
+  }
+  .control {
+    display: grid;
+    gap: 0.35rem;
+  }
+  .control > span {
+    font-size: var(--fs-5);
+    color: var(--color-muted);
+  }
+  .control select {
+    min-width: 14ch;
+  }
+  .control.control--check {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* ---------------------------------------------
+   * Demo stages & items
+   * --------------------------------------------- */
+  .stage {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    padding: var(--space-4);
+    min-height: 180px;
+    min-width: 0; /* prevent page-wide overflow */
+    overflow: hidden; /* contain visual overflow */
+  }
+
+  .cell,
+  .area {
+    background: var(--gradient-badge-d);
+    color: var(--badge-text);
+    border: 1px solid color-mix(in srgb, var(--color-border) 90%, transparent);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 0.75rem;
+    font-weight: 600;
+    text-align: center;
+    min-width: 64px;
+  }
+
+  /* Emphasize A/B/C with distinct gradients */
+  .stage--items-grid .cell--a {
+    background: var(--gradient-badge-b);
+  }
+  .stage--items-grid .cell--b {
+    background: var(--gradient-badge-c);
+  }
+  .stage--items-grid .cell--c {
+    background: var(--gradient-badge-e);
+  }
+
+  /* Template areas stage (areas map to grid-area) */
+  .stage--areas {
+    display: grid;
+    gap: 1rem;
+  }
+  .area--header,
+  .area--footer {
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .area--header {
+    grid-area: header;
+  }
+  .area--aside {
+    grid-area: aside;
+  }
+  .area--main {
+    grid-area: main;
+  }
+  .area--footer {
+    grid-area: footer;
+  }
+
+  /* ---------------------------------------------
+   * Ultra-narrow safety (<= 360px)
+   * --------------------------------------------- */
+  @media (max-width: 360px) {
+    .chapter .c-card pre,
+    .code {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .c-button {
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+  }
+
+  /* ---------------------------------------------
+   * Anchor jump safety (sticky nav offset)
+   * --------------------------------------------- */
+  .chapter section[id] {
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+  }
+
+  /* ---------------------------------------------
+   * Responsive type scale
+   * --------------------------------------------- */
+  .chapter h1 {
+    font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+  }
+  .chapter h2 {
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+  }
+  .chapter p,
+  .chapter li {
+    font-size: clamp(0.95rem, 1.8vw, 1rem);
+  }
+
+  /* ---------------------------------------------
+   * Horizontal overflow guard
+   * --------------------------------------------- */
+  .page--css-ch7 main {
+    overflow-x: hidden;
+  }
+  .page--css-ch7 :where(p, li, code, pre) {
+    overflow-wrap: anywhere;
+  }
+}

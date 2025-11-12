@@ -1,0 +1,250 @@
+/* ---------------------------------------------
+ * CSS · Chapter 10 — page-only styles (English comments)
+ * --------------------------------------------- */
+@layer pages {
+  /* ---------------------------------------------
+   * Page background
+   * --------------------------------------------- */
+  body.page--css-ch10 {
+    background: var(--gradient-bg-mist) fixed;
+    background-color: var(--color-bg);
+  }
+
+  /* ---------------------------------------------
+   * Chapter layout
+   * --------------------------------------------- */
+  .chapter {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0; /* allow shrink on very narrow devices */
+  }
+
+  /* ---------------------------------------------
+   * Hero
+   * --------------------------------------------- */
+  .hero .hero__title {
+    margin: 0 0 var(--space-2);
+  }
+  .hero .hero__lead {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------------------------------------------
+   * Cards / pre/code consistency
+   * --------------------------------------------- */
+  .chapter .c-card {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .chapter .c-card pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+  .code {
+    max-width: 100%;
+    overflow: auto;
+    margin: 0;
+  }
+
+  /* ---------------------------------------------
+   * Controls
+   * --------------------------------------------- */
+  .controls {
+    align-items: end;
+    gap: var(--space-3);
+  }
+  .control {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+  .control > span {
+    font-size: var(--fs-5);
+    color: var(--color-muted);
+  }
+  .control select,
+  .control input[type="range"] {
+    width: 100%;
+    max-width: 22ch;
+  }
+  .control--full {
+    grid-column: 1 / -1;
+  }
+
+  /* ---------------------------------------------
+   * Side-by-side demo
+   * --------------------------------------------- */
+  .demo-sbs {
+    display: grid;
+    gap: var(--space-4);
+    min-width: 0;
+  }
+  .demo-sbs > .pane {
+    min-width: 0;
+  }
+  @media (min-width: 900px) {
+    .demo-sbs {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+
+  /* ---------------------------------------------
+   * Image boxes
+   * --------------------------------------------- */
+  .box {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    padding: var(--space-3);
+    min-width: 0;
+    overflow: hidden;
+  }
+  .box img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  .box--narrow {
+    max-width: 520px;
+  }
+
+  /* ---------------------------------------------
+   * Baseline demo
+   * --------------------------------------------- */
+  .baseline-demo {
+    min-width: 0;
+  }
+  .baseline-line {
+    padding: 0.5rem 0.75rem;
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-sm);
+    line-height: 1.25;
+    background: linear-gradient(
+      to bottom,
+      transparent calc(100% - 6px),
+      hsl(8 90% 90% / 0.9) 0
+    );
+  }
+
+  /* ---------------------------------------------
+   * Overlay stage
+   * --------------------------------------------- */
+  .overlay-stage {
+    min-width: 0;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+  .profile-pic {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 0;
+    background: var(--color-surface);
+  }
+  .profile-pic img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .profile-pic figcaption {
+    font-size: var(--fs-5);
+    color: var(--color-muted);
+    padding: 0.375rem 0.5rem 0.25rem;
+  }
+  .profile-pic::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: var(--overlay, none);
+    background-repeat: var(--rep, no-repeat);
+    background-position: var(--pos, center);
+    background-size: var(--size, cover);
+    opacity: var(--ovl-alpha, 0.45);
+  }
+
+  /* ---------------------------------------------
+   * Clip-text demo
+   * --------------------------------------------- */
+  .clip-wrap {
+    min-width: 0;
+  }
+  .clip-title {
+    font: 800 clamp(1.25rem, 4vw, 2rem) / 1.1 system-ui, -apple-system, Segoe UI,
+      Roboto, sans-serif;
+    margin: 0;
+    background-image: linear-gradient(90deg, #7bd, #e59);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    display: inline-block;
+  }
+
+  /* ---------------------------------------------
+   * Object-fit demo
+   * --------------------------------------------- */
+  .objectfit-demo {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    overflow: hidden;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+  .hero-img {
+    display: block;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+  }
+
+  /* ---------------------------------------------
+   * Ultra-narrow safety (<= 360px)
+   * --------------------------------------------- */
+  @media (max-width: 360px) {
+    .chapter .c-card pre,
+    .code {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .c-button {
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+  }
+
+  /* ---------------------------------------------
+   * Anchor jump safety (sticky nav offset)
+   * --------------------------------------------- */
+  .chapter section[id] {
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+  }
+
+  /* ---------------------------------------------
+   * Responsive type scale
+   * --------------------------------------------- */
+  .chapter h1 {
+    font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+  }
+  .chapter h2 {
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+  }
+  .chapter p,
+  .chapter li {
+    font-size: clamp(0.95rem, 1.8vw, 1rem);
+  }
+
+  /* ---------------------------------------------
+   * Horizontal overflow guard
+   * --------------------------------------------- */
+  .page--css-ch10 main {
+    overflow-x: hidden;
+  }
+  .page--css-ch10 :where(p, li, code, pre) {
+    overflow-wrap: anywhere;
+  }
+}

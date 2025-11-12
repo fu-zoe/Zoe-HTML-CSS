@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML · Chapter 3 · Text</title>
+    <meta
+      name="description"
+      content="HTML Chapter 3: block vs inline elements, character entities, and common text semantics with live demos."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link rel="stylesheet" href="../../styles/pages/html/03-text.css" />
+  </head>
+  <body class="page--html-ch3">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a
+            class="c-nav__link is-active"
+            href="./index.html"
+            aria-current="page"
+            >HTML</a
+          >
+          <a class="c-nav__link" href="../css/index.html">CSS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item"><a href="./index.html">HTML</a></li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 3</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card chapter__hero">
+        <div class="l-cluster">
+          <span class="c-badge c-badge--a">Chapter 3</span>
+          <span class="c-badge c-badge--d">Text</span>
+        </div>
+        <h1 class="chapter__title">Text, Semantics &amp; Entities</h1>
+        <p class="chapter__lead">
+          Block-level vs inline elements, character entities, and everyday text
+          semantics — with live previews.
+        </p>
+      </header>
+
+      <article class="l-stack">
+        <!-- 1) Block vs Inline: concepts -->
+        <section class="c-card" id="concepts">
+          <h2>Block-level vs inline</h2>
+          <div class="l-grid l-grid--fit-300">
+            <div>
+              <h3>Block-level (structure)</h3>
+              <ul>
+                <li>Starts on a new line by default.</li>
+                <li>May contain block-level and inline elements.</li>
+                <li>Think of them as containers/structure.</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Inline (text modifiers)</h3>
+              <ul>
+                <li>Flows within a line; does not break the line by itself.</li>
+                <li>May contain text or other inline elements.</li>
+                <li>Think of them as inline content or text styling.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2) Comparison table -->
+        <section class="c-card" id="table">
+          <h2>Common elements by category</h2>
+          <div class="table-scroll">
+            <table class="c-table c-table--compact">
+              <caption class="u-text-left u-mb-2">
+                Quick reference: block-level vs inline elements
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Block-level Elements</th>
+                  <th scope="col">Inline Elements</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>&lt;p&gt;</code> (paragraph)</td>
+                  <td><code>&lt;em&gt;</code> (emphasis, italic)</td>
+                </tr>
+                <tr>
+                  <td>
+                    <code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code> (headings)
+                  </td>
+                  <td><code>&lt;strong&gt;</code> (strong importance, bold)</td>
+                </tr>
+                <tr>
+                  <td><code>&lt;div&gt;</code> (generic container)</td>
+                  <td><code>&lt;a&gt;</code> (anchor, hyperlink)</td>
+                </tr>
+                <tr>
+                  <td>
+                    <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code> (lists)
+                  </td>
+                  <td><code>&lt;abbr&gt;</code> (abbreviation)</td>
+                </tr>
+                <tr>
+                  <td><code>&lt;li&gt;</code> (list item)</td>
+                  <td><code>&lt;span&gt;</code> (generic inline container)</td>
+                </tr>
+                <tr>
+                  <td>
+                    <code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code>,
+                    <code>&lt;td&gt;</code>
+                  </td>
+                  <td><code>&lt;img&gt;</code> ✓ (image)</td>
+                </tr>
+                <tr>
+                  <td><code>&lt;form&gt;</code> (form container)</td>
+                  <td><code>&lt;code&gt;</code> (inline code)</td>
+                </tr>
+                <tr>
+                  <td>
+                    <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>
+                  </td>
+                  <td><code>&lt;br&gt;</code> ✓ (line break)</td>
+                </tr>
+                <tr>
+                  <td><code>&lt;blockquote&gt;</code></td>
+                  <td><code>&lt;q&gt;</code> (inline quotation)</td>
+                </tr>
+                <tr>
+                  <td><code>&lt;hr&gt;</code> ✓ (thematic break)</td>
+                  <td><code>&lt;input&gt;</code> ✓ (form input)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="u-mb-0 u-text-left u-mt-2">
+            <small>✓ = void element (no closing tag).</small>
+          </p>
+        </section>
+
+        <!-- 3) Live demo: code vs render -->
+        <section class="c-card" id="demo">
+          <h2>Live demo (code ↔ render)</h2>
+          <div class="demo-sbs">
+            <div class="demo__code">
+              <pre><code>&lt;h1&gt;Only one h1&lt;/h1&gt;
+&lt;hr&gt;
+
+&lt;h2&gt;Subtitle: h2&lt;/h2&gt;
+&lt;p&gt;
+  An &lt;abbr title="full statement"&gt;abbr&lt;/abbr&gt; inside text,
+  with &lt;em&gt;emphasis&lt;/em&gt;, &lt;strong&gt;importance&lt;/strong&gt;,
+  an &lt;a href="#"&gt;inline link&lt;/a&gt;, inline &lt;code&gt;code&lt;/code&gt;,
+  and a forced line break&lt;br&gt;right here.
+&lt;/p&gt;
+
+&lt;h3&gt;Subtitle: h3&lt;/h3&gt;
+&lt;p&gt;
+  Inline break: forces new line &lt;br /&gt;
+  bullet point 1&lt;br /&gt;
+  bullet point 2&lt;br /&gt;
+  bullet point 3
+&lt;/p&gt;
+
+&lt;address&gt;
+  Street address&lt;br&gt;State, Country, Postal Code
+&lt;/address&gt;
+
+&lt;p&gt;&amp;lt;&amp;lt;&amp;lt; &amp;copy; Zoe Fu &amp;gt;&amp;gt;&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp; Non-breaking spaces keep text together.&lt;/p&gt;</code></pre>
+            </div>
+            <div class="demo__render">
+              <h1>Only one h1</h1>
+              <hr />
+
+              <h2>Subtitle: h2</h2>
+              <p>
+                An <abbr title="full statement">abbr</abbr> inside text, with
+                <em>emphasis</em>, <strong>importance</strong>, an
+                <a href="#">inline link</a>, inline <code>code</code>, and a
+                forced line break<br />right here.
+              </p>
+
+              <h3>Subtitle: h3</h3>
+              <p>
+                Inline break: forces new line<br />
+                bullet point 1<br />
+                bullet point 2<br />
+                bullet point 3
+              </p>
+
+              <address>Street address<br />State, Country, Postal Code</address>
+
+              <p>&lt;&lt;&lt; &copy; Zoe Fu &gt;&gt;&gt;</p>
+
+              <p>&nbsp;&nbsp;&nbsp; Non-breaking spaces keep text together.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4) Character entities -->
+        <section class="c-card" id="entities">
+          <h2>HTML character entities</h2>
+          <ul>
+            <li>
+              <code>&amp;nbsp;</code> = non-breaking space (no automatic wrap)
+            </li>
+            <li><code>&amp;lt;</code> = <code>&lt;</code> (less-than)</li>
+            <li><code>&amp;gt;</code> = <code>&gt;</code> (greater-than)</li>
+            <li><code>&amp;amp;</code> = <code>&amp;</code> (ampersand)</li>
+            <li><code>&amp;copy;</code> = <code>©</code> (copyright)</li>
+          </ul>
+        </section>
+      </article>
+
+      <!-- Pager -->
+      <nav class="c-pager u-mt-5" aria-label="Page navigation">
+        <a class="c-button c-button--outline" rel="prev" href="./02-head.html"
+          >← Prev: Head</a
+        >
+        <a class="c-button c-button--primary" rel="next" href="./04-lists.html"
+          >Next: Lists →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · HTML · Chapter 3</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same on all pages)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

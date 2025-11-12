@@ -1,0 +1,275 @@
+/* ---------------------------------------------
+ * CSS · Chapter 5 — page-only styles
+ * --------------------------------------------- */
+@layer pages {
+  /* ---------------------------------------------
+   * Page background
+   * --------------------------------------------- */
+  body.page--css-ch5 {
+    background: var(--gradient-bg-mist) fixed;
+    background-color: var(--color-bg);
+  }
+
+  /* ---------------------------------------------
+   * Chapter layout
+   * --------------------------------------------- */
+  .chapter {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0; /* allow shrink on very narrow devices */
+  }
+
+  /* ---------------------------------------------
+   * Hero
+   * --------------------------------------------- */
+  .hero .hero__title {
+    margin: 0 0 var(--space-2);
+  }
+  .hero .hero__lead {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------------------------------------------
+   * Code blocks (local scroll; avoid page overflow)
+   * --------------------------------------------- */
+  .code {
+    margin-top: var(--space-3);
+    max-width: 100%;
+    overflow: auto;
+    white-space: pre;
+  }
+
+  /* ---------------------------------------------
+   * 1) Box model demo (wrapper rings)
+   * --------------------------------------------- */
+  .boxdemo {
+    display: grid;
+    gap: var(--space-3);
+    min-width: 0;
+    --m: 20px; /* margin ring thickness */
+    --b: 8px; /* border ring thickness */
+    --p: 14px; /* padding ring thickness */
+  }
+  .boxdemo__margin {
+    padding: var(--m); /* simulate margin ring */
+    background: color-mix(in srgb, orange 18%, transparent);
+    border-radius: var(--radius-md);
+  }
+  .boxdemo__border {
+    padding: var(--b);
+    background: color-mix(in srgb, var(--slate-400) 30%, transparent);
+    border-radius: calc(var(--radius-md) - 2px);
+  }
+  .boxdemo__padding {
+    padding: var(--p);
+    background: color-mix(in srgb, #5ad39c 18%, transparent);
+    border-radius: calc(var(--radius-md) - 4px);
+  }
+  .boxdemo__content {
+    background: color-mix(in srgb, #58a6ff 18%, transparent);
+    border: 1px dashed color-mix(in srgb, #58a6ff 55%, var(--color-border));
+    padding: 0.5rem 0.75rem;
+    border-radius: calc(var(--radius-md) - 6px);
+    text-align: center;
+    font-weight: 600;
+  }
+  .boxdemo__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--color-muted);
+  }
+  .swatch {
+    display: inline-block;
+    width: 1rem;
+    height: 0.75rem;
+    border-radius: 3px;
+    margin-right: 0.4rem;
+    border: 1px solid var(--color-border);
+    vertical-align: middle;
+  }
+  .swatch--m {
+    background: color-mix(in srgb, orange 30%, transparent);
+  }
+  .swatch--b {
+    background: color-mix(in srgb, var(--slate-400) 45%, transparent);
+  }
+  .swatch--p {
+    background: color-mix(in srgb, #5ad39c 35%, transparent);
+  }
+  .swatch--c {
+    background: color-mix(in srgb, #58a6ff 35%, transparent);
+  }
+
+  /* ---------------------------------------------
+   * 2) box-sizing demo
+   * --------------------------------------------- */
+  .sbs {
+    display: grid;
+    gap: var(--space-4);
+    min-width: 0;
+  }
+  @media (min-width: 900px) {
+    .sbs {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .bsdemo {
+    width: 200px; /* same declared width */
+    padding: 16px;
+    border: 8px solid var(--color-border);
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-1);
+    text-align: center;
+    margin-inline: auto; /* centered on narrow screens */
+  }
+  .bsdemo--content {
+    box-sizing: content-box;
+  }
+  .bsdemo--border {
+    box-sizing: border-box;
+  }
+
+  /* ---------------------------------------------
+   * 3) Outline vs border
+   * --------------------------------------------- */
+  .demo-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.9rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    cursor: pointer;
+  }
+  .demo-btn:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+
+  /* ---------------------------------------------
+   * 4) Display basics
+   * --------------------------------------------- */
+  ul.inline-demo {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  ul.inline-demo > li {
+    display: inline-block;
+    margin-inline: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--color-surface) 85%, transparent);
+    border: 1px solid var(--color-border);
+  }
+
+  /* ---------------------------------------------
+   * 5) Positioning stage
+   * --------------------------------------------- */
+  .pos-stage {
+    position: relative;
+    max-height: 220px;
+    overflow: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    padding: var(--space-4);
+  }
+  .pos {
+    display: inline-block;
+    padding: 0.4rem 0.6rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-surface) 85%, transparent);
+    box-shadow: var(--shadow-1);
+  }
+  .pos--rel {
+    position: relative;
+    left: 12px;
+    top: -6px;
+  }
+  .pos--abs {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+  }
+  .pos--sticky {
+    position: sticky;
+    top: 4px;
+    background: var(--color-surface);
+  }
+  .pos-filler {
+    margin: 1rem 0;
+    color: var(--color-muted);
+    min-height: 120px;
+  }
+
+  /* ---------------------------------------------
+   * Cards / code blocks consistency
+   * --------------------------------------------- */
+  .chapter .c-card {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .chapter .c-card pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+  .chapter .c-card code {
+    word-break: normal;
+  }
+
+  /* ---------------------------------------------
+   * Ultra-narrow safety (<= 360px)
+   * --------------------------------------------- */
+  @media (max-width: 360px) {
+    .chapter .c-card pre,
+    .code {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .c-button {
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+  }
+
+  /* ---------------------------------------------
+   * Anchor jump safety (sticky nav offset)
+   * --------------------------------------------- */
+  .chapter section[id] {
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+  }
+
+  /* ---------------------------------------------
+   * Responsive type scale
+   * --------------------------------------------- */
+  .chapter h1 {
+    font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+  }
+  .chapter h2 {
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+  }
+  .chapter p,
+  .chapter li {
+    font-size: clamp(0.95rem, 1.8vw, 1rem);
+  }
+
+  /* ---------------------------------------------
+   * Horizontal overflow guard (belt-and-suspenders)
+   * --------------------------------------------- */
+  .page--css-ch5 main {
+    overflow-x: hidden;
+  }
+  .page--css-ch5 :where(p, li, code, pre) {
+    overflow-wrap: anywhere;
+  }
+}

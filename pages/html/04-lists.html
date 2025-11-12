@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML · Chapter 4 · Lists</title>
+    <meta
+      name="description"
+      content="HTML Chapter 4: ordered, unordered, and description lists — with code and rendered previews."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link rel="stylesheet" href="../../styles/pages/html/04-lists.css" />
+  </head>
+  <body class="page--html-ch4">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a
+            class="c-nav__link is-active"
+            href="./index.html"
+            aria-current="page"
+            >HTML</a
+          >
+          <a class="c-nav__link" href="../css/index.html">CSS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item"><a href="./index.html">HTML</a></li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 4</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card chapter__hero">
+        <div class="l-cluster">
+          <span class="c-badge c-badge--a">Chapter 4</span>
+          <span class="c-badge c-badge--e">Lists</span>
+        </div>
+        <h1 class="chapter__title">List Types</h1>
+        <p class="chapter__lead">
+          Ordered, unordered, and description lists — code on the left, render
+          on the right (stacks on small screens).
+        </p>
+      </header>
+
+      <article class="l-stack">
+        <!-- Rules / notes -->
+        <section class="c-card" id="list-rules">
+          <h2>List rules (quick)</h2>
+          <ul>
+            <li>
+              Do <strong>not</strong> wrap a list in <code>&lt;p&gt;</code>; the
+              list is a block by itself.
+            </li>
+            <li>
+              <code>&lt;li&gt;</code> <em>may</em> contain paragraphs or other
+              blocks if needed.
+            </li>
+            <li>
+              <code>&lt;dl&gt;</code> pairs use <code>&lt;dt&gt;</code> (term) +
+              <code>&lt;dd&gt;</code> (definition).
+            </li>
+          </ul>
+        </section>
+
+        <!-- Ordered list demo -->
+        <section class="c-card" id="ordered">
+          <h2>Ordered list (<code>&lt;ol&gt;</code>)</h2>
+          <div class="demo-sbs">
+            <div class="demo__code">
+              <pre><code>&lt;!-- Ordered List --&gt;
+&lt;!-- Lists should not be wrapped in &lt;p&gt;; but &lt;li&gt; may contain blocks --&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;p&gt;point1 inside a paragraph&lt;/p&gt;&lt;/li&gt;  &lt;!-- legal but uncommon --&gt;
+  &lt;li&gt;point2&lt;/li&gt;
+  &lt;li&gt;point3&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+            </div>
+            <div class="demo__render">
+              <!-- Rendered -->
+              <ol>
+                <li><p>point1 inside a paragraph</p></li>
+                <!-- legal but uncommon -->
+                <li>point2</li>
+                <li>point3</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <!-- Unordered list demo -->
+        <section class="c-card" id="unordered">
+          <h2>Unordered list (<code>&lt;ul&gt;</code>)</h2>
+          <div class="demo-sbs">
+            <div class="demo__code">
+              <pre><code>&lt;!-- Unordered List --&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;p&gt;point1 inside a paragraph&lt;/p&gt;&lt;/li&gt;  &lt;!-- same note as above --&gt;
+  &lt;li&gt;point2&lt;/li&gt;
+  &lt;li&gt;point3&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            </div>
+            <div class="demo__render">
+              <!-- Rendered -->
+              <ul>
+                <li><p>point1 inside a paragraph</p></li>
+                <!-- same as above -->
+                <li>point2</li>
+                <li>point3</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Description list demo -->
+        <section class="c-card" id="description">
+          <h2>Description list (<code>&lt;dl&gt;</code>)</h2>
+          <div class="demo-sbs">
+            <div class="demo__code">
+              <pre><code>&lt;!-- Description List --&gt;
+&lt;dl&gt;
+  &lt;dt&gt;description term1&lt;/dt&gt;  &lt;!-- term --&gt;
+  &lt;dd&gt;description detail1&lt;/dd&gt; &lt;!-- definition --&gt;
+  &lt;dt&gt;description term2&lt;/dt&gt;
+  &lt;dd&gt;description detail2&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+            </div>
+            <div class="demo__render">
+              <!-- Rendered -->
+              <dl>
+                <dt>description term1</dt>
+                <!-- term -->
+                <dd>description detail1</dd>
+                <!-- definition -->
+                <dt>description term2</dt>
+                <dd>description detail2</dd>
+              </dl>
+            </div>
+          </div>
+        </section>
+      </article>
+
+      <!-- Pager (global pattern) -->
+      <nav class="c-pager u-mt-5" aria-label="Page navigation">
+        <a class="c-button c-button--outline" rel="prev" href="./03-text.html"
+          >← Prev: Text</a
+        >
+        <a class="c-button c-button--primary" rel="next" href="./05-links.html"
+          >Next: Links →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer (global pattern) -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · HTML · Chapter 4</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same on all pages)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

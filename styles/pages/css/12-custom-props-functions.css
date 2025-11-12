@@ -1,0 +1,268 @@
+/* ---------------------------------------------
+ * CSS · Chapter 12 — Custom Props & Functions (page-only styles)
+ * --------------------------------------------- */
+@layer pages {
+  /* ---------------------------------------------
+   * Page background
+   * --------------------------------------------- */
+  body.page--css-ch12 {
+    background: var(--gradient-bg-mist) fixed;
+    background-color: var(--color-bg);
+  }
+
+  /* ---------------------------------------------
+   * Chapter layout
+   * --------------------------------------------- */
+  .chapter {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0;
+  }
+
+  /* ---------------------------------------------
+   * Hero
+   * --------------------------------------------- */
+  .hero .hero__title {
+    margin: 0 0 var(--space-2);
+  }
+  .hero .hero__lead {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------------------------------------------
+   * Cards / pre/code consistency
+   * --------------------------------------------- */
+  .chapter .c-card {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .chapter .c-card pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+  .code {
+    max-width: 100%;
+    overflow: auto;
+    margin: 0;
+  }
+
+  /* ---------------------------------------------
+   * Compact notes list
+   * --------------------------------------------- */
+  .notes {
+    margin: 0 0 var(--space-3);
+    padding-left: 1.1rem;
+  }
+  .notes li {
+    margin: 0.25rem 0;
+  }
+
+  /* ---------------------------------------------
+   * Controls
+   * --------------------------------------------- */
+  .controls {
+    align-items: end;
+  }
+  .control {
+    display: grid;
+    gap: 0.35rem;
+  }
+  .control > span {
+    font-size: var(--fs-5);
+    color: var(--color-muted);
+  }
+
+  /* ---------------------------------------------
+   * Generic demo stage
+   * --------------------------------------------- */
+  .stage {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    padding: var(--space-4);
+    min-width: 0;
+    overflow: hidden;
+    display: grid;
+    gap: 0.5rem;
+    place-items: center;
+  }
+
+  /* ---------------------------------------------
+   * Variables demo
+   * --------------------------------------------- */
+  .var-demo {
+    --brand: hsl(210 80% 55%);
+    --surface: #ffffff;
+    --text: hsl(210 8% 15%);
+    --radius: 12px;
+    --pad: 1rem;
+    --fs: 1rem;
+
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: var(--pad);
+  }
+  .var-demo .swatch-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(120px, 1fr));
+    gap: 0.75rem;
+    width: 100%;
+  }
+  .var-demo .swatch {
+    background: var(--brand);
+    color: var(--badge-text);
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
+    font-weight: 700;
+    text-align: center;
+  }
+  .var-demo.theme--dark {
+    --surface: hsl(210 10% 12%);
+    --text: hsl(210 15% 92%);
+    --brand: hsl(160 70% 45%);
+  }
+  /* Scoped: demonstrate local overrides without touching :root */
+  .var-demo.theme--scoped .swatch:nth-child(1) {
+    --brand: hsl(12 85% 55%);
+  }
+  .var-demo.theme--scoped .swatch:nth-child(2) {
+    --brand: hsl(40 90% 55%);
+  }
+  .var-demo.theme--scoped .swatch:nth-child(3) {
+    --brand: hsl(280 70% 60%);
+  }
+
+  /* ---------------------------------------------
+   * Color pills
+   * --------------------------------------------- */
+  .pill {
+    padding: 0.4rem 0.6rem;
+    border-radius: 999px;
+    font-weight: 700;
+    color: var(--badge-text);
+    border: 1px solid color-mix(in srgb, var(--color-border) 90%, transparent);
+  }
+  .pill--rgb {
+    background: rgb(34 134 255);
+  }
+  .pill--rgba {
+    background: rgba(34, 134, 255, 0.35);
+    color: #111;
+  }
+  .pill--hsl {
+    background: hsl(210 90% 55%);
+  }
+  .pill--hsla {
+    background: hsla(210 90% 55% / 0.35);
+    color: #111;
+  }
+
+  /* ---------------------------------------------
+   * Image layers preview
+   * --------------------------------------------- */
+  .stage--imgfx {
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+  }
+  .layer {
+    width: 180px;
+    height: 110px;
+    display: grid;
+    place-items: center;
+    color: #111;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    border: 1px dashed var(--color-border);
+    background-size: cover;
+  }
+  .demo-lin {
+    background-image: linear-gradient(
+      135deg,
+      hsl(200 90% 60% / 0.5),
+      hsl(320 90% 60% / 0.5)
+    );
+  }
+  .demo-rad {
+    background-image: radial-gradient(
+      circle at center,
+      hsl(200 90% 60% / 0.5),
+      hsl(320 90% 60% / 0.5)
+    );
+  }
+
+  /* ---------------------------------------------
+   * Math clamp sample
+   * --------------------------------------------- */
+  .clamped {
+    font-size: clamp(1rem, 3vw, 2rem);
+    font-weight: 700;
+  }
+
+  /* ---------------------------------------------
+   * Filters
+   * --------------------------------------------- */
+  .filter-stage img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+  }
+
+  /* ---------------------------------------------
+   * Grid helpers
+   * --------------------------------------------- */
+  .minmax-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    width: 100%;
+  }
+  .gcell {
+    background: var(--gradient-badge-d);
+    color: var(--badge-text);
+    border: 1px solid color-mix(in srgb, var(--color-border) 90%, transparent);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 0.75rem;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  /* ---------------------------------------------
+   * Ultra-narrow safety (<= 360px)
+   * --------------------------------------------- */
+  @media (max-width: 360px) {
+    .chapter .c-card pre,
+    .code {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .c-button {
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+  }
+
+  /* ---------------------------------------------
+   * Anchor jump safety (sticky nav offset)
+   * --------------------------------------------- */
+  .chapter section[id] {
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+  }
+
+  /* ---------------------------------------------
+   * Responsive type scale
+   * --------------------------------------------- */
+  .chapter h1 {
+    font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+  }
+  .chapter h2 {
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+  }
+  .chapter p,
+  .chapter li {
+    font-size: clamp(0.95rem, 1.8vw, 1rem);
+  }
+}

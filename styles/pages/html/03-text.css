@@ -1,0 +1,157 @@
+/* ---------------------------------------------
+ * HTML · Chapter 3 — page-only styles
+ * --------------------------------------------- */
+@layer pages {
+  /* ---------------------------------------------
+   * Page background
+   * --------------------------------------------- */
+  body.page--html-ch3 {
+    background: var(--gradient-bg-mist) fixed;
+    background-color: var(--color-bg);
+  }
+
+  /* ---------------------------------------------
+   * Chapter layout
+   * --------------------------------------------- */
+  .chapter {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0; /* allow shrink on very narrow devices */
+  }
+
+  /* ---------------------------------------------
+   * Hero
+   * --------------------------------------------- */
+  .chapter__hero {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .chapter__title {
+    margin: 0;
+  }
+  .chapter__lead {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------------------------------------------
+   * Table: local inner scroll (no page overflow)
+   * --------------------------------------------- */
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .table-scroll .c-table {
+    min-width: 520px;
+  }
+  /* Optional compact variant (local) */
+  .c-table--compact th,
+  .c-table--compact td {
+    padding: 0.5rem 0.6rem;
+    font-size: var(--fs-5);
+  }
+
+  /* ---------------------------------------------
+   * Live demo: side-by-side on wide screens
+   * --------------------------------------------- */
+  .demo-sbs {
+    display: grid;
+    gap: var(--space-4);
+    min-width: 0;
+  }
+  .demo-sbs > * {
+    min-width: 0;
+  }
+  @media (min-width: 900px) {
+    .demo-sbs {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+
+  /* Code pane */
+  .demo__code pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+
+  /* Render pane */
+  .demo__render {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    min-width: 0;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+  .demo__render img,
+  .demo__render table {
+    max-width: 100%;
+    height: auto;
+  }
+  .demo__render code {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* ---------------------------------------------
+   * Cards / code blocks
+   * --------------------------------------------- */
+  .chapter .c-card {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .chapter .c-card pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto; /* inner scroll if needed */
+  }
+  .chapter .c-card code {
+    word-break: normal;
+  }
+
+  /* ---------------------------------------------
+   * Ultra-narrow safety (<= 360px)
+   * --------------------------------------------- */
+  @media (max-width: 360px) {
+    .chapter .c-card pre,
+    .demo__code pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .c-button {
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+  }
+
+  /* ---------------------------------------------
+   * Anchor jump safety (sticky nav offset)
+   * --------------------------------------------- */
+  .chapter section[id] {
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+  }
+
+  /* ---------------------------------------------
+   * Responsive type scale
+   * --------------------------------------------- */
+  .chapter h1 {
+    font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+  }
+  .chapter h2 {
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+  }
+  .chapter p,
+  .chapter li {
+    font-size: clamp(0.95rem, 1.8vw, 1rem);
+  }
+
+  /* ---------------------------------------------
+   * Horizontal overflow guard (belt-and-suspenders)
+   * --------------------------------------------- */
+  .page--html-ch3 main {
+    overflow-x: hidden;
+  }
+}

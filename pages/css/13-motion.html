@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>CSS · Chapter 13 — Transforms, Transitions & Animations</title>
+    <meta
+      name="description"
+      content="Transforms (translate/rotate/scale/skew), transitions (property/duration/timing/delay), and keyframe animations — concise notes with compact, responsive demos."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link rel="stylesheet" href="../../styles/pages/css/13-animations.css" />
+  </head>
+  <body class="page--css-ch13">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a class="c-nav__link" href="../html/index.html">HTML</a>
+          <a
+            class="c-nav__link is-active"
+            href="../css/index.html"
+            aria-current="page"
+            >CSS</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item">
+            <a href="../css/index.html">CSS</a>
+          </li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 13</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card hero">
+        <div class="l-cluster u-mb-2">
+          <span class="c-badge c-badge--b">CSS</span>
+          <span class="c-badge c-badge--a">Chapter 13</span>
+        </div>
+        <h1 class="hero__title">Transforms, Transitions &amp; Animations</h1>
+        <p class="hero__lead">
+          Visual transforms (translate/rotate/scale/skew), smooth transitions,
+          and keyframe animations — concise notes with compact demos.
+        </p>
+      </header>
+
+      <article class="l-stack">
+        <!-- 1) Transform -->
+        <section class="c-card" id="transform">
+          <h2 class="u-mt-0">1) Transform functions</h2>
+          <ul class="notes">
+            <li>
+              <strong>translate(x, y)</strong> — move element without reflow.
+            </li>
+            <li>
+              <strong>rotate(θ)</strong> — 2D; <code>rotateX/rotateY</code> are
+              3D (enable perspective to feel depth).
+            </li>
+            <li><strong>scale(x, y)</strong> — uniform or per-axis.</li>
+            <li><strong>skew(x, y)</strong> — shear/tilt.</li>
+            <li>
+              <strong>transform-origin</strong> — pivot (default: center).
+            </li>
+            <li>
+              Order matters:
+              <code>translate(...) rotate(...) scale(...) skew(...)</code>
+            </li>
+          </ul>
+
+          <div class="playground l-stack l-stack--sm">
+            <form
+              class="controls l-grid l-grid--fit-300"
+              aria-label="Transform controls"
+            >
+              <label class="control">
+                <span>translateX (px)</span>
+                <input type="range" id="tx" min="-150" max="150" value="0" />
+              </label>
+              <label class="control">
+                <span>translateY (px)</span>
+                <input type="range" id="ty" min="-150" max="150" value="0" />
+              </label>
+              <label class="control">
+                <span>rotateZ (deg)</span>
+                <input type="range" id="rot" min="-180" max="180" value="0" />
+              </label>
+              <label class="control">
+                <span>rotateX (deg)</span>
+                <input type="range" id="rotx" min="-60" max="60" value="0" />
+              </label>
+              <label class="control">
+                <span>rotateY (deg)</span>
+                <input type="range" id="roty" min="-60" max="60" value="0" />
+              </label>
+              <label class="control">
+                <span>scale</span>
+                <input type="range" id="s" min="50" max="200" value="100" />
+              </label>
+              <label class="control">
+                <span>skewX (deg)</span>
+                <input type="range" id="skx" min="-45" max="45" value="0" />
+              </label>
+              <label class="control">
+                <span>skewY (deg)</span>
+                <input type="range" id="sky" min="-45" max="45" value="0" />
+              </label>
+              <label class="control">
+                <span>transform-origin</span>
+                <select id="torg">
+                  <option>center</option>
+                  <option>top left</option>
+                  <option>top right</option>
+                  <option>bottom left</option>
+                  <option>bottom right</option>
+                </select>
+              </label>
+              <label class="control">
+                <input type="checkbox" id="t3d" />
+                Enable 3D (perspective)
+              </label>
+            </form>
+
+            <div class="stage" id="tStage">
+              <div class="cube" id="tCube">Transform me</div>
+            </div>
+
+            <pre class="u-mt-1 u-mb-0"><code id="codeTransform">.box {
+  /* optional: .stage { perspective: 800px } */
+  transform-origin: center;
+  transform: translate(0px, 0px) rotateZ(0deg) rotateX(0deg) rotateY(0deg)
+             scale(1) skew(0deg, 0deg);
+}</code></pre>
+          </div>
+        </section>
+
+        <!-- 2) Transition -->
+        <section class="c-card" id="transition">
+          <h2 class="u-mt-0">2) Transitions</h2>
+          <ul class="notes">
+            <li>
+              <strong>transition-property</strong> — e.g., <code>opacity</code>,
+              <code>transform</code>.
+            </li>
+            <li><strong>transition-duration</strong> — time (s/ms).</li>
+            <li>
+              <strong>transition-timing-function</strong> — easing
+              (<code>ease</code>, <code>linear</code>,
+              <code>cubic-bezier()</code>…).
+            </li>
+            <li><strong>transition-delay</strong> — start offset.</li>
+            <li>
+              <strong>Shorthand</strong> —
+              <code>transition: property duration [timing] [delay]</code>.
+            </li>
+            <li>
+              <strong>Tip</strong> — animate <em>opacity/transform</em> for
+              better performance.
+            </li>
+          </ul>
+
+          <div class="playground l-stack l-stack--sm">
+            <form
+              class="controls l-grid l-grid--fit-300"
+              aria-label="Transition controls"
+            >
+              <label class="control">
+                <span>timing</span>
+                <select id="ttf">
+                  <option>ease</option>
+                  <option>linear</option>
+                  <option>ease-in</option>
+                  <option>ease-out</option>
+                  <option selected>ease-in-out</option>
+                </select>
+              </label>
+              <label class="control">
+                <span>duration (ms)</span>
+                <input type="range" id="tdur" min="50" max="1500" value="500" />
+              </label>
+              <label class="control">
+                <span>delay (ms)</span>
+                <input type="range" id="tdel" min="0" max="1000" value="0" />
+              </label>
+              <label class="control">
+                <span>toggle state</span>
+                <button
+                  type="button"
+                  id="tToggle"
+                  class="c-button c-button--subtle"
+                  aria-pressed="false"
+                >
+                  Toggle
+                </button>
+              </label>
+            </form>
+
+            <div class="stage">
+              <div class="card" id="tCard" tabindex="0">Hover or Toggle</div>
+            </div>
+
+            <pre class="u-mt-1 u-mb-0"><code id="codeTransition">.card {
+  transition: background-color 0.5s ease-in-out, transform 0.3s ease-in-out;
+}
+.card:hover,
+.card.is-active { background: hsl(0 80% 60%); transform: scale(1.2); }</code></pre>
+          </div>
+        </section>
+
+        <!-- 3) Animations -->
+        <section class="c-card" id="animation">
+          <h2 class="u-mt-0">3) Keyframe animations</h2>
+          <ul class="notes">
+            <li>
+              <strong>@keyframes</strong> defines states (<code>0% → 100%</code>
+              / <code>from → to</code>).
+            </li>
+            <li>
+              Props:
+              <strong
+                >animation-name / duration / timing-function / delay /
+                iteration-count / direction / fill-mode / play-state</strong
+              >.
+            </li>
+            <li>
+              <strong>direction</strong>: <code>normal</code>,
+              <code>reverse</code>, <code>alternate</code>.
+            </li>
+            <li>
+              <strong>fill-mode</strong>: <code>forwards</code>,
+              <code>both</code>…
+            </li>
+            <li><strong>Multiple</strong>: comma-separated animations.</li>
+          </ul>
+
+          <div class="playground l-stack l-stack--sm">
+            <form
+              class="controls l-grid l-grid--fit-300"
+              aria-label="Animation controls"
+            >
+              <label class="control">
+                <span>preset</span>
+                <select id="apreset">
+                  <option value="slide">slideX</option>
+                  <option value="pulse">pulse</option>
+                  <option value="spin">spin</option>
+                </select>
+              </label>
+              <label class="control">
+                <span>duration (ms)</span>
+                <input
+                  type="range"
+                  id="adur"
+                  min="200"
+                  max="3000"
+                  value="1200"
+                />
+              </label>
+              <label class="control">
+                <span>timing</span>
+                <select id="atf">
+                  <option>linear</option>
+                  <option selected>ease-in-out</option>
+                  <option>ease</option>
+                  <option>ease-in</option>
+                  <option>ease-out</option>
+                </select>
+              </label>
+              <label class="control">
+                <span>iterations</span>
+                <select id="aiter">
+                  <option>1</option>
+                  <option selected>infinite</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+              </label>
+              <label class="control">
+                <span>direction</span>
+                <select id="adir">
+                  <option>normal</option>
+                  <option>reverse</option>
+                  <option selected>alternate</option>
+                </select>
+              </label>
+              <label class="control">
+                <span>fill-mode</span>
+                <select id="afill">
+                  <option>none</option>
+                  <option selected>forwards</option>
+                  <option>backwards</option>
+                  <option>both</option>
+                </select>
+              </label>
+              <label class="control">
+                <span>controls</span>
+                <div class="l-cluster">
+                  <button
+                    type="button"
+                    id="aplay"
+                    class="c-button c-button--subtle"
+                  >
+                    Play
+                  </button>
+                  <button
+                    type="button"
+                    id="apause"
+                    class="c-button c-button--subtle"
+                    aria-pressed="false"
+                  >
+                    Pause
+                  </button>
+                </div>
+              </label>
+            </form>
+
+            <div class="stage anim-wrap" id="aStage">
+              <div class="dot" id="aDot"></div>
+            </div>
+
+            <pre
+              class="u-mt-1 u-mb-0"
+            ><code id="codeAnimation">@keyframes slideX {
+  from { transform: translateX(0); }
+  to   { transform: translateX(220px); }
+}
+@keyframes pulse {
+  0% { transform: scale(1);   opacity: .7; }
+  100%{ transform: scale(1.2); opacity: 1; }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.dot {
+  animation: slideX 1.2s ease-in-out infinite alternate forwards;
+}</code></pre>
+          </div>
+        </section>
+
+        <!-- 4) Quick crib sheet -->
+        <section class="c-card" id="crib">
+          <h2 class="u-mt-0">4) Quick crib sheet</h2>
+          <div class="l-grid l-grid--fit-300">
+            <div>
+              <h3 class="u-mt-0">Transforms</h3>
+              <pre class="code"><code>/* Move then rotate from top-left */
+.box {
+  transform-origin: top left;
+  transform: translate(50px,0) rotate(15deg) scale(1.2);
+}</code></pre>
+            </div>
+            <div>
+              <h3 class="u-mt-0">Transitions</h3>
+              <pre class="code"><code>.btn {
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.btn:hover { transform: translateY(-2px); }</code></pre>
+            </div>
+            <div>
+              <h3 class="u-mt-0">Animations</h3>
+              <pre
+                class="code"
+              ><code>@keyframes pulse { from { opacity:.6 } to { opacity:1 } }
+.tag { animation: pulse .8s ease-in-out infinite alternate; }</code></pre>
+            </div>
+          </div>
+        </section>
+      </article>
+
+      <!-- Pager -->
+      <nav class="c-pager u-mt-5" aria-label="Page navigation">
+        <a
+          class="c-button c-button--outline"
+          rel="prev"
+          href="./12-variables-functions.html"
+          >← Prev: Variables &amp; Functions</a
+        >
+        <a
+          class="c-button c-button--primary"
+          rel="next"
+          href="../css/index.html"
+          >Back to CSS Index →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · CSS · Chapter 13</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same on all pages)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+
+        // -------- Transforms demo (with rotateX/Y & perspective) --------
+        (function () {
+          var stage = document.getElementById("tStage");
+          var el = document.getElementById("tCube");
+          var code = document.getElementById("codeTransform");
+          var ids = [
+            "tx",
+            "ty",
+            "rot",
+            "rotx",
+            "roty",
+            "s",
+            "skx",
+            "sky",
+            "torg",
+            "t3d",
+          ];
+          var ctrls = ids.map(function (id) {
+            return document.getElementById(id);
+          });
+
+          function sync() {
+            var tx = +document.getElementById("tx").value;
+            var ty = +document.getElementById("ty").value;
+            var rotZ = +document.getElementById("rot").value;
+            var rotX = +document.getElementById("rotx").value;
+            var rotY = +document.getElementById("roty").value;
+            var s = +document.getElementById("s").value / 100;
+            var skx = +document.getElementById("skx").value;
+            var sky = +document.getElementById("sky").value;
+            var org = document.getElementById("torg").value;
+            var use3d = document.getElementById("t3d").checked;
+
+            // 3D perspective toggle
+            stage.style.perspective = use3d ? "800px" : "";
+            el.style.transformStyle = use3d ? "preserve-3d" : "";
+
+            var t =
+              "translate(" +
+              tx +
+              "px," +
+              ty +
+              "px) " +
+              "rotateZ(" +
+              rotZ +
+              "deg) " +
+              "rotateX(" +
+              rotX +
+              "deg) " +
+              "rotateY(" +
+              rotY +
+              "deg) " +
+              "scale(" +
+              s +
+              ") " +
+              "skew(" +
+              skx +
+              "deg," +
+              sky +
+              "deg)";
+            el.style.transformOrigin = org;
+            el.style.transform = t;
+
+            code.textContent =
+              (use3d ? "/* .stage { perspective: 800px } */\n" : "") +
+              ".box {\n" +
+              "  transform-origin: " +
+              org +
+              ";\n" +
+              "  transform: " +
+              t +
+              ";\n" +
+              "}";
+          }
+
+          ctrls.forEach(function (c) {
+            c &&
+              c.addEventListener(
+                c.type === "checkbox" ? "change" : "input",
+                sync
+              );
+          });
+          sync();
+        })();
+
+        // -------- Transitions demo --------
+        (function () {
+          var card = document.getElementById("tCard");
+          var ttf = document.getElementById("ttf");
+          var tdur = document.getElementById("tdur");
+          var tdel = document.getElementById("tdel");
+          var btn = document.getElementById("tToggle");
+          var code = document.getElementById("codeTransition");
+
+          function sync() {
+            var dur = (tdur.value | 0) / 1000;
+            var del = (tdel.value | 0) / 1000;
+            var tf = ttf.value;
+            card.style.transition =
+              "background-color " +
+              dur +
+              "s " +
+              tf +
+              " " +
+              del +
+              "s, " +
+              "transform " +
+              Math.max(0.2, dur / 1.6).toFixed(2) +
+              "s " +
+              tf +
+              " " +
+              del +
+              "s";
+
+            code.textContent = `.card {
+  transition: background-color ${dur}s ${tf} ${del}s,
+              transform ${Math.max(0.2, dur / 1.6).toFixed(2)}s ${tf} ${del}s;
+}
+.card:hover,
+.card.is-active { background: hsl(0 80% 60%); transform: scale(1.2); }`;
+          }
+
+          function reflectButtonState(on) {
+            btn.setAttribute("aria-pressed", on ? "true" : "false");
+            btn.textContent = on ? "Toggled" : "Toggle";
+          }
+
+          reflectButtonState(card.classList.contains("is-active"));
+          [ttf, tdur, tdel].forEach(function (el) {
+            el.addEventListener("input", sync);
+          });
+
+          btn.addEventListener("click", function () {
+            card.classList.toggle("is-active");
+            reflectButtonState(card.classList.contains("is-active"));
+          });
+
+          sync();
+        })();
+
+        // -------- Animations demo (Play resets with current params) --------
+        (function () {
+          var dot = document.getElementById("aDot");
+          var code = document.getElementById("codeAnimation");
+
+          var preset = document.getElementById("apreset");
+          var dur = document.getElementById("adur");
+          var tf = document.getElementById("atf");
+          var iter = document.getElementById("aiter");
+          var dir = document.getElementById("adir");
+          var fill = document.getElementById("afill");
+          var play = document.getElementById("aplay");
+          var pause = document.getElementById("apause");
+
+          function keyframeName() {
+            return preset.value === "slide"
+              ? "slideX"
+              : preset.value === "spin"
+              ? "spin"
+              : "pulse";
+          }
+
+          function buildAnim() {
+            var name = keyframeName();
+            var s = (dur.value | 0) / 1000;
+            var timing = tf.value;
+            var it = iter.value;
+            var d = dir.value;
+            var fm = fill.value;
+            return (
+              name + " " + s + "s " + timing + " 0s " + it + " " + d + " " + fm
+            );
+          }
+
+          function updateCodePreview() {
+            var kf = `@keyframes slideX {
+  from { transform: translateX(0); }
+  to   { transform: translateX(220px); }
+}
+@keyframes pulse {
+  0% { transform: scale(1);   opacity: .7; }
+  100%{ transform: scale(1.2); opacity: 1; }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}`;
+            code.textContent =
+              kf + "\n\n" + `.dot {\n  animation: ${buildAnim()};\n}`;
+          }
+
+          function restart() {
+            var anim = buildAnim();
+            dot.style.animation = "none";
+            void dot.offsetWidth; // force reflow
+            dot.style.animation = anim;
+            dot.style.animationPlayState = "running";
+          }
+
+          // Pause / Resume with state reflection
+          pause.addEventListener("click", function () {
+            var paused = dot.style.animationPlayState !== "paused";
+            dot.style.animationPlayState = paused ? "paused" : "running";
+            pause.setAttribute("aria-pressed", paused ? "true" : "false");
+            pause.textContent = paused ? "Resume" : "Pause";
+          });
+
+          play.addEventListener("click", function () {
+            restart();
+            pause.setAttribute("aria-pressed", "false");
+            pause.textContent = "Pause";
+          });
+
+          // Changing params only updates preview; press Play to apply.
+          [preset, dur, tf, iter, dir, fill].forEach(function (el) {
+            el.addEventListener("input", updateCodePreview);
+            el.addEventListener("change", updateCodePreview);
+          });
+
+          updateCodePreview();
+          // restart(); // optional auto-start
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

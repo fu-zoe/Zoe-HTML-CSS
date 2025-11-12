@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>CSS · Chapter 7 — Grid Layout</title>
+    <meta
+      name="description"
+      content="CSS Chapter 7: Grid — tracks (rows/columns), auto-placement, gaps, item placement, alignment, template areas, and live demos."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link rel="stylesheet" href="../../styles/pages/css/07-grid.css" />
+  </head>
+  <body class="page--css-ch7">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a class="c-nav__link" href="../html/index.html">HTML</a>
+          <a
+            class="c-nav__link is-active"
+            href="../css/index.html"
+            aria-current="page"
+            >CSS</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item">
+            <a href="./index.html">CSS</a>
+          </li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 7</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card hero">
+        <div class="l-cluster u-mb-2">
+          <span class="c-badge c-badge--b">CSS</span>
+          <span class="c-badge c-badge--a">Chapter 7</span>
+        </div>
+        <h1 class="hero__title">Grid Layout</h1>
+        <p class="hero__lead">
+          Define tracks with <code>grid-template-rows/columns</code>, control
+          auto-placement, position items with start/end lines, align content,
+          and build layouts with named template areas.
+        </p>
+      </header>
+
+      <article class="l-stack">
+        <!-- 1) Grid container -->
+        <section class="c-card" id="container">
+          <h2 class="u-mt-0">1) Grid container</h2>
+          <ul>
+            <li><code>display: grid</code></li>
+            <li>
+              <code>grid-template-columns</code> /
+              <code>grid-template-rows</code> (tracks)
+            </li>
+            <li>
+              Values:
+              <code>px</code>, <code>fr</code>, <code>minmax()</code>,
+              <code>repeat()</code>
+            </li>
+            <li>
+              <code>grid-auto-flow</code>: <em>row</em> (default) | column
+            </li>
+            <li>
+              <code>grid-auto-rows</code> / <code>grid-auto-columns</code>
+            </li>
+            <li>
+              <code>gap</code>, <code>row-gap</code>, <code>column-gap</code>
+            </li>
+          </ul>
+
+          <!-- Live playground -->
+          <div class="playground l-stack l-stack--sm">
+            <form
+              class="controls l-grid l-grid--fit-300"
+              aria-label="Grid container controls"
+            >
+              <label class="control">
+                <span>grid-template-columns</span>
+                <select id="cols">
+                  <option value="200px 1fr 1fr" selected>200px 1fr 1fr</option>
+                  <option value="200px 100px 200px">200px 100px 200px</option>
+                  <option value="2fr 1fr 1fr">2fr 1fr 1fr</option>
+                  <option value="repeat(4, 1fr)">repeat(4, 1fr)</option>
+                  <option value="repeat(4, 1fr 2fr)">repeat(4, 1fr 2fr)</option>
+                </select>
+              </label>
+
+              <label class="control">
+                <span>grid-auto-flow</span>
+                <select id="autoFlow">
+                  <option value="row" selected>row</option>
+                  <option value="column">column</option>
+                </select>
+              </label>
+
+              <label class="control">
+                <span>grid-auto-rows</span>
+                <select id="autoRows">
+                  <option value="minmax(80px, auto)">minmax(80px, auto)</option>
+                  <option value="120px">120px</option>
+                  <option value="150px">150px</option>
+                </select>
+              </label>
+
+              <label class="control">
+                <span>gap</span>
+                <select id="gap">
+                  <option value="0.5rem">0.5rem</option>
+                  <option value="1rem" selected>1rem</option>
+                  <option value="1.5rem">1.5rem</option>
+                </select>
+              </label>
+            </form>
+
+            <div
+              class="stage stage--grid"
+              id="grid1"
+              aria-label="Grid container demo"
+            >
+              <!-- 10 demo items to show auto-placement -->
+              <div class="cell">1</div>
+              <div class="cell">2</div>
+              <div class="cell">3</div>
+              <div class="cell">4</div>
+              <div class="cell">5</div>
+              <div class="cell">6</div>
+              <div class="cell">7</div>
+              <div class="cell">8</div>
+              <div class="cell">9</div>
+              <div class="cell">10</div>
+            </div>
+          </div>
+
+          <pre class="code"><code>/* Tracks with fractions and minmax */
+.grid {
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr;  /* first fixed, rest fluid */
+  grid-auto-rows: minmax(80px, auto);    /* rows grow with content */
+  gap: 1rem;                              /* row & column gap */
+  grid-auto-flow: row;                    /* auto-placement direction */
+}</code></pre>
+        </section>
+
+        <!-- 2) Grid items -->
+        <section class="c-card" id="items">
+          <h2 class="u-mt-0">2) Grid items (lines &amp; span)</h2>
+          <p class="u-mb-0">
+            Grids create numbered lines. With 3 columns there are 4 vertical
+            lines. <code>grid-column: 1 / 4</code> spans 3 columns.
+          </p>
+
+          <!-- Live playground -->
+          <div class="playground l-stack l-stack--sm">
+            <form
+              class="controls l-grid l-grid--fit-300"
+              aria-label="Grid item controls"
+            >
+              <label class="control">
+                <span>Item A: column</span>
+                <select id="aCol">
+                  <option value="1 / 2">1 / 2</option>
+                  <option value="1 / 3" selected>1 / 3</option>
+                  <option value="2 / 4">2 / 4</option>
+                  <option value="1 / -1">1 / -1 (full row)</option>
+                </select>
+              </label>
+              <label class="control">
+                <span>Item A: row</span>
+                <select id="aRow">
+                  <option value="1 / 2" selected>1 / 2</option>
+                  <option value="1 / 3">1 / 3</option>
+                  <option value="2 / 4">2 / 4</option>
+                </select>
+              </label>
+              <label class="control">
+                <span>Item B: align-self</span>
+                <select id="bAlign">
+                  <option>auto</option>
+                  <option>start</option>
+                  <option selected>center</option>
+                  <option>end</option>
+                  <option>stretch</option>
+                </select>
+              </label>
+              <label class="control">
+                <span>Order: A/B/C</span>
+                <select id="order">
+                  <option value="0 0 0" selected>default (0,0,0)</option>
+                  <option value="1 0 0">A to end</option>
+                  <option value="0 1 0">B to end</option>
+                  <option value="0 0 1">C to end</option>
+                  <option value="2 1 0">reverse-ish</option>
+                </select>
+              </label>
+              <label class="control control--check">
+                <input type="checkbox" id="autoPlace" checked />
+                <span
+                  >Auto-place A/B/C (make <code>order</code> effective)</span
+                >
+              </label>
+            </form>
+
+            <p class="u-help u-mt-2" role="note">
+              <strong>Note:</strong> <code>order</code> only affects
+              <em>auto-placed</em> grid items. If an item is explicitly
+              positioned with <code>grid-column</code>/<code>grid-row</code> or
+              <code>grid-area</code>, its position is pinned and
+              <code>order</code> will not move it. Toggle “Auto-place A/B/C”
+              above to switch them back to auto placement so you can see
+              <code>order</code> in action.
+            </p>
+
+            <div
+              class="stage stage--items-grid"
+              id="grid2"
+              aria-label="Grid items placement demo"
+            >
+              <div class="cell cell--a">A</div>
+              <div class="cell cell--b">B</div>
+              <div class="cell cell--c">C</div>
+            </div>
+          </div>
+
+          <pre class="code"><code>/* Shorthands */
+.item-a { grid-column: 1 / 4; grid-row: 1 / 3; }
+.item-b { align-self: center; } /* per-item cross-axis alignment */
+.item-c { order: 1; }           /* higher = later */</code></pre>
+        </section>
+
+        <!-- 3) Alignment -->
+        <section class="c-card" id="alignment">
+          <h2 class="u-mt-0">3) Alignment (content vs items)</h2>
+          <!-- <ul>
+            <li>
+              <code>justify-content</code> / <code>align-content</code> — align
+              the <em>grid tracks</em> inside the container (when there is extra
+              space)
+            </li>
+            <li>
+              <code>justify-items</code> / <code>align-items</code> — default
+              alignment of <em>items within their cells</em>
+            </li>
+            <li>
+              <code>place-content</code> / <code>place-items</code> — shorthands
+            </li>
+          </ul> -->
+          <ul>
+            <li>
+              <code>justify-content</code> / <code>align-content</code> —
+              position the <em>grid tracks as a whole</em> inside the container
+              (when there’s extra space). Think rows (x) for
+              <code>justify-*</code>, columns (y) for <code>align-*</code>.
+            </li>
+            <li>
+              <code>justify-items</code> / <code>align-items</code> — default
+              alignment of <em>each item’s content</em> within its cell (inline
+              / block axis). Per-item override: <code>justify-self</code> /
+              <code>align-self</code>.
+            </li>
+            <li>
+              Shorthands:
+              <code
+                >place-content: &lt;align-content&gt;
+                &lt;justify-content&gt;</code
+              >,
+              <code>place-items: &lt;align-items&gt; &lt;justify-items&gt;</code
+              >, and per-item <code>place-self</code>.
+            </li>
+            <li>
+              Ordering/stacking: <code>order</code> changes visual order for
+              auto-placed items (lower first); <code>z-index</code> controls
+              stacking when items overlap.
+            </li>
+          </ul>
+
+          <div class="playground l-stack l-stack--sm">
+            <form
+              class="controls l-grid l-grid--fit-300"
+              aria-label="Grid alignment controls"
+            >
+              <label class="control">
+                <span>place-content</span>
+                <select id="placeContent">
+                  <option value="center">center</option>
+                  <option value="start">start</option>
+                  <option value="end">end</option>
+                  <option value="space-between">space-between</option>
+                  <option value="space-around">space-around</option>
+                  <option value="space-evenly">space-evenly</option>
+                </select>
+              </label>
+              <label class="control">
+                <span>place-items</span>
+                <select id="placeItems">
+                  <option value="stretch">stretch</option>
+                  <option value="start">start</option>
+                  <option value="center" selected>center</option>
+                  <option value="end">end</option>
+                </select>
+              </label>
+            </form>
+            <div
+              class="stage stage--align"
+              id="grid3"
+              aria-label="Grid alignment demo"
+            >
+              <div class="cell">1</div>
+              <div class="cell">2</div>
+              <div class="cell">3</div>
+              <div class="cell">4</div>
+            </div>
+          </div>
+          <pre class="code"><code>/* Items alignment (inside each cell) */
+.grid-align__items {
+  display: grid;
+  grid-template-columns: repeat(2, 120px);
+  grid-auto-rows: 80px;
+  gap: .5rem;
+  justify-items: end;          /* x within cell */
+  align-items: start;          /* y within cell */
+  /* Shorthand: place-items: start end; */
+}
+
+/* Per-item override + ordering example */
+.grid-align__items .box:nth-child(2) {
+  justify-self: center;
+  align-self: end;
+  order: -1;                   /* appears earlier among auto-placed */
+}
+
+/* If overlapping, z-index decides */
+.grid-align__items .box:nth-child(3) {
+  grid-column: 1;
+  grid-row: 1;
+  z-index: 2;
+}</code></pre>
+        </section>
+
+        <!-- 4) Template areas -->
+        <section class="c-card" id="areas">
+          <h2 class="u-mt-0">4) Grid template areas</h2>
+          <p>Use named areas to design page layouts.</p>
+          <div class="playground l-stack l-stack--sm">
+            <div class="l-cluster">
+              <button
+                class="c-button c-button--subtle"
+                type="button"
+                id="tplA"
+                aria-pressed="true"
+              >
+                2-column layout
+              </button>
+              <button
+                class="c-button c-button--subtle"
+                type="button"
+                id="tplB"
+                aria-pressed="false"
+              >
+                Header-Main-Footer
+              </button>
+            </div>
+
+            <div
+              class="stage stage--areas"
+              id="grid4"
+              aria-label="Grid template areas demo"
+            >
+              <header class="area area--header">header</header>
+              <aside class="area area--aside">aside</aside>
+              <main class="area area--main">main</main>
+              <footer class="area area--footer">footer</footer>
+            </div>
+          </div>
+
+          <!-- Code block syncs with the selected template -->
+          <pre class="code"><code id="tplCode">.stage--areas {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "aside  main"
+    "footer footer";
+  grid-template-columns: 200px 1fr;
+  grid-auto-rows: minmax(80px, auto);
+  gap: 1rem;
+}
+.area--header { grid-area: header; }
+.area--aside  { grid-area: aside;  }
+.area--main   { grid-area: main;   }
+.area--footer { grid-area: footer; }</code></pre>
+        </section>
+
+        <!-- 5) Resource -->
+        <section class="c-card" id="resource">
+          <h2 class="u-mt-0">5) Practice game</h2>
+          <p class="u-mb-0">
+            <a
+              class="c-button c-button--outline"
+              href="https://cssgridgarden.com"
+              target="_blank"
+              rel="noopener"
+              >CSS Grid Garden ↗</a
+            >
+          </p>
+        </section>
+      </article>
+
+      <!-- Pager -->
+      <nav class="c-pager u-mt-5" aria-label="Page navigation">
+        <a
+          class="c-button c-button--outline"
+          rel="prev"
+          href="./06-flexbox.html"
+          >← Prev: Flexbox</a
+        >
+        <a
+          class="c-button c-button--primary"
+          rel="next"
+          href="./08-floats-columns.html"
+          >Next: Float &amp; Columns →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · CSS · Chapter 7</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same on all pages)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+
+        // ---------- Grid demos ----------
+        (function () {
+          // 1) Container demo
+          var grid1 = document.getElementById("grid1");
+          var cols = document.getElementById("cols");
+          var autoRows = document.getElementById("autoRows");
+          var autoFlow = document.getElementById("autoFlow");
+          var gap = document.getElementById("gap");
+          function syncGrid1() {
+            grid1.style.display = "grid";
+            grid1.style.gridTemplateColumns = cols.value;
+            grid1.style.gridAutoRows = autoRows.value;
+            grid1.style.gridAutoFlow = autoFlow.value;
+            grid1.style.gap = gap.value;
+          }
+          [cols, autoRows, autoFlow, gap].forEach(function (el) {
+            el.addEventListener("change", syncGrid1);
+          });
+          syncGrid1();
+
+          // 2) Items demo
+          var grid2 = document.getElementById("grid2");
+          var autoPlace = document.getElementById("autoPlace");
+          if (autoPlace) autoPlace.addEventListener("change", syncGrid2);
+          grid2.style.display = "grid";
+          grid2.style.gridTemplateColumns = "repeat(3, 1fr)";
+          grid2.style.gridAutoRows = "minmax(80px, auto)";
+          grid2.style.gap = "1rem";
+
+          var a = grid2.querySelector(".cell--a");
+          var b = grid2.querySelector(".cell--b");
+          var c = grid2.querySelector(".cell--c");
+          var aCol = document.getElementById("aCol");
+          var aRow = document.getElementById("aRow");
+          var bAlign = document.getElementById("bAlign");
+          var order = document.getElementById("order");
+
+          function syncGrid2() {
+            b.style.alignSelf = bAlign.value;
+
+            // order preset: "x y z"
+            var parts = order.value.trim().split(/\s+/);
+            a.style.order = parts[0] || "0";
+            b.style.order = parts[1] || "0";
+            c.style.order = parts[2] || "0";
+
+            if (autoPlace && autoPlace.checked) {
+              [a, b, c].forEach(function (el) {
+                el.style.gridColumn = "auto";
+                el.style.gridRow = "auto";
+              });
+            } else {
+              a.style.gridColumn = aCol.value;
+              a.style.gridRow = aRow.value;
+              b.style.gridColumn = "auto";
+              b.style.gridRow = "auto";
+              c.style.gridColumn = "auto";
+              c.style.gridRow = "auto";
+            }
+          }
+          [aCol, aRow, bAlign, order].forEach(function (el) {
+            el.addEventListener("change", syncGrid2);
+          });
+          syncGrid2();
+
+          // 3) Alignment demo
+          var grid3 = document.getElementById("grid3");
+          grid3.style.display = "grid";
+          grid3.style.gridTemplateColumns = "repeat(3, 120px)";
+          grid3.style.gridTemplateRows = "repeat(2, 80px)";
+          grid3.style.gap = "1rem";
+
+          var placeContent = document.getElementById("placeContent");
+          var placeItems = document.getElementById("placeItems");
+          function syncGrid3() {
+            grid3.style.placeContent = placeContent.value;
+            grid3.style.placeItems = placeItems.value;
+          }
+          [placeContent, placeItems].forEach(function (el) {
+            el.addEventListener("change", syncGrid3);
+          });
+          syncGrid3();
+
+          // 4) Template areas demo — sync preview + code + button state
+          var grid4 = document.getElementById("grid4");
+          var tplA = document.getElementById("tplA");
+          var tplB = document.getElementById("tplB");
+          var code = document.getElementById("tplCode");
+          var asideEl = grid4.querySelector(".area--aside");
+
+          function setPressed(which) {
+            tplA.setAttribute("aria-pressed", which === "A" ? "true" : "false");
+            tplB.setAttribute("aria-pressed", which === "B" ? "true" : "false");
+          }
+
+          function useTemplateA() {
+            // preview
+            grid4.style.gridTemplateAreas =
+              '"header header" "aside main" "footer footer"';
+            grid4.style.gridTemplateColumns = "200px 1fr";
+            grid4.style.gridAutoRows = "minmax(80px, auto)";
+            if (asideEl) asideEl.style.display = "";
+
+            // code sample
+            code.textContent = `.stage--areas {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "aside  main"
+    "footer footer";
+  grid-template-columns: 200px 1fr;
+  grid-auto-rows: minmax(80px, auto);
+  gap: 1rem;
+}
+.area--header { grid-area: header; }
+.area--aside  { grid-area: aside;  }
+.area--main   { grid-area: main;   }
+.area--footer { grid-area: footer; }`;
+
+            setPressed("A");
+          }
+
+          function useTemplateB() {
+            // preview
+            grid4.style.gridTemplateAreas = '"header" "main" "footer"';
+            grid4.style.gridTemplateColumns = "1fr";
+            grid4.style.gridAutoRows = "minmax(80px, auto)";
+            if (asideEl) asideEl.style.display = "none"; // hide aside in this template
+
+            // code sample
+            code.textContent = `.stage--areas {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  grid-template-rows: 64px 1fr 56px;
+  gap: 1rem;
+}
+.area--header { grid-area: header; }
+.area--main   { grid-area: main;   }
+.area--footer { grid-area: footer; }`;
+
+            setPressed("B");
+          }
+
+          tplA.addEventListener("click", useTemplateA);
+          tplB.addEventListener("click", useTemplateB);
+          useTemplateA(); // default
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

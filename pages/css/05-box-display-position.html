@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSS · Chapter 5 · Box Model, Display & Position</title>
+    <meta
+      name="description"
+      content="Margin, border, padding, box-sizing; block/inline/inline-block; positioned layout (relative, absolute, fixed, sticky) with small, responsive demos."
+    />
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link
+      rel="stylesheet"
+      href="../../styles/pages/css/05-box-display-position.css"
+    />
+  </head>
+  <body class="page--css-ch5">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a class="c-nav__link" href="../html/index.html">HTML</a>
+          <a
+            class="c-nav__link is-active"
+            href="../css/index.html"
+            aria-current="page"
+            >CSS</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic, accessible) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item">
+            <a href="../css/index.html">CSS</a>
+          </li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 5</li>
+        </ol>
+      </nav>
+
+      <!-- Hero / intro -->
+      <header class="c-card hero">
+        <div class="l-cluster u-mb-2">
+          <span class="c-badge c-badge--b">CSS</span>
+          <span class="c-badge c-badge--a">Chapter 5</span>
+        </div>
+        <h1 class="hero__title">Box Model, Display &amp; Position</h1>
+        <p class="hero__lead">
+          Margin / border / padding / content &amp; <code>box-sizing</code>;
+          block vs inline vs inline-block; relative / absolute / fixed / sticky;
+          <code>z-index</code>.
+        </p>
+      </header>
+
+      <article class="l-stack">
+        <!-- 1) Box model anatomy -->
+        <section class="c-card" id="box-model">
+          <h2>Box model anatomy</h2>
+          <p>
+            Margin (orange) → Border (gray) → Padding (green) → Content (blue).
+            For visualization below, margin is simulated with a wrapper (real
+            margins can’t be colored).
+          </p>
+
+          <div class="boxdemo">
+            <div class="boxdemo__margin">
+              <div class="boxdemo__border">
+                <div class="boxdemo__padding">
+                  <div class="boxdemo__content">Content</div>
+                </div>
+              </div>
+            </div>
+            <ul class="boxdemo__legend">
+              <li><span class="swatch swatch--m"></span> margin</li>
+              <li><span class="swatch swatch--b"></span> border</li>
+              <li><span class="swatch swatch--p"></span> padding</li>
+              <li><span class="swatch swatch--c"></span> content</li>
+            </ul>
+          </div>
+
+          <h3>Shorthand cheatsheet</h3>
+          <pre class="code"><code>/* margin (clockwise) */
+margin: top right bottom left;
+margin: top right-left bottom;
+margin: top-bottom right-left;
+margin: 3rem auto;         /* centers block horizontally */
+
+/* border: width || style || color */
+border: 2px dashed red;
+border-radius: 50%;         /* circle if box is square */
+
+/* padding mirrors margin shorthands */
+padding: 1rem 2rem;</code></pre>
+        </section>
+
+        <!-- 2) box-sizing -->
+        <section class="c-card" id="box-sizing">
+          <h2><code>box-sizing</code></h2>
+          <p>
+            <code>content-box</code> (default) vs
+            <code>border-box</code> (preferred for layouts).
+          </p>
+          <div class="sbs">
+            <div>
+              <h3 class="u-mb-2">content-box</h3>
+              <div class="bsdemo bsdemo--content">200px</div>
+            </div>
+            <div>
+              <h3 class="u-mb-2">border-box</h3>
+              <div class="bsdemo bsdemo--border">200px</div>
+            </div>
+          </div>
+          <pre class="code"><code>/* Global reset commonly used */
+*, *::before, *::after { box-sizing: border-box; }</code></pre>
+        </section>
+
+        <!-- 3) Outline vs border -->
+        <section class="c-card" id="outline">
+          <h2>Outline vs border</h2>
+          <p>
+            Outline doesn't affect layout (good for focus). Use
+            <code>outline-offset</code> to pull it away from the border.
+          </p>
+          <button class="demo-btn">Focus me (Tab)</button>
+          <pre class="code"><code>.demo-btn:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 4px;
+}</code></pre>
+        </section>
+
+        <!-- 4) Display basics -->
+        <section class="c-card" id="display">
+          <h2>Display</h2>
+          <ul>
+            <li>
+              <strong>Block</strong> takes full width (e.g., <code>p</code>,
+              <code>ul</code>).
+            </li>
+            <li>
+              <strong>Inline</strong> flows in text; cannot set
+              <code>height</code> or vertical margins.
+            </li>
+            <li>
+              <strong>Inline-block</strong> behaves like inline but accepts
+              <code>width/height</code> and vertical margins.
+            </li>
+          </ul>
+
+          <h3 class="u-mt-2">Make list items horizontal with spacing</h3>
+          <ul class="inline-demo">
+            <li>One</li>
+            <li>Two</li>
+            <li>Three</li>
+            <li>Four</li>
+          </ul>
+          <pre class="code"><code>ul.inline-demo > li {
+  display: inline-block;
+  margin-inline: 0.5rem;
+}</code></pre>
+        </section>
+
+        <!-- 5) Positioning -->
+        <section class="c-card" id="position">
+          <h2>Position</h2>
+          <p>
+            <strong>static</strong> (default) → not positioned.
+            <strong>relative</strong> / <strong>absolute</strong> /
+            <strong>fixed</strong> / <strong>sticky</strong> → positioned;
+            offsets apply.
+          </p>
+
+          <div class="pos-stage">
+            <div class="pos pos--rel">
+              relative<br /><small>left: 12px; top: -6px</small>
+            </div>
+            <div class="pos pos--abs">
+              absolute<br /><small>bottom-right in stage</small>
+            </div>
+            <div class="pos pos--sticky">sticky (top: 4px)</div>
+
+            <!-- Filler to make the stage scroll so sticky can demo -->
+            <p class="pos-filler">Scroll this mini-stage…</p>
+            <p class="pos-filler">…sticky hugs the top of the stage…</p>
+            <p class="pos-filler">…absolute stays bottom-right in stage.</p>
+          </div>
+
+          <h3 class="u-mt-4">Notes</h3>
+          <ul>
+            <li>
+              <strong>relative</strong>: moves from its original spot; original
+              space is kept.
+            </li>
+            <li>
+              <strong>absolute</strong>: positioned to the nearest positioned
+              ancestor; falls back to initial containing block if none.
+            </li>
+            <li>
+              <strong>fixed</strong>: fixed to viewport; remains on scroll (not
+              demoed here to avoid conflicting with page navbar).
+            </li>
+            <li>
+              <strong>sticky</strong>: toggles between relative and fixed within
+              its scroll container.
+            </li>
+            <li>
+              <strong>z-index</strong>: higher numbers stack above lower ones.
+            </li>
+          </ul>
+
+          <pre
+            class="code"
+          ><code>.pos-stage { position: relative; max-height: 220px; overflow: auto; }
+.pos--rel   { position: relative; left: 12px; top: -6px; }
+.pos--abs   { position: absolute; right: 8px; bottom: 8px; }
+.pos--sticky{ position: sticky; top: 4px; }</code></pre>
+        </section>
+
+        <!-- 6) Smooth scroll hint -->
+        <section class="c-card" id="smooth-scroll">
+          <h2>Smooth scroll</h2>
+          <p>Enables smooth scrolling for anchor links</p>
+          <pre class="code"><code>html { scroll-behavior: smooth; }</code></pre>
+        </section>
+      </article>
+
+      <!-- Pager -->
+      <nav class="c-pager u-mt-5" aria-label="Page navigation">
+        <a
+          class="c-button c-button--outline"
+          rel="prev"
+          href="./04-units-sizing.html"
+          >← Prev: Units &amp; Sizing</a
+        >
+        <a
+          class="c-button c-button--primary"
+          rel="next"
+          href="./06-flexbox.html"
+          >Next: Flexbox →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · CSS · Chapter 5</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+        // Glassy nav: keep slightly darker after scroll (same on all pages)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

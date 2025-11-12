@@ -1,0 +1,196 @@
+@layer pages {
+  /* ---------------------------------------------
+   * Skip link — fixed, no initial layout space
+   * --------------------------------------------- */
+  .c-skiplink {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    transform: translateY(-200%);
+    padding: 0.5rem 0.75rem;
+    background: var(--gradient-badge-a);
+    color: var(--badge-text);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-1);
+    text-decoration: none;
+    z-index: 9999;
+  }
+  .c-skiplink:focus {
+    transform: none;
+  }
+
+  /* ---------------------------------------------
+   * HERO
+   * --------------------------------------------- */
+  .home-hero {
+    background: var(--gradient-section-a);
+    padding: clamp(32px, 6vw, 72px) 16px;
+    border-top: 0;
+  }
+  .home-hero__card {
+    position: relative;
+    /* Keep single-tone surface to avoid banding illusions */
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-2);
+    padding: clamp(24px, 4vw, 48px);
+    max-width: 960px;
+  }
+  .home-hero__eyebrow {
+    position: absolute;
+    top: clamp(12px, 1.8vw, 16px);
+    left: clamp(12px, 1.8vw, 16px);
+    display: inline-block;
+    background: var(--gradient-badge-a);
+    color: var(--badge-text);
+    padding: 3px 9px;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    font-size: clamp(0.72rem, 1.8vw, 0.85rem);
+    letter-spacing: 0.2px;
+    user-select: none;
+  }
+  .home-hero__title {
+    margin-top: clamp(24px, 3.2vw, 36px);
+    font-size: var(--fs-1);
+    line-height: var(--lh-tight);
+  }
+  .home-hero__lead {
+    font-size: clamp(0.95rem, 2.6vw, 1rem);
+    color: var(--color-muted);
+    max-width: 70ch;
+  }
+  .home-hero__tip {
+    text-align: center;
+    margin-top: var(--space-2);
+  }
+  .home-hero__tip-text {
+    display: inline-block;
+    /* border-bottom: 2px solid currentColor; */
+    padding-bottom: 20px;
+    text-decoration: none;
+  }
+  .home-hero__tip kbd {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08), inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas,
+      "Liberation Mono", monospace;
+  }
+
+  /* Hero links */
+  .home-hero__links {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap; /* prevent overflow on very narrow screens */
+    margin-top: var(--space-3);
+    align-items: baseline;
+    justify-content: space-evenly;
+  }
+
+  .home-hero__link {
+    font-weight: 600;
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 0.08em;
+  }
+
+  .home-hero__link:hover,
+  .home-hero__link:focus-visible {
+    color: var(--color-primary);
+    text-decoration-color: currentColor;
+    border-bottom: 2px solid currentColor;
+    outline: none;
+  }
+
+  /* ---------------------------------------------
+   * GATE (HTML / CSS entry cards)
+   * --------------------------------------------- */
+  .home-gate {
+    background: none;
+    padding: 48px 16px;
+    border-top: 1px solid var(--color-border);
+  }
+  .home-gate__row {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+  .home-gate__item {
+    display: block;
+    text-decoration: none;
+    background: var(--color-surface) !important; /* avoid layered bg banding */
+    transition: transform var(--dur-2) var(--ease),
+      box-shadow var(--dur-2) var(--ease);
+  }
+  .home-gate__row > .home-gate__item {
+    height: 100%;
+  }
+  .home-gate__item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-2);
+  }
+  .home-gate__title {
+    margin: 0 0 var(--space-2);
+  }
+
+  /* ---------------------------------------------
+   * FOOTER
+   * --------------------------------------------- */
+  .home-footer {
+    padding: 24px 16px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* ---------------------------------------------
+   * Breakpoints
+   * --------------------------------------------- */
+  @media (min-width: 600px) {
+    .home-gate__row {
+      grid-template-columns: 1fr 1fr;
+    }
+    .home-hero__title {
+      font-size: clamp(2rem, 2.4vw, 2.6rem);
+    }
+    .home-hero__lead {
+      font-size: 1rem;
+    }
+    .home-hero__eyebrow {
+      font-size: 0.8rem;
+      padding: 4px 10px;
+    }
+  }
+  @media (min-width: 900px) {
+    .home-hero__title {
+      font-size: clamp(2.2rem, 2vw, 2.8rem);
+    }
+    .home-hero__lead {
+      font-size: 1.0625rem;
+    }
+    .home-hero__card {
+      padding: clamp(28px, 3.5vw, 52px);
+    }
+    .home-hero__actions {
+      margin-top: var(--space-4);
+    }
+  }
+  @media (min-width: 1200px) {
+    .home-hero__title {
+      font-size: clamp(2.4rem, 1.5vw, 3rem);
+    }
+    .home-hero__lead {
+      font-size: 1.1rem;
+    }
+    .home-hero__eyebrow {
+      font-size: 0.85rem;
+    }
+    .home-hero__card {
+      padding: 56px;
+    }
+  }
+}

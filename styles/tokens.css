@@ -1,0 +1,360 @@
+/* ---------------------------------------------
+ * File: styles/tokens.css
+ * Purpose: Design tokens (type scale, spacing, colors, gradients, z, motion)
+ * Layer: tokens
+ * --------------------------------------------- */
+
+@layer tokens {
+  /* ======================================
+   * Theme-agnostic design scales
+   * ====================================== */
+  :root {
+    /* Typography */
+    --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
+      "Segoe UI Emoji";
+    --fs-1: clamp(2rem, 1.2rem + 2vw, 3rem);
+    --fs-2: 1.5rem;
+    --fs-3: 1.125rem;
+    --fs-4: 1rem;
+    --fs-5: 0.875rem;
+    --lh-tight: 1.2;
+    --lh-normal: 1.6;
+
+    /* Spacing */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+
+    /* Radii */
+    --radius-sm: 0.5rem;
+    --radius-md: 1rem;
+    --radius-lg: 1.5rem;
+    --radius-pill: 999px;
+
+    /* Breakpoints & container */
+    --bp-sm: 600px;
+    --bp-md: 900px;
+    --bp-lg: 1200px;
+    --bp-xl: 1536px;
+    --container: 1200px;
+
+    /* Shadows */
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.16);
+    --shadow-2: 0 6px 24px rgba(0, 0, 0, 0.22);
+
+    /* Motion */
+    --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --ease-out: cubic-bezier(0.16, 0.84, 0.44, 1);
+    --dur-1: 150ms;
+    --dur-2: 250ms;
+    --dur-3: 400ms;
+
+    /* Z-index */
+    --z-nav: 1000;
+    --z-overlay: 1100;
+    --z-modal: 1200;
+
+    /* Layout constants */
+    --nav-h: 56px;
+
+    /* Unified page side padding for nav + container */
+    --page-pad: clamp(12px, 4vw, var(--space-5));
+  }
+
+  /* ---------------------------------------------
+   * Base palettes (ocean blues, teals, slate)
+   * --------------------------------------------- */
+  :root {
+    --ocean-50: #f0f7fb;
+    --ocean-100: #e4f0f8;
+    --ocean-200: #cde4f2;
+    --ocean-300: #b2d5ea;
+    --ocean-400: #8fc1df;
+    --ocean-500: #6fb0d8;
+    --ocean-600: #4e96c3;
+    --ocean-700: #2a6f97;
+    --ocean-800: #1b4965;
+    --ocean-900: #0f2e44;
+
+    --teal-50: #e6fbf7;
+    --teal-100: #cdf7ef;
+    --teal-200: #a4efe2;
+    --teal-300: #7fe2d3;
+    --teal-400: #5fd1c2;
+    --teal-500: #45b9ab;
+    --teal-600: #309a90;
+    --teal-700: #257e78;
+    --teal-800: #1f6461;
+    --teal-900: #184f4d;
+
+    --slate-50: #f6f8fa;
+    --slate-100: #eef2f6;
+    --slate-200: #e3e8ef;
+    --slate-300: #cdd5df;
+    --slate-400: #9aa4b2;
+    --slate-500: #697586;
+    --slate-600: #4b5565;
+    --slate-700: #364152;
+    --slate-800: #202939;
+    --slate-900: #121826;
+  }
+
+  /* ---------------------------------------------
+   * Nav glass tokens
+   * --------------------------------------------- */
+  :root {
+    --nav-glass-bg: color-mix(in srgb, var(--ocean-900) 18%, transparent);
+    --nav-glass-bg-scrolled: color-mix(
+      in srgb,
+      var(--ocean-900) 28%,
+      transparent
+    );
+    --nav-glass-border: color-mix(
+      in srgb,
+      var(--color-border) 70%,
+      transparent
+    );
+    --nav-backdrop-blur: 12px;
+    --nav-backdrop-saturate: 140%;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --nav-glass-bg: color-mix(in srgb, var(--ocean-900) 22%, transparent);
+      --nav-glass-bg-scrolled: color-mix(
+        in srgb,
+        var(--ocean-900) 32%,
+        transparent
+      );
+    }
+  }
+
+  /* ---------------------------------------------
+   * Semantic (light)
+   * --------------------------------------------- */
+  :root,
+  .theme-ocean-light {
+    --color-bg: #ffffff;
+    --color-surface: #ffffff;
+    --color-text: #0f2e44;
+    --color-muted: #4b5565;
+    --color-border: #e3e8ef;
+
+    --color-primary: var(--ocean-600);
+    --color-accent: var(--teal-500);
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      var(--ocean-500) 0%,
+      var(--ocean-700) 100%
+    );
+    --gradient-accent: linear-gradient(
+      135deg,
+      var(--teal-400) 0%,
+      var(--teal-700) 100%
+    );
+
+    --color-code-bg: #f5f7fb;
+    --color-selection: rgba(79, 145, 180, 0.22);
+
+    --badge-text: #06202a;
+  }
+
+  /* ---------------------------------------------
+   * Page & section gradients (light)
+   * --------------------------------------------- */
+  :root {
+    --gradient-bg-mist: linear-gradient(
+      180deg,
+      rgba(111, 176, 216, 0.08) 0%,
+      rgba(127, 226, 211, 0.06) 40%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    --gradient-section-a: linear-gradient(
+      180deg,
+      rgba(111, 176, 216, 0.16) 0%,
+      rgba(111, 176, 216, 0) 70%
+    );
+    --gradient-section-b: linear-gradient(
+      180deg,
+      rgba(127, 226, 211, 0.16) 0%,
+      rgba(127, 226, 211, 0) 70%
+    );
+    --gradient-section-c: linear-gradient(
+      180deg,
+      rgba(42, 111, 151, 0.14) 0%,
+      rgba(42, 111, 151, 0) 70%
+    );
+    --gradient-section-d: linear-gradient(
+      180deg,
+      rgba(205, 213, 223, 0.16) 0%,
+      rgba(205, 213, 223, 0) 70%
+    );
+    --gradient-section-e: linear-gradient(
+      180deg,
+      rgba(228, 240, 248, 0.16) 0%,
+      rgba(255, 255, 255, 0) 70%
+    );
+    --gradient-surface: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.35) 0%,
+      rgba(255, 255, 255, 0) 60%
+    );
+
+    --gradient-badge-a: linear-gradient(
+      135deg,
+      #58eaff 0%,
+      #6aa5ff 55%,
+      #e6f0ff 100%
+    );
+    --gradient-badge-b: linear-gradient(
+      135deg,
+      #4ff6e7 0%,
+      #45b9ab 55%,
+      #bff8f2 100%
+    );
+    --gradient-badge-c: linear-gradient(
+      135deg,
+      #5db9ff 0%,
+      #2a6f97 55%,
+      #8bd0ff 100%
+    );
+    --gradient-badge-d: linear-gradient(
+      135deg,
+      #b8c7e6 0%,
+      #90a6d8 55%,
+      #d7e3ff 100%
+    );
+    --gradient-badge-e: linear-gradient(
+      135deg,
+      #a8e8ff 0%,
+      #c7f5ff 55%,
+      #eefbff 100%
+    );
+    --gradient-badge: var(--gradient-badge-a);
+  }
+
+  /* ---------------------------------------------
+   * Dark mode
+   * --------------------------------------------- */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg: #0b1015;
+      --color-surface: #0f141b;
+      --color-text: #eaf2f8;
+      --color-muted: #9aa4b2;
+      --color-border: #1f2937;
+      --color-primary: var(--ocean-400);
+      --color-accent: var(--teal-300);
+
+      --gradient-primary: linear-gradient(
+        135deg,
+        var(--ocean-700) 0%,
+        var(--ocean-500) 100%
+      );
+      --gradient-accent: linear-gradient(
+        135deg,
+        var(--teal-700) 0%,
+        var(--teal-400) 100%
+      );
+
+      --color-code-bg: #0c0e13;
+      --color-selection: rgba(111, 176, 216, 0.28);
+
+      --gradient-bg-mist: linear-gradient(
+        180deg,
+        rgba(111, 176, 216, 0.1) 0%,
+        rgba(127, 226, 211, 0.08) 40%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      --gradient-section-a: linear-gradient(
+        180deg,
+        rgba(111, 176, 216, 0.18) 0%,
+        rgba(111, 176, 216, 0) 70%
+      );
+      --gradient-section-b: linear-gradient(
+        180deg,
+        rgba(127, 226, 211, 0.18) 0%,
+        rgba(127, 226, 211, 0) 70%
+      );
+      --gradient-section-c: linear-gradient(
+        180deg,
+        rgba(79, 145, 180, 0.16) 0%,
+        rgba(79, 145, 180, 0) 70%
+      );
+      --gradient-section-d: linear-gradient(
+        180deg,
+        rgba(157, 170, 189, 0.18) 0%,
+        rgba(157, 170, 189, 0) 70%
+      );
+      --gradient-section-e: linear-gradient(
+        180deg,
+        rgba(196, 219, 238, 0.16) 0%,
+        rgba(0, 0, 0, 0) 70%
+      );
+      --gradient-surface: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0) 60%
+      );
+
+      --gradient-badge-a: linear-gradient(
+        135deg,
+        #25e6ff 0%,
+        #7fb2ff 60%,
+        #d7e6ff 100%
+      );
+      --gradient-badge-b: linear-gradient(
+        135deg,
+        #36f0e1 0%,
+        #46cabc 60%,
+        #c9fff7 100%
+      );
+      --gradient-badge-c: linear-gradient(
+        135deg,
+        #6cc6ff 0%,
+        #3a86b5 60%,
+        #a9dbff 100%
+      );
+      --gradient-badge-d: linear-gradient(
+        135deg,
+        #a9bdec 0%,
+        #7fa0e3 60%,
+        #d6e4ff 100%
+      );
+      --gradient-badge-e: linear-gradient(
+        135deg,
+        #94e4ff 0%,
+        #bdefff 60%,
+        #e8f7ff 100%
+      );
+
+      --badge-text: #06202a;
+      --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.35);
+      --shadow-2: 0 8px 28px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  /* ---------------------------------------------
+   * Theme toggles
+   * --------------------------------------------- */
+  .theme-ocean-light {
+    color-scheme: light;
+  }
+  .theme-ocean-dark {
+    color-scheme: dark;
+  }
+
+  /* ---------------------------------------------
+   * Status colors
+   * --------------------------------------------- */
+  :root {
+    --color-success: #62c370;
+    --color-warning: #f2b94c;
+    --color-danger: #e26d5a;
+  }
+}

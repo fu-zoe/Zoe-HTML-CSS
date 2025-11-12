@@ -1,0 +1,146 @@
+/* ---------------------------------------------
+ * HTML · Chapter 4 (Lists) — page-only styles
+ * --------------------------------------------- */
+@layer pages {
+  /* ---------------------------------------------
+   * Page background
+   * --------------------------------------------- */
+  body.page--html-ch4 {
+    background: var(--gradient-bg-mist) fixed;
+    background-color: var(--color-bg);
+  }
+
+  /* ---------------------------------------------
+   * Chapter layout
+   * --------------------------------------------- */
+  .chapter {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0; /* allow shrink on very narrow devices */
+  }
+
+  /* ---------------------------------------------
+   * Hero
+   * --------------------------------------------- */
+  .chapter__hero {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .chapter__title {
+    margin: 0;
+  }
+  .chapter__lead {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------------------------------------------
+   * Live demo: side-by-side on wide, stacked on small
+   * --------------------------------------------- */
+  .demo-sbs {
+    display: grid;
+    gap: var(--space-4);
+    min-width: 0; /* let the grid shrink on narrow screens */
+  }
+  .demo-sbs > * {
+    min-width: 0;
+  } /* critical for grid children */
+  @media (min-width: 900px) {
+    .demo-sbs {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+
+  /* Code pane */
+  .demo__code pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto; /* inner scroll on normal widths */
+  }
+
+  /* Render pane */
+  .demo__render {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    min-width: 0;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+  .demo__render ul,
+  .demo__render ol,
+  .demo__render dl {
+    margin: 0 0 var(--space-4);
+    padding-inline-start: 1.25rem;
+  }
+  .demo__render dl {
+    padding-inline-start: 0;
+  }
+  .demo__render dt {
+    font-weight: 600;
+  }
+  .demo__render dd {
+    margin: 0 0 0.4rem 0;
+  }
+
+  /* ---------------------------------------------
+   * Cards / code blocks
+   * --------------------------------------------- */
+  .chapter .c-card {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .chapter .c-card pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+  .chapter .c-card code {
+    word-break: normal;
+  }
+
+  /* ---------------------------------------------
+   * Ultra-narrow safety
+   * --------------------------------------------- */
+  @media (max-width: 600px) {
+    .chapter .c-card pre,
+    .demo__code pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .c-button {
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+  }
+
+  /* ---------------------------------------------
+   * Anchor jump safety (sticky nav offset)
+   * --------------------------------------------- */
+  .chapter section[id] {
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+  }
+
+  /* ---------------------------------------------
+   * Responsive type scale
+   * --------------------------------------------- */
+  .chapter h1 {
+    font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+  }
+  .chapter h2 {
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+  }
+  .chapter p,
+  .chapter li {
+    font-size: clamp(0.95rem, 1.8vw, 1rem);
+  }
+
+  /* ---------------------------------------------
+   * Horizontal overflow guard (belt & suspenders)
+   * --------------------------------------------- */
+  .page--html-ch4 main {
+    overflow-x: hidden;
+  }
+}

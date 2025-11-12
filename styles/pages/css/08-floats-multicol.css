@@ -1,0 +1,250 @@
+/* ---------------------------------------------
+ * CSS · Chapter 8 — page-only styles
+ * --------------------------------------------- */
+@layer pages {
+  /* ---------------------------------------------
+   * Page background
+   * --------------------------------------------- */
+  body.page--css-ch8 {
+    background: var(--gradient-bg-mist) fixed;
+    background-color: var(--color-bg);
+  }
+
+  /* ---------------------------------------------
+   * Chapter layout
+   * --------------------------------------------- */
+  .chapter {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0; /* allow shrink on very narrow devices */
+  }
+
+  /* ---------------------------------------------
+   * Hero
+   * --------------------------------------------- */
+  .hero .hero__title {
+    margin: 0 0 var(--space-2);
+  }
+  .hero .hero__lead {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------------------------------------------
+   * Code blocks (local scroll; avoid page overflow)
+   * --------------------------------------------- */
+  .code {
+    max-width: 100%;
+    overflow: auto;
+    margin: 0;
+  }
+
+  /* ---------------------------------------------
+   * Cards / pre/code consistency
+   * --------------------------------------------- */
+  .chapter .c-card {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .chapter .c-card pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+  .chapter .c-card code {
+    word-break: normal;
+  }
+
+  /* ---------------------------------------------
+   * Controls
+   * --------------------------------------------- */
+  .controls {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: 1fr;
+    align-items: end;
+    margin-bottom: var(--space-3);
+  }
+  .control {
+    display: grid;
+    gap: 0.35rem;
+  }
+  .control > span {
+    font-size: var(--fs-5);
+    color: var(--color-muted);
+  }
+  .control select {
+    min-width: 18ch;
+  }
+  .control--checkbox {
+    grid-auto-flow: column;
+    align-items: center;
+  }
+  .control--checkbox > input {
+    margin-right: 0.5rem;
+  }
+  @media (min-width: 900px) {
+    .controls {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* ---------------------------------------------
+   * Stage
+   * --------------------------------------------- */
+  .stage {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    padding: var(--space-4);
+    min-width: 0;
+  }
+
+  /* --- Floats demo --- */
+  .stage--float .container {
+    position: relative;
+    border: 1px dashed color-mix(in srgb, var(--color-border) 80%, transparent);
+    border-radius: var(--radius-sm);
+    padding: var(--space-4);
+    min-height: 120px;
+  }
+  .floatbox {
+    float: none;
+    background: var(--gradient-badge-e);
+    color: var(--badge-text);
+    border: 1px solid color-mix(in srgb, var(--color-border) 90%, transparent);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+    font-weight: 700;
+    width: 160px;
+    height: 110px;
+    display: grid;
+    place-items: center;
+    margin: 0 0 0.75rem 0;
+  }
+  .floatbox.left {
+    float: left;
+    margin: 0 0.75rem 0.75rem 0;
+  }
+  .floatbox.right {
+    float: right;
+    margin: 0 0 0.75rem 0.75rem;
+  }
+  .clear {
+    clear: both;
+    margin-top: 0.5rem;
+    color: var(--color-muted);
+  }
+  .use-overflow {
+    overflow: auto;
+  }
+  .use-flow-root {
+    display: flow-root;
+  }
+
+  .meter {
+    margin-top: var(--space-3);
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    color: var(--color-muted);
+  }
+  .pill {
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 0.1rem 0.6rem;
+    font-size: var(--fs-6);
+  }
+  .pill.is-bad {
+    background: #ffeaea;
+    color: #b73232;
+    border-color: #f5c2c2;
+  }
+  .pill.is-good {
+    background: #ecfbf1;
+    color: #167c3a;
+    border-color: #b7ebc3;
+  }
+
+  /* --- Multicol demo --- */
+  .columns {
+    columns: 3 260px;
+    column-gap: 1.25rem;
+    column-rule: 1px solid #ccd6e0;
+  }
+  .columns h2 {
+    margin: 0 0 0.5rem 0;
+    padding: 0.25rem 0.35rem;
+    background: color-mix(in srgb, var(--color-surface) 90%, transparent);
+    border-radius: var(--radius-sm);
+  }
+  .columns h2.is-avoid {
+    outline: 2px dashed color-mix(in srgb, var(--color-border) 50%, transparent);
+    outline-offset: 2px;
+  }
+  .columns .quote {
+    background: color-mix(in srgb, var(--color-surface) 85%, transparent);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+  }
+  .demo-long {
+    margin: 0.5rem 0;
+  }
+
+  .nowrap-wrap {
+    overflow: auto;
+    max-width: 100%;
+  }
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  /* ---------------------------------------------
+   * Ultra-narrow safety (<= 360px)
+   * --------------------------------------------- */
+  @media (max-width: 360px) {
+    .chapter .c-card pre,
+    .code {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .c-button {
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+  }
+
+  /* ---------------------------------------------
+   * Anchor jump safety (sticky nav offset)
+   * --------------------------------------------- */
+  .chapter section[id] {
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+  }
+
+  /* ---------------------------------------------
+   * Responsive type scale
+   * --------------------------------------------- */
+  .chapter h1 {
+    font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+  }
+  .chapter h2 {
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+  }
+  .chapter p,
+  .chapter li {
+    font-size: clamp(0.95rem, 1.8vw, 1rem);
+  }
+
+  /* ---------------------------------------------
+   * Horizontal overflow guard
+   * --------------------------------------------- */
+  .page--css-ch8 main {
+    overflow-x: hidden;
+  }
+  .page--css-ch8 :where(p, li, code, pre) {
+    overflow-wrap: anywhere;
+  }
+}

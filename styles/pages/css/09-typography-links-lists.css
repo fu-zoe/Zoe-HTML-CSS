@@ -1,0 +1,220 @@
+/* ---------------------------------------------
+ * CSS · Chapter 9 — page-only styles (English comments)
+ * --------------------------------------------- */
+@layer pages {
+  /* ---------------------------------------------
+   * Page background
+   * --------------------------------------------- */
+  body.page--css-ch9 {
+    background: var(--gradient-bg-mist) fixed;
+    background-color: var(--color-bg);
+  }
+
+  /* ---------------------------------------------
+   * Chapter layout
+   * --------------------------------------------- */
+  .chapter {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0; /* allow shrink on very narrow devices */
+  }
+
+  /* ---------------------------------------------
+   * Hero
+   * --------------------------------------------- */
+  .hero .hero__title {
+    margin: 0 0 var(--space-2);
+  }
+  .hero .hero__lead {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------------------------------------------
+   * Code blocks (local scroll; avoid page overflow)
+   * --------------------------------------------- */
+  .code {
+    max-width: 100%;
+    overflow: auto;
+    margin: 0;
+  }
+
+  /* ---------------------------------------------
+   * Controls (2 per row on wide screens)
+   * --------------------------------------------- */
+  .controls {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: 1fr;
+    align-items: end;
+    margin-bottom: var(--space-3);
+  }
+  .control {
+    display: grid;
+    gap: 0.35rem;
+  }
+  .control > span {
+    font-size: var(--fs-5);
+    color: var(--color-muted);
+  }
+  .control select {
+    min-width: 16ch;
+  }
+  .control--checkbox {
+    grid-auto-flow: column;
+    align-items: center;
+  }
+  .control--checkbox > input {
+    margin-right: 0.5rem;
+  }
+  @media (min-width: 900px) {
+    .controls {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* ---------------------------------------------
+   * Stage surface
+   * --------------------------------------------- */
+  .stage {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    padding: var(--space-4);
+    min-width: 0;
+  }
+
+  /* ---------------------------------------------
+   * Typography stage
+   * --------------------------------------------- */
+  .type-sample {
+    max-width: 60ch;
+    margin-inline: auto;
+  }
+  .u-help {
+    color: var(--color-muted);
+    font-size: var(--fs-5);
+  }
+
+  /* ---------------------------------------------
+   * Links stage
+   * --------------------------------------------- */
+  .stage--links .demo-links {
+    line-height: 1.9;
+  }
+  .stage--links .demo-links a {
+    color: hsl(210 90% 40%);
+    text-decoration: underline;
+    cursor: var(--cursor, pointer);
+    transition: color var(--dur-2) var(--ease), opacity var(--dur-2) var(--ease);
+  }
+  .stage--links .demo-links a.as-visited {
+    color: rebeccapurple;
+  }
+  .stage--links[data-tech="hsl"] .demo-links a:hover,
+  .stage--links[data-tech="hsl"] .demo-links a:focus {
+    color: hsl(210 90% 55%);
+  }
+  .stage--links[data-tech="opacity"] .demo-links a:hover,
+  .stage--links[data-tech="opacity"] .demo-links a:focus {
+    opacity: 0.8;
+  }
+  .stage--links .demo-links a:active {
+    color: crimson;
+  }
+  .stage--links[data-cursor="pointer"] {
+    --cursor: pointer;
+  }
+  .stage--links[data-cursor="not-allowed"] {
+    --cursor: not-allowed;
+  }
+
+  /* ---------------------------------------------
+   * Lists stage — ::marker & striping
+   * --------------------------------------------- */
+  #list-stage {
+    --m-color: ;
+    --m-family: ;
+    --m-size: ;
+  }
+  #list-stage li::marker {
+    color: var(--m-color);
+    font-family: var(--m-family);
+    font-size: var(--m-size);
+  }
+  /* Optional marker content for UL (toggled via data attribute) */
+  #list-stage[data-marker-content="on"] ul li::marker {
+    content: "Only $5 » ";
+  }
+
+  /* Nth-child striping demo for UL — visible but subtle */
+  #list-stage[data-stripe="odd"] ul li:nth-child(odd),
+  #list-stage[data-stripe="even"] ul li:nth-child(even) {
+    background: hsl(210 90% 55% / 0.14);
+    outline: 1px dashed color-mix(in srgb, var(--color-border) 70%, transparent);
+    border-radius: var(--radius-sm);
+    padding: 0.1rem 0.25rem;
+  }
+
+  /* ---------------------------------------------
+   * Cards / pre/code consistency
+   * --------------------------------------------- */
+  .chapter .c-card {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .chapter .c-card pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+  .chapter .c-card code {
+    word-break: normal;
+  }
+
+  /* ---------------------------------------------
+   * Ultra-narrow safety (<= 360px)
+   * --------------------------------------------- */
+  @media (max-width: 360px) {
+    .chapter .c-card pre,
+    .code {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .c-button {
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+  }
+
+  /* ---------------------------------------------
+   * Anchor jump safety (sticky nav offset)
+   * --------------------------------------------- */
+  .chapter section[id] {
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+  }
+
+  /* ---------------------------------------------
+   * Responsive type scale
+   * --------------------------------------------- */
+  .chapter h1 {
+    font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+  }
+  .chapter h2 {
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+  }
+  .chapter p,
+  .chapter li {
+    font-size: clamp(0.95rem, 1.8vw, 1rem);
+  }
+
+  /* ---------------------------------------------
+   * Horizontal overflow guard
+   * --------------------------------------------- */
+  .page--css-ch9 main {
+    overflow-x: hidden;
+  }
+  .page--css-ch9 :where(p, li, code, pre) {
+    overflow-wrap: anywhere;
+  }
+}

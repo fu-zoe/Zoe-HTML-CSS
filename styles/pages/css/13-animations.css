@@ -1,0 +1,259 @@
+/* ---------------------------------------------
+ * CSS · Chapter 13 — page-only styles
+ * --------------------------------------------- */
+@layer pages {
+  /* ---------------------------------------------
+   * Page background
+   * --------------------------------------------- */
+  body.page--css-ch13 {
+    background: var(--gradient-bg-mist) fixed;
+    background-color: var(--color-bg);
+  }
+
+  /* ---------------------------------------------
+   * Chapter layout
+   * --------------------------------------------- */
+  .chapter {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0; /* allow shrink on very narrow devices */
+  }
+
+  /* ---------------------------------------------
+   * Hero
+   * --------------------------------------------- */
+  .hero .hero__title {
+    margin: 0 0 var(--space-2);
+  }
+  .hero .hero__lead {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------------------------------------------
+   * Code blocks (local scroll; avoid page overflow)
+   * --------------------------------------------- */
+  .code {
+    margin-top: var(--space-3);
+    max-width: 100%;
+    overflow: auto;
+  }
+
+  /* ---------------------------------------------
+   * Cards / pre/code consistency
+   * --------------------------------------------- */
+  .chapter .c-card {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .chapter .c-card pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+  .chapter .c-card code {
+    word-break: normal;
+  }
+
+  /* ---------------------------------------------
+   * Notes list (compact)
+   * --------------------------------------------- */
+  .notes {
+    margin: 0 0 var(--space-3);
+    padding-left: 1.1rem;
+  }
+  .notes li {
+    margin: 0.25rem 0;
+  }
+
+  /* ---------------------------------------------
+   * Controls
+   * --------------------------------------------- */
+  .controls {
+    align-items: end;
+  }
+  .control {
+    display: grid;
+    gap: 0.35rem;
+  }
+  .control > span {
+    font-size: var(--fs-5);
+    color: var(--color-muted);
+  }
+  .control input[type="range"] {
+    width: 100%;
+  }
+  .control input[type="checkbox"] {
+    margin-right: 0.5rem;
+  }
+
+  /* ---------------------------------------------
+   * Demo stage (shared)
+   * --------------------------------------------- */
+  .stage {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    padding: var(--space-4);
+    min-width: 0;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+
+  /* ---------------------------------------------
+   * Transform demo box
+   * --------------------------------------------- */
+  .cube {
+    width: 150px;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    background: var(--gradient-badge-c);
+    color: var(--badge-text);
+    border: 1px solid color-mix(in srgb, var(--color-border) 90%, transparent);
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    user-select: none;
+    will-change: transform;
+  }
+
+  /* ---------------------------------------------
+   * Transition demo card
+   * --------------------------------------------- */
+  .card {
+    width: 180px;
+    aspect-ratio: 4 / 3;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: hsl(210 80% 60%);
+    color: #fff;
+    transform: scale(1);
+    will-change: transform; /* smoother scaling */
+    transition: background-color 0.5s ease-in-out, transform 0.3s ease-in-out;
+    outline: none;
+  }
+  .card:hover,
+  .card.is-active,
+  .card:focus-visible {
+    background: hsl(0 80% 60%);
+    transform: scale(1.2);
+  }
+
+  /* ---------------------------------------------
+   * Animation demo
+   * --------------------------------------------- */
+  .anim-wrap {
+    height: 120px;
+  }
+  .dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--gradient-badge-b);
+    box-shadow: 0 6px 12px color-mix(in srgb, #000 20%, transparent);
+    will-change: transform, opacity;
+  }
+  @keyframes slideX {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(220px);
+    }
+  }
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    100% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .is-paused .dot {
+    animation-play-state: paused !important;
+  }
+
+  /* ---------------------------------------------
+   * Reduce motion (page-only)
+   * --------------------------------------------- */
+  @media (prefers-reduced-motion: reduce) {
+    .page--css-ch13 * {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+
+  /* ---------------------------------------------
+   * Ultra-narrow safety (<= 360px)
+   * --------------------------------------------- */
+  @media (max-width: 360px) {
+    .chapter .c-card pre,
+    .code {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .c-button {
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+  }
+
+  /* ---------------------------------------------
+   * Anchor jump safety (sticky nav offset)
+   * --------------------------------------------- */
+  .chapter section[id] {
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+  }
+
+  /* ---------------------------------------------
+   * Responsive type scale
+   * --------------------------------------------- */
+  .chapter h1 {
+    font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+  }
+  .chapter h2 {
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+  }
+  .chapter p,
+  .chapter li {
+    font-size: clamp(0.95rem, 1.8vw, 1rem);
+  }
+
+  /* ---------------------------------------------
+   * Horizontal overflow guard (belt-and-suspenders)
+   * --------------------------------------------- */
+  .page--css-ch13 main {
+    overflow-x: hidden;
+  }
+  .page--css-ch13 :where(p, li, code, pre) {
+    overflow-wrap: anywhere;
+  }
+
+  /* ---------------------------------------------
+   * Toggle button state (a11y feedback)
+   * --------------------------------------------- */
+  #tToggle[aria-pressed="true"] {
+    outline: 2px solid hsl(0 80% 60%);
+    box-shadow: 0 0 0 3px color-mix(in srgb, hsl(0 80% 60%) 25%, transparent);
+  }
+  #tToggle[aria-pressed="true"]::after {
+    content: "";
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-left: 0.5rem;
+    border-radius: 999px;
+    background: hsl(0 80% 60%);
+    vertical-align: middle;
+  }
+}

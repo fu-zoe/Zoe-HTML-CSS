@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>HTML · Zoe's Study Hub</title>
+    <meta
+      name="description"
+      content="HTML notes: 9 chapters with key points and mini demos."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link rel="stylesheet" href="../../styles/pages/html/index.css" />
+  </head>
+  <body class="has-sticky-header page--html">
+    <!-- Global skip link component -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a class="c-nav__link is-active" href="./" aria-current="page"
+            >HTML</a
+          >
+          <a class="c-nav__link" href="../css/">CSS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- Hero -->
+      <section class="hero l-container">
+        <div class="c-card hero__card">
+          <div class="l-cluster u-mb-2">
+            <span class="c-badge c-badge--a">HTML</span>
+            <span class="c-badge c-badge--c">Index</span>
+          </div>
+          <h1 class="hero__title">HTML Study Index</h1>
+          <p class="hero__lead">
+            A fast path through the essentials—document anatomy, head metadata,
+            text &amp; lists, links, images, semantic structure, tables, and
+            forms.
+          </p>
+
+          <!-- Single TOC structure for all viewports -->
+          <details class="toc" open>
+            <summary class="toc__summary">
+              <span>Contents</span>
+              <svg
+                class="toc__chevron"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  d="M6 9l6 6 6-6"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </summary>
+
+            <ol class="toc__list">
+              <li><a href="./01-start-here.html">Start Here</a></li>
+              <li><a href="./02-head.html">Head</a></li>
+              <li><a href="./03-text.html">Text</a></li>
+              <li><a href="./04-lists.html">Lists</a></li>
+              <li><a href="./05-links.html">Links</a></li>
+              <li><a href="./06-images.html">Images</a></li>
+              <li><a href="./07-semantics.html">Semantics</a></li>
+              <li><a href="./08-tables.html">Tables</a></li>
+              <li><a href="./09-forms.html">Forms</a></li>
+            </ol>
+          </details>
+        </div>
+      </section>
+
+      <!-- Topic cards -->
+      <section class="topics l-container">
+        <div class="l-grid l-grid--fit-300 cards">
+          <article class="c-card card">
+            <h3 class="card__title">Start Here</h3>
+            <p class="card__blurb">
+              Document skeleton, elements/tags/attributes, one page-level
+              <code>&lt;h1&gt;</code>.
+            </p>
+            <a class="c-button c-button--subtle" href="./01-start-here.html"
+              >Open</a
+            >
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Head</h3>
+            <p class="card__blurb">
+              Title, meta charset/viewport/description, icons, resource hints,
+              stylesheets.
+            </p>
+            <a class="c-button c-button--subtle" href="./02-head.html">Open</a>
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Text</h3>
+            <p class="card__blurb">
+              Block vs inline, emphasis/strong, entities like
+              <code>&amp;lt;</code>, <code>&amp;copy;</code>.
+            </p>
+            <a class="c-button c-button--subtle" href="./03-text.html">Open</a>
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Lists</h3>
+            <p class="card__blurb">
+              Ordered/unordered/description; legal nesting; paragraphs inside
+              <code>&lt;li&gt;</code>.
+            </p>
+            <a class="c-button c-button--subtle" href="./04-lists.html">Open</a>
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Links</h3>
+            <p class="card__blurb">
+              Absolute/relative; internal anchors;
+              <code>mailto:</code>/<code>tel:</code>; new tab safety.
+            </p>
+            <a class="c-button c-button--subtle" href="./05-links.html">Open</a>
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Images</h3>
+            <p class="card__blurb">
+              <code>&lt;img&gt;</code> alt text, width/height to avoid CLS,
+              <code>&lt;figure&gt;</code>/<code>&lt;figcaption&gt;</code>.
+            </p>
+            <a class="c-button c-button--subtle" href="./06-images.html"
+              >Open</a
+            >
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Semantics</h3>
+            <p class="card__blurb">
+              Landmarks
+              <code>&lt;header/nav/main/section/article/aside/footer&gt;</code>,
+              ARIA labeling.
+            </p>
+            <a class="c-button c-button--subtle" href="./07-semantics.html"
+              >Open</a
+            >
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Tables</h3>
+            <p class="card__blurb">
+              Caption, thead/tbody/tfoot, proper <code>scope</code> for headers,
+              colspan/rowspan.
+            </p>
+            <a class="c-button c-button--subtle" href="./08-tables.html"
+              >Open</a
+            >
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Forms</h3>
+            <p class="card__blurb">
+              Label-for/id, name as key, GET vs POST, inputs/selects/textarea.
+            </p>
+            <a class="c-button c-button--subtle" href="./09-forms.html">Open</a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · HTML Index</small>
+      <script>
+        document.getElementById("y").textContent = new Date().getFullYear();
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

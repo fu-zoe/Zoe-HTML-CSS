@@ -1,0 +1,432 @@
+/* ---------------------------------------------
+ * File: styles/components.css
+ * Purpose: Global UI components (nav, buttons, cards, forms, tables, pager…)
+ * NOTE: Imported via `@import ... layer(components)` from app.css — no @layer here.
+ * --------------------------------------------- */
+
+/* ---------------------------------------------
+ * Section: NAV / HEADER — glassy sticky nav
+ * --------------------------------------------- */
+.c-nav {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-nav);
+  -webkit-backdrop-filter: blur(var(--nav-backdrop-blur))
+    saturate(var(--nav-backdrop-saturate));
+  backdrop-filter: blur(var(--nav-backdrop-blur))
+    saturate(var(--nav-backdrop-saturate));
+  background-color: var(--nav-glass-bg);
+  border-bottom: 1px solid var(--nav-glass-border);
+  transition: background-color var(--dur-2) var(--ease),
+    backdrop-filter var(--dur-2) var(--ease),
+    box-shadow var(--dur-2) var(--ease);
+}
+.c-nav.is-scrolled {
+  background-color: var(--nav-glass-bg-scrolled);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.c-nav__inner {
+  min-height: var(--nav-h);
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--page-pad);
+  gap: var(--space-4);
+}
+.c-nav__brand {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  font-size: clamp(1rem, 1.6vw, 1.125rem);
+  color: var(--color-text);
+  text-decoration: none;
+}
+.c-nav__links {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+.c-nav__link {
+  font-size: clamp(0.95rem, 1.4vw, 1rem);
+  color: var(--color-text);
+  text-decoration: none;
+  padding: 0.35rem 0.6rem;
+  border-radius: 8px;
+  transition: background-color var(--dur-1) var(--ease);
+}
+.c-nav__link:hover {
+  background-color: color-mix(in srgb, var(--color-surface) 85%, transparent);
+}
+.c-nav__link.is-active {
+  background-color: color-mix(in srgb, var(--color-primary) 22%, transparent);
+}
+
+/* Small screens: wrap to two rows gracefully */
+@media (max-width: 600px) {
+  .c-nav__inner {
+    flex-wrap: wrap;
+    row-gap: 6px;
+    padding-block: 6px;
+  }
+  .c-nav__links {
+    width: 100%;
+    justify-content: flex-end;
+    gap: var(--space-2);
+  }
+  .c-nav__brand {
+    font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+  }
+  .c-nav__link {
+    font-size: clamp(0.9rem, 2.2vw, 1rem);
+    padding: 0.25rem 0.5rem;
+  }
+}
+@media (min-width: 900px) {
+  .c-nav__link {
+    padding: 0.35rem 0.6rem;
+  }
+}
+
+/* ---------------------------------------------
+ * Section: Skip link (shared)
+ * --------------------------------------------- */
+.c-skiplink {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+/* Show on focus — TOP CENTER, under the sticky nav */
+.c-skiplink:focus {
+  position: fixed;
+  left: 50%;
+  top: calc(var(--nav-h) + 12px);
+  transform: translateX(-50%);
+  z-index: var(--z-overlay);
+
+  /* Reset hiding props */
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  white-space: normal;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.5rem 0.75rem;
+  max-width: min(92vw, 40ch);
+  text-align: center;
+
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-1);
+}
+
+/* ---------------------------------------------
+ * Section: Breadcrumbs
+ * --------------------------------------------- */
+.c-breadcrumbs {
+  color: var(--color-muted);
+  font-size: var(--fs-5);
+}
+.c-breadcrumbs__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap; /* never cause horizontal scroll */
+  gap: var(--space-2);
+  align-items: center;
+}
+.c-breadcrumbs__item {
+  color: var(--color-muted);
+  min-width: 0;
+}
+.c-breadcrumbs a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+.c-breadcrumbs a:hover {
+  text-decoration: underline;
+}
+/* decorative separator (not announced by screen readers) */
+.c-breadcrumbs__item + .c-breadcrumbs__item::before {
+  content: ">";
+  color: var(--color-muted);
+  margin: 0 var(--space-1);
+}
+
+@media (max-width: 600px) {
+  .c-breadcrumbs {
+    font-size: var(--fs-5);
+  }
+}
+
+/* ---------------------------------------------
+ * Section: Buttons
+ * --------------------------------------------- */
+.c-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  transition: transform var(--dur-1) var(--ease),
+    background-color var(--dur-1) var(--ease),
+    border-color var(--dur-1) var(--ease);
+  cursor: pointer;
+  text-decoration: none;
+}
+.c-button:hover {
+  transform: translateY(-1px);
+}
+.c-button:active {
+  transform: translateY(0);
+}
+.c-button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+.c-button[disabled],
+.c-button.is-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.c-button--primary {
+  border-color: transparent;
+  background-color: var(--color-primary);
+  color: #061019;
+}
+.c-button--primary-gradient {
+  border-color: transparent;
+  background: var(--gradient-primary);
+  color: #061019;
+  transition: transform var(--dur-1) var(--ease),
+    filter var(--dur-1) var(--ease);
+}
+.c-button--outline {
+  background-color: transparent;
+  border-color: color-mix(
+    in srgb,
+    var(--color-primary) 55%,
+    var(--color-border)
+  );
+  color: var(--color-primary);
+}
+.c-button--outline:hover {
+  background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
+}
+.c-button--subtle {
+  background-color: color-mix(in srgb, var(--color-surface) 85%, transparent);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+.c-button--sm {
+  padding: 0.35rem 0.7rem;
+  font-size: var(--fs-5);
+  border-radius: var(--radius-sm);
+}
+.c-button--lg {
+  padding: 0.7rem 1.1rem;
+  font-size: var(--fs-3);
+  border-radius: var(--radius-lg);
+}
+
+/* ---------------------------------------------
+ * Section: Cards
+ * --------------------------------------------- */
+.c-card {
+  background: var(--color-surface), var(--gradient-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+  padding: var(--space-5);
+}
+.c-card__header {
+  margin-bottom: var(--space-3);
+}
+.c-card__title {
+  font-size: var(--fs-3);
+  line-height: var(--lh-tight);
+  margin: 0;
+}
+.c-card__body {
+  display: grid;
+  gap: var(--space-3);
+}
+.c-card__footer {
+  margin-top: var(--space-4);
+  display: flex;
+  gap: var(--space-3);
+}
+.c-card--soft {
+  background: var(--color-surface);
+}
+
+/* ---------------------------------------------
+ * Section: Forms
+ * --------------------------------------------- */
+.c-field {
+  display: grid;
+  gap: 0.4rem;
+}
+.c-label {
+  font-weight: 600;
+}
+.c-help {
+  color: var(--color-muted);
+  font-size: var(--fs-5);
+}
+.c-input,
+.c-select,
+.c-textarea {
+  width: 100%;
+  color: var(--color-text);
+  background-color: color-mix(in srgb, var(--color-surface) 92%, transparent);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.75rem;
+  transition: border-color var(--dur-1) var(--ease),
+    background-color var(--dur-1) var(--ease),
+    box-shadow var(--dur-1) var(--ease);
+}
+.c-input::placeholder,
+.c-textarea::placeholder {
+  color: color-mix(in srgb, var(--color-muted) 65%, transparent);
+}
+.c-input:focus,
+.c-select:focus,
+.c-textarea:focus {
+  outline: none;
+  border-color: color-mix(
+    in srgb,
+    var(--color-accent) 65%,
+    var(--color-border)
+  );
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 25%, transparent);
+}
+.c-input.is-invalid,
+.c-select.is-invalid,
+.c-textarea.is-invalid {
+  border-color: color-mix(
+    in srgb,
+    var(--color-danger) 65%,
+    var(--color-border)
+  );
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 20%, transparent);
+}
+.c-checkrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ---------------------------------------------
+ * Section: Table
+ * --------------------------------------------- */
+.c-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-color: var(--color-surface);
+}
+.c-table th,
+.c-table td {
+  padding: 0.6rem 0.8rem;
+  border-top: 1px solid var(--color-border);
+}
+.c-table thead th {
+  position: sticky;
+  top: 0;
+  background-color: color-mix(
+    in srgb,
+    var(--color-bg) 90%,
+    var(--color-surface)
+  );
+  text-align: left;
+  font-weight: 700;
+}
+.c-table tr:nth-child(even) td {
+  background-color: color-mix(in srgb, var(--color-surface) 90%, transparent);
+}
+
+/* ---------------------------------------------
+ * Section: Badges
+ * --------------------------------------------- */
+.c-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-5);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  color: var(--badge-text);
+}
+.c-badge--a {
+  background: var(--gradient-badge-a);
+}
+.c-badge--b {
+  background: var(--gradient-badge-b);
+}
+.c-badge--c {
+  background: var(--gradient-badge-c);
+}
+.c-badge--d {
+  background: var(--gradient-badge-d);
+}
+.c-badge--e {
+  background: var(--gradient-badge-e);
+}
+
+/* ---------------------------------------------
+ * Section: Pager — prev left, next right
+ * --------------------------------------------- */
+.c-pager {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0; /* long labels may wrap */
+}
+.c-pager .c-button {
+  min-width: 0;
+  white-space: normal;
+}
+/* Centered variant (for one action) */
+.c-pager--center {
+  justify-content: center;
+}
+
+/* Narrow screens: stack vertically, full-width buttons */
+@media (max-width: 600px) {
+  .c-pager {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .c-pager .c-button {
+    width: 100%;
+    text-align: center;
+  }
+}

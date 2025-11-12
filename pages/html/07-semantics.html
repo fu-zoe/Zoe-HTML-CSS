@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML · Chapter 7 · Semantic Tags</title>
+    <meta
+      name="description"
+      content="HTML Chapter 7: semantic tags — landmarks and structure (header, nav, main, article, section, aside, details/summary, footer) with live demo and outlines toggle."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link rel="stylesheet" href="../../styles/pages/html/07-semantics.css" />
+  </head>
+  <body class="page--html-ch7">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a
+            class="c-nav__link is-active"
+            href="./index.html"
+            aria-current="page"
+            >HTML</a
+          >
+          <a class="c-nav__link" href="../css/index.html">CSS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item"><a href="./index.html">HTML</a></li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 7</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card chapter__hero">
+        <div class="l-cluster">
+          <span class="c-badge c-badge--a">Chapter 7</span>
+          <span class="c-badge c-badge--d">Semantics</span>
+        </div>
+        <h1 class="chapter__title">Semantic Tags &amp; Landmarks</h1>
+        <p class="chapter__lead">
+          Semantic tags don’t change look by default, but add meaning for
+          browsers, search engines, and assistive tech. Use the toggle to
+          visualize structure.
+        </p>
+      </header>
+
+      <!-- 1) Concept -->
+      <section class="c-card" id="concept">
+        <h2>General idea</h2>
+        <ul>
+          <li>Semantics = meaning; default visuals are minimal.</li>
+          <li>
+            Helps <em>navigation</em> for screen readers via landmarks
+            (<code>header</code>, <code>nav</code>, <code>main</code>,
+            <code>footer</code>...).
+          </li>
+          <li>Improves SEO and document structure (headings hierarchy).</li>
+        </ul>
+      </section>
+
+      <!-- 2) Live demo: code ↔ render -->
+      <section class="c-card" id="live-demo">
+        <h2>Live demo (code ↔ render)</h2>
+        <div class="l-cluster">
+          <button
+            id="outlineToggle"
+            class="c-button c-button--outline c-button--sm"
+            type="button"
+          >
+            Show outlines
+          </button>
+        </div>
+        <div class="demo-sbs">
+          <!-- Code pane -->
+          <div class="demo__code">
+            <pre><code>&lt;header&gt;
+  &lt;h1&gt;Main heading&lt;/h1&gt;
+  &lt;nav aria-label="site"&gt;&lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;main&gt;
+  &lt;article id="a1"&gt;
+    &lt;h2&gt;Article1 heading&lt;/h2&gt;
+
+    &lt;section id="s1"&gt;
+      &lt;h3&gt;Section1 heading&lt;/h3&gt;
+
+      &lt;aside&gt;
+        &lt;h4&gt;Aside heading&lt;/h4&gt;
+        &lt;details&gt;
+          &lt;summary&gt;Show more details about Section 1&lt;/summary&gt;
+          inline element mark: &lt;mark&gt;highlighted content&lt;/mark&gt;
+        &lt;/details&gt;
+      &lt;/aside&gt;
+    &lt;/section&gt;
+  &lt;/article&gt;
+
+  &lt;section id="s2"&gt;
+    &lt;h2 id="section2-heading"&gt;section2 heading&lt;/h2&gt;
+    &lt;nav aria-labelledby="section2-heading"&gt;&lt;/nav&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;
+  &lt;nav aria-label="footer"&gt;&lt;/nav&gt;
+&lt;/footer&gt;</code></pre>
+          </div>
+
+          <!-- Render pane -->
+          <div class="demo__render" id="render">
+            <header>
+              <h1>Main heading</h1>
+              <nav aria-label="site"></nav>
+            </header>
+
+            <main>
+              <article id="a1">
+                <h2>Article1 heading</h2>
+
+                <section id="s1">
+                  <h3>Section1 heading</h3>
+
+                  <aside>
+                    <h4>Aside heading</h4>
+                    <details>
+                      <summary>Show more details about Section 1</summary>
+                      inline element mark: <mark>highlighted content</mark>
+                    </details>
+                  </aside>
+                </section>
+              </article>
+
+              <section id="s2">
+                <h2 id="section2-heading">section2 heading</h2>
+                <nav aria-labelledby="section2-heading"></nav>
+              </section>
+            </main>
+
+            <footer>
+              <nav aria-label="footer"></nav>
+            </footer>
+          </div>
+        </div>
+
+        <!-- Legend for outline colors -->
+        <ul class="legend">
+          <li><span class="chip chip--header"></span> header</li>
+          <li><span class="chip chip--nav"></span> nav</li>
+          <li><span class="chip chip--main"></span> main</li>
+          <li><span class="chip chip--article"></span> article</li>
+          <li><span class="chip chip--section"></span> section</li>
+          <li><span class="chip chip--aside"></span> aside</li>
+          <li><span class="chip chip--details"></span> details/summary</li>
+          <li><span class="chip chip--footer"></span> footer</li>
+        </ul>
+      </section>
+
+      <!-- 3) Tips (restored) -->
+      <section class="c-card" id="tips">
+        <h2>Tips &amp; rules</h2>
+        <ul>
+          <li>
+            <strong>Headings:</strong> One page-level <code>&lt;h1&gt;</code>;
+            then descend in order (<code>h2</code> inside article/section,
+            etc.).
+          </li>
+          <li>
+            <strong>section vs article:</strong> <em>Article</em> is
+            self-contained (blog post, card, comment). <em>Section</em> groups
+            related content inside a page region. Prefer a heading for each
+            <code>section</code>.
+          </li>
+          <li>
+            <strong>Multiple navs:</strong> Differentiate with
+            <code>aria-label</code> or <code>aria-labelledby</code> (e.g. site
+            nav vs in-section nav).
+          </li>
+          <li>
+            <strong>div / span:</strong> No semantics. Use for styling hooks or
+            when no semantic element fits.
+          </li>
+          <li>
+            <strong>details/summary:</strong> Built-in disclosure widget; keep
+            summary clear and focusable.
+          </li>
+        </ul>
+      </section>
+
+      <!-- Pager (global pattern) -->
+      <nav class="c-pager u-mt-5" aria-label="Page navigation">
+        <a class="c-button c-button--outline" rel="prev" href="./06-images.html"
+          >← Prev: Images</a
+        >
+        <a class="c-button c-button--primary" rel="next" href="./08-tables.html"
+          >Next: Tables →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer (global pattern) -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · HTML · Chapter 7</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same on all pages)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+
+        // Outline toggle
+        (function () {
+          var toggle = document.getElementById("outlineToggle");
+          var render = document.getElementById("render");
+          if (!toggle || !render) return;
+          toggle.addEventListener("click", function () {
+            var on = render.classList.toggle("is-outlined");
+            toggle.textContent = on ? "Hide outlines" : "Show outlines";
+          });
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

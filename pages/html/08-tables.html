@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML · Chapter 8 · Tables</title>
+    <meta
+      name="description"
+      content="HTML Chapter 8: semantic tables with caption, thead/tbody/tfoot, row/column headers, rowspan/colspan — with row/column hover aids and span badges."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link rel="stylesheet" href="../../styles/pages/html/08-tables.css" />
+  </head>
+  <body class="page--html-ch8">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a
+            class="c-nav__link is-active"
+            href="./index.html"
+            aria-current="page"
+            >HTML</a
+          >
+          <a class="c-nav__link" href="../css/index.html">CSS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item"><a href="./index.html">HTML</a></li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 8</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card chapter__hero">
+        <div class="l-cluster">
+          <span class="c-badge c-badge--a">Chapter 8</span>
+          <span class="c-badge c-badge--d">Tables</span>
+        </div>
+        <h1 class="chapter__title">Create Tables</h1>
+        <p class="chapter__lead">
+          Caption, <code>thead</code>/<code>tbody</code>/<code>tfoot</code>,
+          row/column headers (<code>scope</code>), and cell spanning with
+          <code>rowspan</code>/<code>colspan</code>. Turn on the visual aids to
+          see structure.
+        </p>
+      </header>
+
+      <!-- Article content -->
+      <article class="l-stack">
+        <!-- Aids / switches -->
+        <section class="c-card" id="aids">
+          <h2>Visualization aids</h2>
+          <div class="l-cluster">
+            <label class="c-checkrow">
+              <input id="aidRow" type="checkbox" checked />
+              <span>Row hover highlight</span>
+            </label>
+            <label class="c-checkrow">
+              <input id="aidCol" type="checkbox" checked />
+              <span>Column hover via column headers</span>
+            </label>
+            <label class="c-checkrow">
+              <input id="aidSpan" type="checkbox" checked />
+              <span>Show <code>rowspan/colspan</code> badges</span>
+            </label>
+          </div>
+          <p class="u-text-left u-mt-2 u-mb-0">
+            Tip: move the cursor over a <strong>column header</strong> to
+            highlight that column; hover a row to highlight the row.
+          </p>
+        </section>
+
+        <!-- Live demo: code ↔ render -->
+        <section class="c-card" id="demo">
+          <h2>Live demo (code ↔ render)</h2>
+          <div class="demo-sbs">
+            <!-- Code pane -->
+            <div class="demo__code">
+              <pre><code>&lt;table&gt;
+  &lt;!-- Caption: describes what the table is about --&gt;
+  &lt;caption&gt;What table is about (centered by default)&lt;/caption&gt;
+
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;!-- Empty top-left header cell --&gt;
+      &lt;th&gt;&amp;nbsp;&lt;/th&gt;
+      &lt;!-- scope=&quot;col&quot; marks column headers --&gt;
+      &lt;th scope=&quot;col&quot;&gt;C1 heading&lt;/th&gt;
+      &lt;th scope=&quot;col&quot;&gt;C2 heading&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;!-- scope=&quot;row&quot; marks row headers --&gt;
+      &lt;th scope=&quot;row&quot;&gt;R1 heading&lt;/th&gt;
+      &lt;td&gt;C1R1&lt;/td&gt;
+      &lt;td&gt;C2R1&lt;/td&gt;
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+      &lt;th scope=&quot;row&quot;&gt;R2 heading&lt;/th&gt;
+      &lt;td&gt;C1R2&lt;/td&gt;
+      &lt;td&gt;C2R2&lt;/td&gt;
+    &lt;/tr&gt;
+
+    &lt;!-- This row merges two columns: colspan --&gt;
+    &lt;tr&gt;
+      &lt;th scope=&quot;row&quot;&gt;R3 heading&lt;/th&gt;
+      &lt;td colspan=&quot;2&quot;&gt;Taking up two columns&lt;/td&gt;
+    &lt;/tr&gt;
+
+    &lt;!-- This row and the next row are merged in the first data column --&gt;
+    &lt;tr&gt;
+      &lt;th scope=&quot;row&quot;&gt;R4 heading&lt;/th&gt;
+      &lt;td rowspan=&quot;2&quot;&gt;Taking up two rows&lt;/td&gt;
+      &lt;td&gt;row1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th scope=&quot;row&quot;&gt;R5 heading&lt;/th&gt;
+      &lt;td&gt;row2&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+
+  &lt;tfoot&gt;
+    &lt;tr&gt;
+      &lt;td colspan=&quot;3&quot;&gt;Table footer&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;</code></pre>
+            </div>
+
+            <!-- Render pane -->
+            <div class="demo__render">
+              <div class="table-scroll">
+                <table
+                  id="tableDemo"
+                  class="c-table"
+                  aria-describedby="tableNote"
+                >
+                  <caption>
+                    What table is about (centered by default)
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th>&nbsp;</th>
+                      <th scope="col">C1 heading</th>
+                      <th scope="col">C2 heading</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">R1 heading</th>
+                      <td>C1R1</td>
+                      <td>C2R1</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">R2 heading</th>
+                      <td>C1R2</td>
+                      <td>C2R2</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">R3 heading</th>
+                      <td colspan="2">Taking up two columns</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">R4 heading</th>
+                      <td rowspan="2">Taking up two rows</td>
+                      <td>row1</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">R5 heading</th>
+                      <td>row2</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="3">Table footer</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <p id="tableNote" class="note u-mt-2 u-mb-0">
+                Hover a <strong>column header</strong> to highlight the whole
+                column; hover a row anywhere to highlight the row. Spanned cells
+                show badges when enabled.
+              </p>
+            </div>
+          </div>
+        </section>
+      </article>
+
+      <!-- Pager -->
+      <nav class="c-pager u-mt-5" aria-label="Page navigation">
+        <a
+          class="c-button c-button--outline"
+          rel="prev"
+          href="./07-semantics.html"
+          >← Prev: Semantics</a
+        >
+        <a class="c-button c-button--primary" rel="next" href="./09-forms.html"
+          >Next: Forms →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · HTML · Chapter 8</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same on all pages)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+
+        // Aids toggles
+        (function () {
+          var table = document.getElementById("tableDemo");
+          var aidRow = document.getElementById("aidRow");
+          var aidCol = document.getElementById("aidCol");
+          var aidSpan = document.getElementById("aidSpan");
+          if (!table || !aidRow || !aidCol || !aidSpan) return;
+
+          var applyAids = function () {
+            table.toggleAttribute("data-aid-row", !!aidRow.checked);
+            table.toggleAttribute("data-aid-col", !!aidCol.checked);
+            table.toggleAttribute("data-aid-span", !!aidSpan.checked);
+          };
+          [aidRow, aidCol, aidSpan].forEach(function (cb) {
+            cb.addEventListener("change", applyAids);
+          });
+          applyAids();
+
+          // Column highlight via header hover
+          table
+            .querySelectorAll('thead th[scope="col"]')
+            .forEach(function (th) {
+              th.addEventListener("mouseenter", function () {
+                var col = th.cellIndex + 1; // nth-child index within <tr>
+                table.setAttribute("data-highlight-col", String(col));
+              });
+              th.addEventListener("mouseleave", function () {
+                table.removeAttribute("data-highlight-col");
+              });
+            });
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

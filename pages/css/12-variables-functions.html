@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>CSS · Chapter 12 — Custom Props & Functions</title>
+    <meta
+      name="description"
+      content="CSS custom properties (variables) and the core function toolbox: color (rgb/hsl), images (gradients), references (var()/url()), math (min/max/minmax/clamp/calc), filters, attr(), and grid helpers (repeat/minmax)."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link
+      rel="stylesheet"
+      href="../../styles/pages/css/12-custom-props-functions.css"
+    />
+  </head>
+  <body class="page--css-ch12">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a class="c-nav__link" href="../html/index.html">HTML</a>
+          <a
+            class="c-nav__link is-active"
+            href="../css/index.html"
+            aria-current="page"
+            >CSS</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item">
+            <a href="./index.html">CSS</a>
+          </li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 12</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card hero">
+        <div class="l-cluster u-mb-2">
+          <span class="c-badge c-badge--b">CSS</span>
+          <span class="c-badge c-badge--a">Chapter 12</span>
+        </div>
+        <h1 class="hero__title">Custom Props &amp; Functions</h1>
+        <p class="hero__lead">
+          CSS Custom Properties (variables) + core functions: color (rgb/hsl),
+          images (gradients), references
+          (<code>var()</code>/<code>url()</code>), math
+          (<code>min/max/minmax/clamp/calc</code>), filters,
+          <code>attr()</code>, and Grid helpers (<code>repeat()</code>).
+        </p>
+      </header>
+
+      <article class="l-stack">
+        <!-- 1) Variables (custom properties) -->
+        <section class="c-card" id="variables">
+          <h2 class="u-mt-0">1) Custom properties (variables)</h2>
+
+          <ul class="notes">
+            <li>
+              <strong>Syntax &amp; naming:</strong> start with <code>--</code>
+              (kebab-case). Use on any property:
+              <code>color: var(--brand)</code>.
+            </li>
+            <li>
+              <strong>Inheritance:</strong> custom properties <em>inherit</em> —
+              children take the nearest definition.
+            </li>
+            <li>
+              <strong>Cascade &amp; scope:</strong> follow normal cascade; set
+              at <code>:root</code>, override per component to theme locally.
+            </li>
+            <li>
+              <strong>Fallback:</strong> <code>var(--x, fallback)</code> is used
+              when <code>--x</code> is missing/invalid.
+            </li>
+            <li>
+              <strong>Units:</strong> store values with units (e.g.
+              <code>--pad: 1rem</code>); combine with <code>calc()</code> for
+              math.
+            </li>
+            <li>
+              <strong>Shorthands:</strong> can appear inside shorthands (e.g.
+              <code>border: var(--bw,2px) solid var(--brand)</code>).
+            </li>
+            <li>
+              <strong>Media overrides:</strong> redefine inside media queries
+              (e.g. dark mode).
+            </li>
+            <li>
+              <strong>Limit:</strong> variables are for values, not property
+              names.
+            </li>
+          </ul>
+
+          <div class="playground l-stack l-stack--sm">
+            <div
+              class="controls l-grid l-grid--fit-300"
+              aria-label="Variable theme controls"
+            >
+              <button
+                class="c-button c-button--subtle"
+                type="button"
+                data-theme="light"
+                aria-pressed="true"
+              >
+                Light
+              </button>
+              <button
+                class="c-button c-button--subtle"
+                type="button"
+                data-theme="dark"
+                aria-pressed="false"
+              >
+                Dark
+              </button>
+              <button
+                class="c-button c-button--subtle"
+                type="button"
+                data-theme="scoped"
+                aria-pressed="false"
+              >
+                Scoped override
+              </button>
+            </div>
+
+            <div class="var-demo theme--light" id="varDemo">
+              <h3 class="u-mt-0">Card title</h3>
+              <p class="u-mt-0 u-mb-2">
+                This block uses custom properties for color and spacing. The
+                “scoped” theme locally overrides variables without touching
+                <code>:root</code>.
+              </p>
+              <div class="swatch-row" aria-label="Current variable swatches">
+                <div class="swatch">--brand</div>
+                <div class="swatch">--surface</div>
+                <div class="swatch">--text</div>
+              </div>
+            </div>
+
+            <pre
+              class="code u-mt-2 u-mb-0"
+            ><code>/* Global definition (usually at :root) */
+:root {
+  --brand: hsl(210 80% 55%);
+  --surface: #fff;
+  --text: hsl(210 8% 15%);
+  --radius: 12px;
+  --pad: 1rem;
+  --fs: 1rem;
+}
+
+/* Use */
+.card { background: var(--surface); color: var(--text); }
+
+/* Scoped override (does not change :root) */
+.section-dark {
+  --surface: hsl(210 10% 12%);
+  --text: hsl(210 15% 92%);
+}</code></pre>
+          </div>
+        </section>
+
+        <!-- 2) Functions -->
+        <section class="c-card" id="functions">
+          <h2 class="u-mt-0">2) Core functions</h2>
+
+          <div class="l-grid l-grid--fit-300">
+            <div>
+              <h3 class="u-mt-0">Color functions</h3>
+              <ul class="notes">
+                <li>
+                  <code>rgb()</code>/<code>rgba()</code>,
+                  <code>hsl()</code>/<code>hsla()</code> — alpha as
+                  <code>/ .5</code> or 4th param.
+                </li>
+                <li>Prefer HSL for predictable hover lightness tweaks.</li>
+                <li>
+                  Modern syntax allows spaces:
+                  <code>hsl(210 90% 55% / .35)</code>.
+                </li>
+              </ul>
+              <div class="stage">
+                <div class="pill pill--rgb">rgb(34,134,255)</div>
+                <div class="pill pill--rgba">rgba(34,134,255,.35)</div>
+                <div class="pill pill--hsl">hsl(210 90% 55%)</div>
+                <div class="pill pill--hsla">hsla(210 90% 55% / .35)</div>
+              </div>
+              <pre
+                class="code u-mt-2 u-mb-0"
+              ><code>.box-a { background: rgb(34 134 255); }
+.box-b { background: hsl(210 90% 55% / 0.35); }</code></pre>
+            </div>
+
+            <div>
+              <h3 class="u-mt-0">Image functions</h3>
+              <ul class="notes">
+                <li>
+                  <code>linear-gradient()</code>,
+                  <code>radial-gradient()</code>, <code>conic-gradient()</code>,
+                  plus repeating variants.
+                </li>
+                <li>
+                  Multiple backgrounds are comma-separated; the
+                  <em>first</em> is painted on top.
+                </li>
+                <li>
+                  <code>background-position/size/repeat</code> can be
+                  comma-separated for each layer.
+                </li>
+              </ul>
+              <div class="stage stage--imgfx">
+                <div class="layer demo-lin">linear-gradient()</div>
+                <div class="layer demo-rad">radial-gradient()</div>
+              </div>
+              <pre class="code u-mt-2 u-mb-0"><code>.hero {
+  background-image:
+    linear-gradient(135deg, hsl(200 90% 60% / .5), hsl(320 90% 60% / .5)),
+    url("../../assets/html-10.png");
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+}</code></pre>
+            </div>
+
+            <div>
+              <h3 class="u-mt-0">Math functions</h3>
+              <ul class="notes">
+                <li><code>min(a,b)</code> / <code>max(a,b)</code>.</li>
+                <li>
+                  <code>clamp(min, ideal, max)</code> — responsive sizing within
+                  bounds.
+                </li>
+                <li><code>calc()</code> — computed-time math.</li>
+                <li><code>minmax(min,max)</code> — Grid track range.</li>
+              </ul>
+              <div class="stage">
+                <p class="clamped" id="clampedText">
+                  Responsive type via <code>clamp()</code>
+                </p>
+              </div>
+              <pre
+                class="code u-mt-2 u-mb-0"
+              ><code>.title { font-size: clamp(1rem, 3vw, 2rem); }
+.box   { width: calc(70% - 8px); }
+.cols  { grid-template-columns: repeat(3, minmax(200px, 1fr)); }</code></pre>
+            </div>
+
+            <div>
+              <h3 class="u-mt-0">Filter functions</h3>
+              <ul class="notes">
+                <li>
+                  Chainable:
+                  <code
+                    >filter: brightness(120%) hue-rotate(180deg) blur(2px)</code
+                  >.
+                </li>
+                <li>Heavy blurs on large elements can be expensive.</li>
+                <li>Apply to images or isolated layers.</li>
+              </ul>
+              <div class="stage filter-stage">
+                <img
+                  id="filterImg"
+                  src="../../assets/html-12.png"
+                  alt="filter demo"
+                  width="1319"
+                  height="1617"
+                />
+              </div>
+              <form
+                class="controls l-grid l-grid--fit-300 u-mt-2"
+                aria-label="Filter controls"
+              >
+                <label class="control">
+                  <span>brightness</span>
+                  <input
+                    type="range"
+                    id="fBright"
+                    min="50"
+                    max="150"
+                    value="100"
+                  />
+                </label>
+                <label class="control">
+                  <span>hue-rotate</span>
+                  <input type="range" id="fHue" min="0" max="360" value="0" />
+                </label>
+                <label class="control">
+                  <span>blur(px)</span>
+                  <input type="range" id="fBlur" min="0" max="6" value="0" />
+                </label>
+              </form>
+              <pre
+                class="code u-mt-2 u-mb-0"
+              ><code>img { filter: brightness(120%) hue-rotate(180deg) blur(2px); }</code></pre>
+            </div>
+
+            <div>
+              <h3 class="u-mt-0">Content (attr)</h3>
+              <ul class="notes">
+                <li>
+                  <code>attr()</code> is broadly supported in
+                  <code>content:</code> (badges/tooltips).
+                </li>
+                <li>
+                  Using <code>attr()</code> in other properties is still
+                  emerging; don’t rely on it.
+                </li>
+              </ul>
+              <div class="stage">
+                <button
+                  class="c-button has-tip"
+                  data-tooltip="Copied to clipboard!"
+                >
+                  Copy
+                </button>
+                <button class="c-button has-tip" data-tooltip="Danger action">
+                  Delete
+                </button>
+              </div>
+              <pre
+                class="code u-mt-2 u-mb-0"
+              ><code>.has-tip { position: relative; }
+.has-tip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  inset-inline: 50% auto;
+  transform: translateX(-50%);
+  bottom: calc(100% + 6px);
+  background: #111; color: #fff;
+  padding: .25rem .5rem;
+  border-radius: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.has-tip:hover::after,
+.has-tip:focus-visible::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-2px);
+}</code></pre>
+            </div>
+
+            <div>
+              <h3 class="u-mt-0">Grid helpers</h3>
+              <ul class="notes">
+                <li><code>repeat(n, x)</code> — repeated tracks.</li>
+                <li>
+                  <code>minmax(min,max)</code> — usable small, fluid large.
+                </li>
+                <li><code>fit-content(len)</code> — cap track growth.</li>
+              </ul>
+              <div class="stage">
+                <div class="minmax-grid">
+                  <div class="gcell">1</div>
+                  <div class="gcell">2</div>
+                  <div class="gcell">3</div>
+                  <div class="gcell">4</div>
+                  <div class="gcell">5</div>
+                  <div class="gcell">6</div>
+                </div>
+              </div>
+              <pre class="code u-mt-2 u-mb-0"><code>.minmax-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(200px, 1fr));
+}</code></pre>
+            </div>
+          </div>
+        </section>
+      </article>
+
+      <!-- Pager -->
+      <nav class="c-pager" aria-label="Page navigation">
+        <a
+          class="c-button c-button--subtle"
+          rel="prev"
+          href="./11-responsive-media-queries.html"
+          >← Prev: Responsive</a
+        >
+        <a class="c-button c-button--primary" rel="next" href="./13-motion.html"
+          >Next: Motion →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · CSS · Chapter 12</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav on scroll
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          function onScroll() {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          }
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+
+        // 1) Variables theme toggles
+        (function () {
+          var wrap = document.getElementById("varDemo");
+          var panel = document.querySelector("#variables .controls");
+          if (!wrap || !panel) return;
+
+          function setTheme(key) {
+            wrap.className = "var-demo theme--" + key;
+            panel.querySelectorAll("[data-theme]").forEach(function (b) {
+              b.setAttribute(
+                "aria-pressed",
+                b.getAttribute("data-theme") === key ? "true" : "false"
+              );
+            });
+          }
+          panel.addEventListener("click", function (e) {
+            var btn = e.target.closest("[data-theme]");
+            if (!btn) return;
+            setTheme(btn.getAttribute("data-theme"));
+          });
+          setTheme("light");
+        })();
+
+        // 2) Filters controls
+        (function () {
+          var img = document.getElementById("filterImg");
+          var b = document.getElementById("fBright");
+          var h = document.getElementById("fHue");
+          var bl = document.getElementById("fBlur");
+          if (!img) return;
+          function sync() {
+            img.style.filter =
+              "brightness(" +
+              (b.value | 0) +
+              "%) " +
+              "hue-rotate(" +
+              (h.value | 0) +
+              "deg) " +
+              "blur(" +
+              (bl.value | 0) +
+              "px)";
+          }
+          [b, h, bl].forEach(function (el) {
+            el.addEventListener("input", sync);
+          });
+          sync();
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

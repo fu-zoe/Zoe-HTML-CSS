@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>CSS · Chapter 9 — Typography & Links & Lists</title>
+    <meta
+      name="description"
+      content="Text & font basics, link states and hover strategies, and list styling (HTML features + CSS list-style + ::marker + nth-child)."
+    />
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link
+      rel="stylesheet"
+      href="../../styles/pages/css/09-typography-links-lists.css"
+    />
+  </head>
+  <body class="page--css-ch9">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a class="c-nav__link" href="../html/index.html">HTML</a>
+          <a
+            class="c-nav__link is-active"
+            href="../css/index.html"
+            aria-current="page"
+            >CSS</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item">
+            <a href="./index.html">CSS</a>
+          </li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 9</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card hero">
+        <div class="l-cluster u-mb-2">
+          <span class="c-badge c-badge--b">CSS</span>
+          <span class="c-badge c-badge--a">Chapter 9</span>
+        </div>
+        <h1 class="hero__title">Typography · Links · Lists</h1>
+        <p class="hero__lead">
+          Text &amp; font settings, practical link states and hover styling, and
+          list features from HTML and CSS.
+        </p>
+      </header>
+
+      <article class="l-stack">
+        <!-- 1) Typography -->
+        <section class="c-card" id="typography">
+          <h2 class="u-mt-0">1) Typography: text, spacing, fonts</h2>
+
+          <form class="controls" aria-label="Typography controls">
+            <!-- Text settings -->
+            <label class="control">
+              <span>text-decoration</span>
+              <select id="t-deco">
+                <option>none</option>
+                <option selected>underline</option>
+                <option>overline</option>
+                <option>line-through</option>
+              </select>
+            </label>
+
+            <label class="control">
+              <span>text-transform</span>
+              <select id="t-transform">
+                <option>none</option>
+                <option>capitalize</option>
+                <option>lowercase</option>
+                <option>uppercase</option>
+              </select>
+            </label>
+
+            <label class="control">
+              <span>text-align</span>
+              <select id="t-align">
+                <option>left</option>
+                <option selected>center</option>
+                <option>right</option>
+                <option>justify</option>
+              </select>
+            </label>
+
+            <label class="control">
+              <span>text-indent</span>
+              <select id="t-indent">
+                <option value="0">0</option>
+                <option value="1em">1em</option>
+                <option value="2em" selected>2em</option>
+              </select>
+            </label>
+
+            <label class="control">
+              <span>text-shadow</span>
+              <select id="t-shadow">
+                <option value="none">none</option>
+                <option value="2px 2px 5px rgba(0,0,0,.35)" selected>
+                  2px 2px 5px rgba(0,0,0,.35)
+                </option>
+              </select>
+            </label>
+
+            <!-- Line & spacing -->
+            <label class="control">
+              <span>line-height</span>
+              <select id="t-line">
+                <option>1.2</option>
+                <option selected>1.5</option>
+                <option>1.8</option>
+              </select>
+            </label>
+
+            <label class="control">
+              <span>letter-spacing</span>
+              <select id="t-letter">
+                <option value="0">0</option>
+                <option value="0.05em">0.05em</option>
+                <option value="0.1em" selected>0.1em</option>
+              </select>
+            </label>
+
+            <label class="control">
+              <span>word-spacing</span>
+              <select id="t-word">
+                <option value="0">0</option>
+                <option value="0.1em" selected>0.1em</option>
+                <option value="0.2em">0.2em</option>
+              </select>
+            </label>
+
+            <!-- Font properties -->
+            <label class="control">
+              <span>font-weight</span>
+              <select id="t-weight">
+                <option>400</option>
+                <option selected>600</option>
+                <option>700</option>
+              </select>
+            </label>
+
+            <label class="control">
+              <span>font-style</span>
+              <select id="t-style">
+                <option>normal</option>
+                <option selected>italic</option>
+                <option>oblique</option>
+              </select>
+            </label>
+
+            <label class="control">
+              <span>font-family</span>
+              <select id="t-family">
+                <option
+                  value="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Noto Sans, Apple Color Emoji, Segoe UI Emoji"
+                >
+                  system-ui sans-serif (web)
+                </option>
+                <option value="Georgia, 'Times New Roman', serif" selected>
+                  Georgia, Times, serif
+                </option>
+                <option value="'Courier New', Courier, monospace">
+                  'Courier New', monospace
+                </option>
+                <option value="Verdana, Geneva, Tahoma, sans-serif">
+                  Verdana, Geneva, Tahoma, sans-serif
+                </option>
+              </select>
+            </label>
+          </form>
+
+          <div class="stage stage--type" id="type-stage">
+            <p id="type-sample" class="type-sample">
+              “Typography is the craft of endowing human language with a visual
+              form.” — Robert Bringhurst
+            </p>
+            <p class="u-help u-mt-2">
+              Google Fonts: add a <code>&lt;link&gt;</code> before your CSS or
+              an <code>@import</code> at the top of your stylesheet, then set
+              <code>font-family</code>.<br />
+              Example:
+              <code
+                >&lt;link
+                href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap"
+                rel="stylesheet"&gt;</code
+              >
+            </p>
+          </div>
+
+          <pre class="code u-mt-2 u-mb-0"><code id="type-code"></code></pre>
+        </section>
+
+        <!-- 2) Styling links -->
+        <section class="c-card" id="links">
+          <h2 class="u-mt-0">2) Styling links (LVHA &amp; hover techniques)</h2>
+
+          <form class="controls" aria-label="Link demo controls">
+            <label class="control">
+              <span>cursor</span>
+              <select id="a-cursor">
+                <option value="pointer" selected>pointer</option>
+                <option value="not-allowed">not-allowed</option>
+              </select>
+            </label>
+
+            <label class="control">
+              <span>hover technique</span>
+              <select id="a-tech">
+                <option value="hsl" selected>HSL lighten</option>
+                <option value="opacity">opacity 0.8</option>
+              </select>
+            </label>
+          </form>
+
+          <div class="stage stage--links" id="links-stage">
+            <p class="demo-links">
+              <a href="#" class="demo">A regular link</a> ·
+              <a href="#" class="demo as-visited">A “visited” example</a> ·
+              <a href="#" class="demo">Another link</a>
+            </p>
+            <p class="u-help u-mt-1 u-mb-0" role="note">
+              Order matters: <strong>LVHA</strong> — <code>:link</code>,
+              <code>:visited</code>, <code>:hover</code>/<code>:focus</code>,
+              <code>:active</code>. The purple “visited” here is simulated with
+              a class.
+            </p>
+          </div>
+
+          <pre class="code u-mt-2 u-mb-0"><code id="links-code"></code></pre>
+        </section>
+
+        <!-- 3) Lists -->
+        <section class="c-card" id="lists">
+          <h2 class="u-mt-0">3) List styles (HTML + CSS)</h2>
+
+          <div class="l-grid l-grid--fit-300">
+            <div>
+              <h3>HTML features</h3>
+              <div class="stage">
+                <ol start="3">
+                  <li>Ordered list starting at 3</li>
+                  <li>Next is 4</li>
+                </ol>
+                <ol reversed>
+                  <li>Numbers in reverse</li>
+                  <li>Go downwards</li>
+                </ol>
+                <ol>
+                  <li>Normal</li>
+                  <li value="24">Manually set this item to 24</li>
+                  <li>Back to 25</li>
+                </ol>
+              </div>
+
+              <pre class="code u-mt-2"><code>&lt;ol start="3"&gt;
+  &lt;li&gt;Ordered list starting at 3&lt;/li&gt;
+  &lt;li&gt;Next is 4&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ol reversed&gt;
+  &lt;li&gt;Numbers in reverse&lt;/li&gt;
+  &lt;li&gt;Go downwards&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Normal&lt;/li&gt;
+  &lt;li value="24"&gt;Manually set this item to 24&lt;/li&gt;
+  &lt;li&gt;Back to 25&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+            </div>
+
+            <div>
+              <h3>CSS playground</h3>
+              <form class="controls" aria-label="List CSS controls">
+                <label class="control">
+                  <span>ol list-style-type</span>
+                  <select id="ol-type">
+                    <option>decimal</option>
+                    <option>lower-alpha</option>
+                    <option>upper-roman</option>
+                    <option>georgian</option>
+                    <option>none</option>
+                  </select>
+                </label>
+
+                <label class="control">
+                  <span>ul list-style-type</span>
+                  <select id="ul-type">
+                    <option>disc</option>
+                    <option>circle</option>
+                    <option>square</option>
+                    <option>none</option>
+                  </select>
+                </label>
+
+                <label class="control">
+                  <span>list-style-position</span>
+                  <select id="list-pos">
+                    <option>outside</option>
+                    <option>inside</option>
+                  </select>
+                </label>
+
+                <label class="control">
+                  <span>list-style-image</span>
+                  <select id="list-img">
+                    <option value="none" selected>none</option>
+                    <option value="svg">custom SVG marker</option>
+                  </select>
+                </label>
+
+                <label class="control">
+                  <span>nth-child striping (UL)</span>
+                  <select id="list-stripe">
+                    <option value="none" selected>none</option>
+                    <option value="odd">odd</option>
+                    <option value="even">even</option>
+                  </select>
+                </label>
+
+                <label class="control control--checkbox">
+                  <input type="checkbox" id="list-reset" />
+                  <span>Remove default padding (indent)</span>
+                </label>
+
+                <label class="control control--checkbox">
+                  <input type="checkbox" id="list-center" />
+                  <span>Center-align list items</span>
+                </label>
+
+                <label class="control control--checkbox">
+                  <input type="checkbox" id="list-marker" />
+                  <span>Style <code>::marker</code> (color, font)</span>
+                </label>
+
+                <label class="control control--checkbox">
+                  <input type="checkbox" id="list-content" />
+                  <span
+                    >UL marker content: <code>"Only $5 &raquo; "</code></span
+                  >
+                </label>
+              </form>
+
+              <div class="stage" id="list-stage">
+                <ol id="ol-demo">
+                  <li>Alpha launch</li>
+                  <li>Bravo check</li>
+                  <li>Charlie wrap-up</li>
+                </ol>
+                <ul id="ul-demo">
+                  <li>Apples</li>
+                  <li>Bananas</li>
+                  <li>Cherries</li>
+                  <li>Dates</li>
+                  <li>Elderberries</li>
+                </ul>
+              </div>
+              <p class="u-help u-mt-1 u-mb-0">
+                <strong>Note:</strong> <code>::marker</code> supports a limited
+                set of properties. <code>content</code> on
+                <code>::marker</code> is supported in modern browsers, but test
+                in your target.
+              </p>
+            </div>
+          </div>
+
+          <pre class="code u-mt-2 u-mb-0"><code id="lists-code"></code></pre>
+        </section>
+      </article>
+
+      <!-- Pager (global component; no extra container) -->
+      <nav class="c-pager" aria-label="Page navigation">
+        <a
+          class="c-button c-button--subtle"
+          rel="prev"
+          href="./08-floats-columns.html"
+          >← Prev: Floats &amp; Columns</a
+        >
+        <a
+          class="c-button c-button--primary"
+          rel="next"
+          href="./10-images-media.html"
+          >Next: Images &amp; Media →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · CSS · Chapter 9</small>
+
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same pattern)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+
+        // ---------- Typography demo ----------
+        (function () {
+          var sample = document.getElementById("type-sample");
+          var code = document.getElementById("type-code");
+          var deco = document.getElementById("t-deco");
+          var transform = document.getElementById("t-transform");
+          var align = document.getElementById("t-align");
+          var indent = document.getElementById("t-indent");
+          var shadow = document.getElementById("t-shadow");
+          var line = document.getElementById("t-line");
+          var letter = document.getElementById("t-letter");
+          var word = document.getElementById("t-word");
+          var weight = document.getElementById("t-weight");
+          var style = document.getElementById("t-style");
+          var family = document.getElementById("t-family");
+
+          function sync() {
+            sample.style.textDecoration = deco.value;
+            sample.style.textTransform = transform.value;
+            sample.style.textAlign = align.value;
+            sample.style.textIndent = indent.value;
+            sample.style.textShadow = shadow.value;
+            sample.style.lineHeight = line.value;
+            sample.style.letterSpacing = letter.value;
+            sample.style.wordSpacing = word.value;
+            sample.style.fontWeight = weight.value;
+            sample.style.fontStyle = style.value;
+            sample.style.fontFamily = family.value;
+
+            var lines = [
+              "text-decoration: " + deco.value + ";",
+              "text-transform: " + transform.value + ";",
+              "text-align: " + align.value + ";",
+              "text-indent: " + indent.value + ";",
+              "text-shadow: " + shadow.value + ";",
+              "line-height: " + line.value + ";",
+              "letter-spacing: " + letter.value + ";",
+              "word-spacing: " + word.value + ";",
+              "font-weight: " + weight.value + ";",
+              "font-style: " + style.value + ";",
+              "font-family: " + family.value + ";",
+            ];
+            code.textContent = lines.join("\n");
+          }
+          [
+            deco,
+            transform,
+            align,
+            indent,
+            shadow,
+            line,
+            letter,
+            word,
+            weight,
+            style,
+            family,
+          ].forEach(function (el) {
+            el.addEventListener("change", sync);
+          });
+          sync();
+        })();
+
+        // ---------- Links demo ----------
+        (function () {
+          var stage = document.getElementById("links-stage");
+          var cursor = document.getElementById("a-cursor");
+          var tech = document.getElementById("a-tech");
+          var code = document.getElementById("links-code");
+
+          function sync() {
+            stage.dataset.cursor = cursor.value;
+            stage.dataset.tech = tech.value;
+
+            var lines = [
+              "/* LVHA order */",
+              "a:link    { color: hsl(210 90% 40%); }",
+              "a:visited { color: rebeccapurple; }",
+              tech.value === "hsl"
+                ? "a:hover, a:focus { color: hsl(210 90% 55%); }"
+                : "a:hover, a:focus { opacity: 0.8; }",
+              "a:active  { color: crimson; }",
+              "",
+              ".demo-links a { cursor: " + cursor.value + "; }",
+            ];
+            code.textContent = lines.join("\n");
+          }
+          [cursor, tech].forEach(function (el) {
+            el.addEventListener("change", sync);
+          });
+          sync();
+        })();
+
+        // ---------- Lists demo ----------
+        (function () {
+          var ol = document.getElementById("ol-demo");
+          var ul = document.getElementById("ul-demo");
+          var stage = document.getElementById("list-stage");
+          var code = document.getElementById("lists-code");
+
+          var tOl = document.getElementById("ol-type");
+          var tUl = document.getElementById("ul-type");
+          var tPos = document.getElementById("list-pos");
+          var tImg = document.getElementById("list-img");
+          var tStripe = document.getElementById("list-stripe");
+          var tReset = document.getElementById("list-reset");
+          var tCenter = document.getElementById("list-center");
+          var tMarker = document.getElementById("list-marker");
+          var tContent = document.getElementById("list-content");
+
+          var dataSvg =
+            'url("data:image/svg+xml;utf8,' +
+            "<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12'>" +
+            "<circle cx='6' cy='6' r='5' fill='%231d7cf2'/></svg>\")";
+
+          function sync() {
+            ol.style.listStyleType = tOl.value;
+            ul.style.listStyleType = tUl.value;
+
+            ol.style.listStylePosition = tPos.value;
+            ul.style.listStylePosition = tPos.value;
+
+            var img = tImg.value === "svg" ? dataSvg : "none";
+            ol.style.listStyleImage = img;
+            ul.style.listStyleImage = img;
+
+            // nth-child striping — set a data attribute the CSS uses
+            stage.dataset.stripe = tStripe.value; // "none" | "odd" | "even"
+
+            // reset padding (indent) and center align
+            [ol, ul].forEach(function (el) {
+              el.style.paddingInlineStart = tReset.checked ? "0" : "";
+              el.style.textAlign = tCenter.checked ? "center" : "";
+            });
+
+            // ::marker styling (via CSS variables on the stage)
+            stage.style.setProperty(
+              "--m-color",
+              tMarker.checked ? "black" : ""
+            );
+            stage.style.setProperty(
+              "--m-family",
+              tMarker.checked ? "fantasy" : ""
+            );
+            stage.style.setProperty("--m-size", tMarker.checked ? "1em" : "");
+
+            // marker content for UL only
+            stage.dataset.markerContent = tContent.checked ? "on" : "off";
+
+            var lines = [
+              "ol { list-style-type: " + tOl.value + "; }",
+              "ul { list-style-type: " + tUl.value + "; }",
+              "ol, ul { list-style-position: " + tPos.value + "; }",
+              "ol, ul { list-style-image: " +
+                (tImg.value === "svg" ? "<svg circle>" : "none") +
+                "; }",
+              tStripe.value !== "none"
+                ? "ul li:nth-child(" +
+                  tStripe.value +
+                  ") { background: hsl(210 90% 55% / 0.14); outline: 1px dashed color-mix(in srgb, var(--color-border) 70%, transparent); }"
+                : "",
+              tReset.checked ? "ol, ul { padding-inline-start: 0; }" : "",
+              tCenter.checked ? "ol, ul { text-align: center; }" : "",
+              tMarker.checked
+                ? "li::marker { color: black; font-family: fantasy; font-size: 1em; }"
+                : "",
+              tContent.checked
+                ? 'ul li::marker { content: "Only $5 » "; }'
+                : "",
+            ].filter(Boolean);
+            code.textContent = lines.join("\n");
+          }
+          [
+            tOl,
+            tUl,
+            tPos,
+            tImg,
+            tStripe,
+            tReset,
+            tCenter,
+            tMarker,
+            tContent,
+          ].forEach(function (el) {
+            el.addEventListener("change", sync);
+          });
+          sync();
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

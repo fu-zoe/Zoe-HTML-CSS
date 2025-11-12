@@ -1,0 +1,103 @@
+/* ---------------------------------------------
+ * Playground · Project Skeleton — page-only styles
+ * --------------------------------------------- */
+@layer pages {
+  /* Background (same as others) */
+  body.page--playground-skel {
+    background: var(--gradient-bg-mist) fixed;
+    background-color: var(--color-bg);
+  }
+
+  /* Chapter layout */
+  .chapter {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0;
+  }
+
+  /* Hero */
+  .chapter__hero {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .chapter__title {
+    margin: 0;
+  }
+  .chapter__lead {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* Tree */
+  .tree-wrap {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+  }
+  .tree {
+    margin: 0;
+    max-width: 100%;
+    overflow: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas,
+      "Liberation Mono", monospace;
+    font-size: 0.95em;
+  }
+
+  /* Layer cards */
+  .layer-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    padding: var(--space-3);
+    min-width: 0;
+  }
+
+  /* Cards / code blocks guard */
+  .chapter .c-card {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .chapter .c-card pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+  .chapter .c-card code {
+    word-break: normal;
+  }
+
+  /* Ultra-narrow safety */
+  @media (max-width: 360px) {
+    .chapter .c-card pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .c-button {
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+  }
+
+  /* Anchor offset */
+  .chapter section[id] {
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+  }
+
+  /* Responsive type scale */
+  .chapter h1 {
+    font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+  }
+  .chapter h2 {
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+  }
+  .chapter p,
+  .chapter li {
+    font-size: clamp(0.95rem, 1.8vw, 1rem);
+  }
+
+  /* Horizontal overflow guard */
+  .page--playground-skel main {
+    overflow-x: hidden;
+  }
+}

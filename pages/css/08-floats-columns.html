@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>CSS · Chapter 8 — Floats & Multicol</title>
+    <meta
+      name="description"
+      content="CSS Chapter 8: Floats (float/clear/contain) and Multi-column layout — with focused demos and a live-updating code block."
+    />
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link
+      rel="stylesheet"
+      href="../../styles/pages/css/08-floats-multicol.css"
+    />
+  </head>
+  <body class="page--css-ch8">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a class="c-nav__link" href="../html/index.html">HTML</a>
+          <a
+            class="c-nav__link is-active"
+            href="../css/index.html"
+            aria-current="page"
+            >CSS</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item"><a href="./index.html">CSS</a></li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 8</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card hero">
+        <div class="l-cluster u-mb-2">
+          <span class="c-badge c-badge--b">CSS</span>
+          <span class="c-badge c-badge--a">Chapter 8</span>
+        </div>
+        <h1 class="hero__title">Floats &amp; Multi-column Layout</h1>
+        <p class="hero__lead">
+          Float elements left/right (with <em>clear</em> and containment), and
+          use CSS Multicol to flow content into multiple columns with rules,
+          gaps, and controlled breaks.
+        </p>
+      </header>
+
+      <article class="l-stack">
+        <!-- 1) Floats -->
+        <section class="c-card" id="floats">
+          <h2 class="u-mt-0">
+            1) Floats: float · clear · containing strategies
+          </h2>
+
+          <p class="u-help u-mt-0">
+            <strong>Emmet hint:</strong>
+            <code>p*5&gt;lorem20</code> creates 5 <code>&lt;p&gt;</code> with
+            20-word lorem ipsum.
+          </p>
+
+          <form class="controls" aria-label="Float demo controls">
+            <label class="control">
+              <span>float</span>
+              <select id="f-float">
+                <option value="none" selected>none</option>
+                <option value="left">left</option>
+                <option value="right">right</option>
+              </select>
+            </label>
+
+            <label class="control">
+              <span>clear</span>
+              <select id="f-clear">
+                <option value="none" selected>none</option>
+                <option value="left">left</option>
+                <option value="right">right</option>
+                <option value="both">both</option>
+              </select>
+            </label>
+
+            <label class="control">
+              <span>Contain strategy</span>
+              <select id="f-contain">
+                <option value="none" selected>
+                  none (collapses if only floats)
+                </option>
+                <option value="overflow">overflow:auto</option>
+                <option value="flow-root">display: flow-root</option>
+              </select>
+            </label>
+
+            <label class="control control--checkbox">
+              <input type="checkbox" id="f-collapse" />
+              <span>Collapse scenario (only floats)</span>
+            </label>
+          </form>
+
+          <div class="stage stage--float">
+            <div class="container" id="f-container" data-state="contained">
+              <div id="floatbox" class="floatbox" aria-label="Floated box">
+                FLOAT
+              </div>
+
+              <div id="flow-content">
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea
+                  minus, doloremque commodi obcaecati similique. Temporibus,
+                  delectus. Nisi impedit, eos quidem nobis cumque quasi sed
+                  consequuntur qui?
+                </p>
+                <p>
+                  Dignissimos nemo dolorum illum accusamus deserunt ratione
+                  obcaecati ipsum? Architecto nemo veniam aliquid nihil earum,
+                  facilis fugiat expedita.
+                </p>
+              </div>
+
+              <p id="clear-block" class="clear" hidden>
+                I am the “clear” block.
+              </p>
+            </div>
+
+            <div class="meter">
+              <span>Container height:</span>
+              <strong id="f-height">—</strong>
+              <span id="f-state" class="pill">state: —</span>
+            </div>
+          </div>
+
+          <pre class="code"><code>/* Essentials */
+.left  { float: left;  }
+.right { float: right; }
+.clear { clear: both;  }
+
+/* Containing strategies */
+.container { overflow: auto; }     /* expands around floats (BFC) */
+.container { display: flow-root; } /* modern BFC; no clipping/scrollbars */</code></pre>
+        </section>
+
+        <!-- 2) Multicol -->
+        <section class="c-card" id="multicol">
+          <h2 class="u-mt-0">2) Multi-column layout</h2>
+
+          <form class="controls" aria-label="Multicol demo controls">
+            <label class="control">
+              <span>columns (shorthand)</span>
+              <select id="m-columns">
+                <option value="auto 260px">columns: auto 260px;</option>
+                <option value="3 260px" selected>columns: 3 260px;</option>
+                <option value="4 250px">columns: 4 250px;</option>
+                <option value="auto 320px">columns: auto 320px;</option>
+              </select>
+            </label>
+
+            <label class="control">
+              <span>column-count</span>
+              <select id="m-count">
+                <option value="auto">column-count: auto;</option>
+                <option value="2">column-count: 2;</option>
+                <option value="3" selected>column-count: 3;</option>
+                <option value="4">column-count: 4;</option>
+              </select>
+            </label>
+
+            <label class="control">
+              <span>column-width</span>
+              <select id="m-width">
+                <option value="220px">column-width: 220px;</option>
+                <option value="260px" selected>column-width: 260px;</option>
+                <option value="320px">column-width: 320px;</option>
+              </select>
+            </label>
+
+            <label class="control">
+              <span>column-gap</span>
+              <select id="m-gap">
+                <option value="1rem">column-gap: 1rem;</option>
+                <option value="1.25rem" selected>column-gap: 1.25rem;</option>
+                <option value="2rem">column-gap: 2rem;</option>
+              </select>
+            </label>
+
+            <label class="control">
+              <span>column-rule</span>
+              <select id="m-rule">
+                <option value="none">column-rule: none;</option>
+                <option value="thin" selected>
+                  column-rule: 1px solid #ccd6e0;
+                </option>
+                <option value="thick">column-rule: 3px solid #98a6b3;</option>
+              </select>
+            </label>
+
+            <label class="control control--checkbox">
+              <input type="checkbox" id="m-avoid" />
+              <span>Headings: <code>break-inside: avoid</code></span>
+            </label>
+
+            <label class="control control--checkbox">
+              <input type="checkbox" id="m-before" checked />
+              <span>Each heading: <code>break-before: column</code></span>
+            </label>
+
+            <label class="control control--checkbox">
+              <input type="checkbox" id="m-span" />
+              <span>Full-width quote: <code>column-span: all</code></span>
+            </label>
+
+            <label class="control control--checkbox">
+              <input type="checkbox" id="m-nowrap" />
+              <span>Demo line: <code>white-space: nowrap</code></span>
+            </label>
+          </form>
+
+          <div class="stage">
+            <section id="columns" class="columns">
+              <h2>Section title one</h2>
+              <p>
+                Multicol flows content top-to-bottom, then left-to-right across
+                columns. It does
+                <em>not</em> map “one element per column”.
+              </p>
+
+              <!-- Tall paragraph to demonstrate break-inside: avoid -->
+              <p class="demo-long">
+                This paragraph is deliberately long to show fragmentation:
+                without
+                <code>break-inside: avoid</code> it may split across columns;
+                with the option on, it moves intact to the next column if there
+                isn't enough room left here. Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. A aspernatur voluptatem,
+                perspiciatis dolorum, cupiditate, porro ab tempore repellendus
+                nisi molestiae! Ullam, sed accusamus. Quam, commodi,
+                perspiciatis. Voluptate, illum, iusto!
+              </p>
+
+              <h2>Section title two</h2>
+              <p>
+                Use <code>column-count</code> for a target number of columns and
+                <code>column-width</code> for a minimum track width — the
+                browser may reduce the final count if space is tight.
+              </p>
+
+              <blockquote class="quote">
+                “Spanning content across <strong>all columns</strong> is handy
+                for pull quotes or section dividers.”
+              </blockquote>
+
+              <h2>
+                Section title three with a very very very long heading to wrap
+              </h2>
+              <p>
+                <code>break-before: column</code> forces a new column at each
+                heading. That’s why later content appears in the next column —
+                it’s expected and stays inside the card (scroll if needed).
+              </p>
+
+              <div class="nowrap-wrap">
+                <p class="nowrap" id="nowrap-line" hidden>
+                  ThisIsAVeryLongUnbrokenString_▶_watch_this_line_scroll_when_nowrap_is_on
+                </p>
+              </div>
+            </section>
+          </div>
+
+          <p class="u-help u-mt-2">
+            <strong>Tip:</strong> The <code>columns</code> shorthand combines
+            <code>column-count</code> and <code>column-width</code>. You can set
+            either or both.
+          </p>
+
+          <!-- Live code snippet -->
+          <pre class="code"><code id="mc-code"></code></pre>
+        </section>
+      </article>
+
+      <!-- Pager -->
+      <nav class="c-pager u-mt-5" aria-label="Page navigation">
+        <a class="c-button c-button--outline" rel="prev" href="./07-grid.html"
+          >← Prev: Grid</a
+        >
+        <a
+          class="c-button c-button--primary"
+          rel="next"
+          href="./09-typography-links-lists.html"
+          >Next: Typography &amp; Links &amp; Lists →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · CSS · Chapter 8</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same on all pages)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+
+        // ---------- Floats demo ----------
+        (function () {
+          var wrap = document.getElementById("f-container");
+          var floatbox = document.getElementById("floatbox");
+          var flow = document.getElementById("flow-content");
+          var clear = document.getElementById("clear-block");
+          var meter = document.getElementById("f-height");
+          var pill = document.getElementById("f-state");
+
+          var sFloat = document.getElementById("f-float");
+          var sClear = document.getElementById("f-clear");
+          var sContain = document.getElementById("f-contain");
+          var cbCollapse = document.getElementById("f-collapse");
+
+          function syncFloats() {
+            floatbox.classList.remove("left", "right");
+            wrap.classList.remove("use-overflow", "use-flow-root");
+
+            var side = sFloat.value;
+            if (side === "left" || side === "right")
+              floatbox.classList.add(side);
+
+            var collapsed = !!cbCollapse.checked;
+            flow.hidden = collapsed;
+
+            clear.hidden = sClear.value === "none";
+            clear.style.clear = sClear.value === "none" ? "" : sClear.value;
+
+            if (sContain.value === "overflow")
+              wrap.classList.add("use-overflow");
+            else if (sContain.value === "flow-root")
+              wrap.classList.add("use-flow-root");
+
+            requestAnimationFrame(function () {
+              var h = wrap.getBoundingClientRect().height | 0;
+              meter.textContent = h + " px";
+
+              var isCollapsed =
+                collapsed &&
+                sContain.value === "none" &&
+                sFloat.value !== "none" &&
+                sClear.value === "none";
+
+              pill.textContent = isCollapsed
+                ? "state: collapsed"
+                : "state: contained";
+              pill.classList.toggle("is-bad", isCollapsed);
+              pill.classList.toggle("is-good", !isCollapsed);
+            });
+          }
+          [sFloat, sClear, sContain, cbCollapse].forEach(function (el) {
+            el.addEventListener("change", syncFloats);
+          });
+          syncFloats();
+        })();
+
+        // ---------- Multicol demo + live code ----------
+        (function () {
+          var box = document.getElementById("columns");
+          var columns = document.getElementById("m-columns");
+          var count = document.getElementById("m-count");
+          var width = document.getElementById("m-width");
+          var gap = document.getElementById("m-gap");
+          var rule = document.getElementById("m-rule");
+          var avoid = document.getElementById("m-avoid");
+          var before = document.getElementById("m-before");
+          var span = document.getElementById("m-span");
+          var nowrap = document.getElementById("m-nowrap");
+          var code = document.getElementById("mc-code");
+          var quote = box.querySelector(".quote");
+          var longP = box.querySelector(".demo-long");
+          var line = document.getElementById("nowrap-line");
+
+          function ruleValue(val) {
+            if (val === "none") return "none";
+            if (val === "thin") return "1px solid #ccd6e0";
+            return "3px solid #98a6b3";
+          }
+
+          function syncMulticol() {
+            // Apply styles
+            box.style.columns = columns.value; // shorthand
+            box.style.columnCount = count.value === "auto" ? "" : count.value;
+            box.style.columnWidth = width.value;
+            box.style.columnGap = gap.value;
+            box.style.columnRule = ruleValue(rule.value);
+
+            // Break controls
+            var h2 = box.querySelectorAll("h2");
+            h2.forEach(function (el) {
+              el.style.breakInside = avoid.checked ? "avoid" : "";
+              el.classList.toggle("is-avoid", avoid.checked);
+              el.style.breakBefore = before.checked ? "column" : "";
+            });
+
+            // Tall paragraph for break-inside contrast
+            longP.style.breakInside = avoid.checked ? "avoid" : "";
+
+            // Span demo + nowrap demo
+            quote.style.columnSpan = span.checked ? "all" : "none";
+            line.hidden = !nowrap.checked;
+
+            // Update code snippet
+            var lines = [
+              ".columns {",
+              "  columns: " + columns.value + ";",
+              "  column-count: " +
+                (count.value === "auto" ? "auto" : count.value) +
+                ";",
+              "  column-width: " + width.value + ";",
+              "  column-gap: " + gap.value + ";",
+              "  column-rule: " + ruleValue(rule.value) + ";",
+              "}",
+              ".columns h2 { break-inside: " +
+                (avoid.checked ? "avoid" : "auto") +
+                "; }",
+              ".columns h2 { break-before: " +
+                (before.checked ? "column" : "auto") +
+                "; }",
+              ".columns .quote { column-span: " +
+                (span.checked ? "all" : "none") +
+                "; }",
+              ".nowrap-wrap { overflow: auto; max-width: 100%; }",
+              ".nowrap { white-space: nowrap; }",
+            ];
+            code.textContent = lines.join("\n");
+          }
+
+          [
+            columns,
+            count,
+            width,
+            gap,
+            rule,
+            avoid,
+            before,
+            span,
+            nowrap,
+          ].forEach(function (el) {
+            el.addEventListener("change", syncMulticol);
+          });
+          syncMulticol();
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

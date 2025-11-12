@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>CSS · Chapter 3 — Colors & Backgrounds</title>
+    <meta
+      name="description"
+      content="Color formats (hex/rgb/hsl/alpha), currentColor, color-mix, gradients, and background layering/size/position."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link
+      rel="stylesheet"
+      href="../../styles/pages/css/03-colors-backgrounds.css"
+    />
+  </head>
+  <body class="page--css-ch3">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a class="c-nav__link" href="../html/">HTML</a>
+          <a class="c-nav__link is-active" href="../css/">CSS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item"><a href="../css/">CSS</a></li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 3</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card hero">
+        <div class="l-cluster u-mb-2">
+          <span class="c-badge c-badge--a">CSS</span>
+          <span class="c-badge c-badge--b">Chapter 3</span>
+        </div>
+        <h1 class="hero__title">Colors &amp; Backgrounds</h1>
+        <p class="hero__lead">
+          Hex/rgb/hsl with alpha, <code>currentColor</code>,
+          <code>color-mix()</code>, gradients (linear/radial/conic), and
+          background layering/size/position tricks.
+        </p>
+      </header>
+
+      <!-- 1) Color formats & alpha -->
+      <section class="c-card">
+        <h2 class="u-mt-0">1) Color formats &amp; alpha</h2>
+        <div class="l-grid l-grid--fit-300 demos">
+          <article class="demo-card">
+            <h3 class="u-mt-0">Hex / RGB / HSL</h3>
+            <pre class="code"><code>/* Hex (with alpha: #RRGGBBAA) */
+.box-hex   { background: #2a6f97; }
+.box-hexa  { background: #2a6f97cc; } /* ~80% opacity */
+
+/* rgb() / hsl() with alpha */
+.box-rgba  { background: rgba(79,145,180,.75); }
+.box-hsla  { background: hsl(204 39% 51% / .75); }</code></pre>
+            <div class="swatches">
+              <div class="swatch box-hex">#2a6f97</div>
+              <div class="swatch box-hexa">#2a6f97cc</div>
+              <div class="swatch box-rgba">rgba(...,.75)</div>
+              <div class="swatch box-hsla">hsl(... / .75)</div>
+            </div>
+          </article>
+
+          <article class="demo-card">
+            <h3 class="u-mt-0"><code>currentColor</code></h3>
+            <pre
+              class="code"
+            ><code>.icon { color: var(--ocean-700); border: 2px solid currentColor; }</code></pre>
+            <div class="demo">
+              <span class="icon" aria-hidden="true">◎</span>
+              <button
+                class="c-button"
+                style="color: var(--teal-600); border-color: currentColor"
+              >
+                Button inherits color
+              </button>
+            </div>
+            <p class="u-help u-mb-0">
+              Borders/shadows can reuse the element’s text color.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- 2) color-mix() -->
+      <section class="c-card">
+        <h2 class="u-mt-0">2) <code>color-mix()</code></h2>
+        <div class="l-grid l-grid--fit-300 demos">
+          <article class="demo-card">
+            <h3 class="u-mt-0">Mix with white/black</h3>
+            <pre
+              class="code"
+            ><code>.tint  { background: color-mix(in srgb, var(--color-primary) 30%, white); }
+.shade { background: color-mix(in srgb, var(--color-primary) 70%, black); }</code></pre>
+            <div class="swatches">
+              <div class="swatch tint">tint (→ lighter)</div>
+              <div class="swatch shade">shade (→ darker)</div>
+            </div>
+          </article>
+
+          <article class="demo-card">
+            <h3 class="u-mt-0">On hover</h3>
+            <pre class="code"><code>.btn-mix:hover {
+  background: color-mix(in srgb, var(--color-primary) 70%, var(--color-surface));
+}</code></pre>
+            <div class="demo">
+              <a class="c-button btn-mix" href="#">Hover me</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 3) Gradients -->
+      <section class="c-card">
+        <h2 class="u-mt-0">3) Gradients</h2>
+        <div class="l-grid l-grid--fit-300 demos">
+          <article class="demo-card">
+            <h3 class="u-mt-0">Linear</h3>
+            <pre
+              class="code"
+            ><code>.g-linear { background: linear-gradient(135deg, var(--ocean-500), var(--ocean-700)); }</code></pre>
+            <div class="grad g-linear"></div>
+          </article>
+
+          <article class="demo-card">
+            <h3 class="u-mt-0">Radial</h3>
+            <pre
+              class="code"
+            ><code>.g-radial { background: radial-gradient(circle at 30% 30%, var(--teal-400), transparent 60%); }</code></pre>
+            <div class="grad g-radial"></div>
+          </article>
+
+          <article class="demo-card">
+            <h3 class="u-mt-0">Conic</h3>
+            <pre
+              class="code"
+            ><code>.g-conic { background: conic-gradient(from 0.25turn, var(--ocean-500), var(--teal-500), var(--ocean-500)); }</code></pre>
+            <div class="grad g-conic"></div>
+          </article>
+
+          <article class="demo-card">
+            <h3 class="u-mt-0">Text gradient (clip)</h3>
+            <pre class="code"><code>.text-grad {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}</code></pre>
+            <p class="text-grad demo-text">Gradient text</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- 4) Background layering / multiple backgrounds -->
+      <section class="c-card">
+        <h2 class="u-mt-0">4) Multiple backgrounds &amp; layering</h2>
+        <div class="l-grid l-grid--fit-300 demos">
+          <article class="demo-card">
+            <h3 class="u-mt-0">Overlay + pattern</h3>
+            <pre class="code"><code>.layered {
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,0)),
+    url("data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'&gt;&lt;rect width='60' height='60' fill='%23e4f0f8'/&gt;&lt;circle cx='30' cy='30' r='6' fill='%236fb0d8'/&gt;&lt;/svg&gt;");
+  background-size: auto, 60px 60px;  /* top layer uses auto; pattern 60px */
+  background-repeat: no-repeat, repeat;
+  background-position: center, top left;
+}</code></pre>
+            <div class="panel layered"></div>
+          </article>
+
+          <article class="demo-card">
+            <h3 class="u-mt-0">Shorthand &amp; order</h3>
+            <pre class="code"><code>/* First listed = topmost layer */
+.panel {
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 50%),
+    var(--gradient-section-c);
+}</code></pre>
+            <div class="panel panel-2"></div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 5) background-size / position / repeat / attachment -->
+      <section class="c-card">
+        <h2 class="u-mt-0">5) Size · Position · Repeat</h2>
+        <div class="l-grid l-grid--fit-300 demos">
+          <article class="demo-card">
+            <h3 class="u-mt-0"><code>cover</code> vs <code>contain</code></h3>
+            <pre
+              class="code"
+            ><code>.cover  { background-size: cover;  background-position: center; }
+.contain{ background-size: contain;background-position: center; background-repeat: no-repeat; }</code></pre>
+            <div class="grid-2">
+              <div class="imgbox cover" aria-label="cover"></div>
+              <div class="imgbox contain" aria-label="contain"></div>
+            </div>
+          </article>
+
+          <article class="demo-card">
+            <h3 class="u-mt-0">Repeat &amp; position</h3>
+            <pre
+              class="code"
+            ><code>.tile { background-repeat: repeat; background-position: top left; }
+.no-repeat { background-repeat: no-repeat; background-position: 10% 20%; }</code></pre>
+            <div class="grid-2">
+              <div class="tile imgbox" aria-label="repeat"></div>
+              <div class="no-repeat imgbox" aria-label="no-repeat"></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 6) Useful links -->
+      <section class="c-card">
+        <h2 class="u-mt-0">6) Useful links</h2>
+        <p class="u-mb-2">Palette generators &amp; color tools:</p>
+        <div class="l-cluster">
+          <a
+            class="c-button c-button--outline"
+            href="https://coolors.co/"
+            target="_blank"
+            rel="noopener"
+            >Open Coolors ↗</a
+          >
+        </div>
+      </section>
+
+      <!-- Pager -->
+      <nav class="c-pager u-mt-5" aria-label="Page navigation">
+        <a
+          class="c-button c-button--outline"
+          rel="prev"
+          href="./02-selectors-pseudo.html"
+          >← Prev: Selectors</a
+        >
+        <a
+          class="c-button c-button--primary"
+          rel="next"
+          href="./04-units-sizing.html"
+          >Next: Units &amp; Sizing →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · CSS · Chapter 3</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same on all pages)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

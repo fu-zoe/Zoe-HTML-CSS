@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSS · Labs · Project Summary</title>
+    <meta
+      name="description"
+      content="Personal project notes: navigation patterns, section/article IDs, CSS reset, utility & general classes, sticky header/nav, layout, profile card sizing patterns, and mobile-first media queries."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link rel="stylesheet" href="../../styles/pages/css/00-labs.css" />
+  </head>
+  <body class="page--css-labs">
+    <!-- Global skip link -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a class="c-nav__link" href="../html/index.html">HTML</a>
+          <a
+            class="c-nav__link is-active"
+            href="./index.html"
+            aria-current="page"
+            >CSS</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item"><a href="./index.html">CSS</a></li>
+          <li class="c-breadcrumbs__item" aria-current="page">Labs</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card chapter__hero">
+        <div class="l-cluster">
+          <span class="c-badge c-badge--a">Labs</span>
+          <span class="c-badge c-badge--e">Project Summary</span>
+        </div>
+        <h1 class="chapter__title">
+          Project Summary (Mistakes &amp; Key Points)
+        </h1>
+        <p class="chapter__lead">
+          Quick notes I wish I had on day one — nav patterns, section/article
+          IDs, CSS reset &amp; utilities, sticky header/nav, main layout,
+          profile card sizing, and mobile-first media queries.
+        </p>
+      </header>
+
+      <article class="l-stack">
+        <!-- 1) HTML: Navigation -->
+        <section class="c-card" id="html-nav">
+          <h2 class="u-mt-0">1) HTML — Navigation</h2>
+          <ul>
+            <li>
+              You don’t have to use a list in <code>&lt;nav&gt;</code> — a row
+              of <code>&lt;a&gt;</code> works fine for simple sites.
+            </li>
+          </ul>
+          <div class="l-grid l-grid--fit-300">
+            <div>
+              <h3 class="u-mt-0">Simple (anchors only)</h3>
+              <pre><code>&lt;nav aria-label="Primary"&gt;
+  &lt;a href="#intro"&gt;Intro&lt;/a&gt;
+  &lt;a href="#cards"&gt;Cards&lt;/a&gt;
+  &lt;a href="#contact"&gt;Contact&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+            </div>
+            <div>
+              <h3 class="u-mt-0">List-based (also valid)</h3>
+              <pre><code>&lt;nav aria-label="Primary"&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="#intro"&gt;Intro&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#cards"&gt;Cards&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#contact"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2) HTML: Sections & IDs -->
+        <section class="c-card" id="html-sections">
+          <h2 class="u-mt-0">2) HTML — Sections &amp; IDs</h2>
+          <ul>
+            <li>
+              Use the same <code>class</code> for repeated patterns (e.g.
+              <code>class="card"</code>).
+            </li>
+            <li>
+              Give each section a unique <code>id</code> to enable nav jumps.
+            </li>
+          </ul>
+          <pre><code>&lt;article id="about" class="card"&gt;...&lt;/article&gt;
+&lt;article id="skills" class="card"&gt;...&lt;/article&gt;</code></pre>
+        </section>
+
+        <!-- 3) CSS: Reset -->
+        <section class="c-card" id="css-reset">
+          <h2 class="u-mt-0">3) CSS — Reset</h2>
+          <ul>
+            <li>Start clean and let CSS control sizing.</li>
+            <li>
+              Images: override any HTML width/height via CSS so they scale with
+              the layout.
+            </li>
+          </ul>
+          <pre><code>*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+img { display: block; max-width: 100%; height: auto; }  /* CSS rules win over HTML width/height */</code></pre>
+        </section>
+
+        <!-- 4) CSS: Utility class -->
+        <section class="c-card" id="css-utility">
+          <h2 class="u-mt-0">4) CSS — Utility class</h2>
+          <ul>
+            <li>
+              <code>.nowrap</code> — wrap a short phrase to prevent awkward line
+              breaks.
+            </li>
+          </ul>
+          <pre><code>&lt;p&gt;Keep &lt;span class="nowrap"&gt;product names&lt;/span&gt; intact.&lt;/p&gt;
+/* CSS */ .nowrap { white-space: nowrap; }</code></pre>
+        </section>
+
+        <!-- 5) CSS: General classes -->
+        <section class="c-card" id="css-general">
+          <h2 class="u-mt-0">5) CSS — General classes</h2>
+          <div class="l-grid l-grid--fit-300">
+            <div>
+              <h3 class="u-mt-0">Page basics</h3>
+              <pre><code>html { scroll-behavior: smooth; }
+
+body {
+  min-height: 100vh;
+  /* fonts, background-color / background-image, layout display, etc. */
+}</code></pre>
+            </div>
+            <div>
+              <h3 class="u-mt-0">Header / footer (sticky)</h3>
+              <pre><code>header { position: sticky; top: 0; }
+footer { position: sticky; bottom: 0; }
+/* color, text-align ... */</code></pre>
+            </div>
+            <div>
+              <h3 class="u-mt-0">Nav</h3>
+              <pre><code>nav {
+  display: flex;
+  gap: .75rem;
+  /* color, font, padding, border, pseudo-classes ... */
+}</code></pre>
+            </div>
+            <div>
+              <h3 class="u-mt-0">Main layout</h3>
+              <pre><code>main {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;       /* or a token variable */
+  padding: 1rem;
+  align-items: start;
+}</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6) Profile Card -->
+        <section class="c-card" id="profile-card">
+          <h2 class="u-mt-0">6) Profile Card</h2>
+          <ul>
+            <li>
+              <code>scroll-margin-top</code> — leave space for a sticky header
+              when anchored.
+            </li>
+            <li>
+              Sizing with <code>min()</code>/<code>max()</code>/<code
+                >clamp()</code
+              >
+              or nested <code>calc()</code>.
+            </li>
+          </ul>
+
+          <div class="l-grid l-grid--fit-300">
+            <div>
+              <h3 class="u-mt-0">Code</h3>
+              <pre><code>.card {
+  scroll-margin-top: calc(var(--nav-h) + 12px);
+  width: min(100%, 350px); /* cap width at 350px, never exceed container */
+}
+
+/* Advanced: compare two expressions and take the smaller one */
+.card {
+  width: min(100% - 2rem, calc(50% + 100px));
+  /* calc(): do math across units (%, px, rem...) */
+}</code></pre>
+            </div>
+
+            <figure class="lab-card u-mt-2">
+              <div class="lab-card__img" aria-hidden="true"></div>
+              <figcaption class="lab-card__txt">
+                <strong>Jane Doe</strong><br />
+                UI Engineer · <span class="nowrap">San Francisco</span>
+              </figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <!-- 7) Media queries -->
+        <section class="c-card" id="media-queries">
+          <h2 class="u-mt-0">7) Media Queries</h2>
+          <ul>
+            <li>
+              Use <strong>mobile-first</strong> with <code>min-width</code>.
+              Larger breakpoints inherit smaller rules unless you override them.
+            </li>
+          </ul>
+          <pre><code>/* Base (mobile) */
+.card-grid { grid-template-columns: 1fr; }
+
+/* Wider screens enhance layout */
+@media (min-width: 600px) {
+  .card-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 900px) {
+  .card-grid { grid-template-columns: repeat(3, 1fr); }
+}</code></pre>
+        </section>
+      </article>
+
+      <!-- Pager -->
+      <nav class="c-pager c-pager--center u-mt-5" aria-label="Page navigation">
+        <a class="c-button c-button--primary" rel="prev" href="./index.html"
+          >Back to CSS Index</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · CSS · Labs</small>
+      <script>
+        // Year (global)
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav on scroll (global)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

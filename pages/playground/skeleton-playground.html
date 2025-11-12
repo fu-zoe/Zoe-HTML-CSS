@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Playground · Project Skeleton</title>
+    <meta
+      name="description"
+      content="A visual skeleton of the project structure and CSS layering. Quick reference for folders and key files."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link
+      rel="stylesheet"
+      href="../../styles/pages/playground/skeleton-playground.css"
+    />
+  </head>
+  <body class="page--playground-skel">
+    <!-- Skip link -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a class="c-nav__link" href="../html/index.html">HTML</a>
+          <a class="c-nav__link" href="../css/index.html">CSS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item" aria-current="page">
+            Playground · Skeleton
+          </li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card chapter__hero">
+        <div class="l-cluster">
+          <span class="c-badge c-badge--e">Playground</span>
+          <span class="c-badge c-badge--c">Project</span>
+        </div>
+        <h1 class="chapter__title">Project Skeleton</h1>
+        <p class="chapter__lead">
+          A diagram of folders &amp; files plus a quick glossary of the CSS
+          layers (<code>tokens.css</code>, <code>base.css</code>,
+          <code>components.css</code>, <code>app.css</code>).
+        </p>
+      </header>
+
+      <article class="l-stack">
+        <!-- Visual tree -->
+        <section class="c-card" id="tree">
+          <h2 class="u-mt-0">Directory Tree</h2>
+          <div class="tree-wrap">
+            <pre
+              id="treeText"
+              class="tree"
+              aria-label="Project directory tree"
+            ><code>/
+├─ index.html
+├─ assets/
+│  ├─ images/
+│  └─ ...
+├─ pages/
+│  ├─ html/
+│  │  ├─ 01-start-here.html
+│  │  ├─ 02-head.html
+│  │  └─ ...
+│  ├─ css/
+│  │  ├─ 00-labs.html
+│  │  ├─ 01-basics-cascade.html
+│  │  └─ ...
+│  └─ playground/
+│     ├─ tokens-playground.html
+│     └─ skelenton-playground.html
+└─ styles/
+   ├─ tokens.css        # design tokens (colors, spacing, radii, durations…)
+   ├─ base.css          # reset/normalize + element defaults, layout primitives
+   ├─ components.css    # buttons, nav, badges, cards, utilities
+   └─ app.css           # global bundle (imports + page-wide tweaks)</code></pre>
+          </div>
+          <p class="u-mt-2">
+            <button
+              id="copyTree"
+              class="c-button c-button--subtle"
+              type="button"
+            >
+              Copy tree
+            </button>
+          </p>
+        </section>
+
+        <!-- CSS layers glossary -->
+        <section class="c-card" id="layers">
+          <h2 class="u-mt-0">CSS Layers (quick glossary)</h2>
+          <div class="l-grid l-grid--fit-300">
+            <article class="layer-card">
+              <h3 class="u-mt-0"><code>tokens.css</code></h3>
+              <p class="u-mb-0">
+                Design tokens only: colors, gradients, spacing, radii, font
+                sizes, durations, easings.
+              </p>
+            </article>
+            <article class="layer-card">
+              <h3 class="u-mt-0"><code>base.css</code></h3>
+              <p class="u-mb-0">
+                Reset/normalize + element defaults and basic layout primitives.
+              </p>
+            </article>
+            <article class="layer-card">
+              <h3 class="u-mt-0"><code>components.css</code></h3>
+              <p class="u-mb-0">
+                Global components &amp; utilities: nav, buttons, cards, badges,
+                helpers.
+              </p>
+            </article>
+            <article class="layer-card">
+              <h3 class="u-mt-0"><code>app.css</code></h3>
+              <p class="u-mb-0">
+                The app-wide bundle that wires everything together (imports +
+                minor tweaks).
+              </p>
+            </article>
+          </div>
+        </section>
+      </article>
+
+      <!-- Pager -->
+      <nav class="c-pager c-pager--center u-mt-5" aria-label="Page navigation">
+        <a class="c-button c-button--primary" href="../../index.html"
+          >Back to Home</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · Playground · Skeleton</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav on scroll
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+
+        // Copy tree button
+        (function () {
+          var btn = document.getElementById("copyTree");
+          var pre = document.getElementById("treeText");
+          if (!btn || !pre) return;
+          btn.addEventListener("click", function () {
+            var text = pre.innerText || pre.textContent || "";
+            navigator.clipboard.writeText(text).then(function () {
+              btn.textContent = "Copied!";
+              setTimeout(function () {
+                btn.textContent = "Copy tree";
+              }, 900);
+            });
+          });
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

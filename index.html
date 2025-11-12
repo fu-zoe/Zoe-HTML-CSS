@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Zoe's Study Hub</title>
+    <meta
+      name="description"
+      content="A study-and-practice hub for HTML & CSS."
+    />
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="styles/app.css" />
+    <!-- Page-specific -->
+    <link rel="stylesheet" href="styles/pages/home.css" />
+  </head>
+  <body class="page--home">
+    <!-- Skip link: fixed + offscreen by default (no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="index.html">Zoe · HTML/CSS Review</a>
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link is-active" href="index.html">Home</a>
+          <a class="c-nav__link" href="pages/html/index.html">HTML</a>
+          <a class="c-nav__link" href="pages/css/index.html">CSS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="view--home l-stack">
+      <!-- HERO -->
+      <section class="home-hero">
+        <div class="l-container home-hero__card">
+          <span class="home-hero__eyebrow">Practice · Review · Ship</span>
+          <h1 class="home-hero__title">Zoe's Study Hub</h1>
+          <p class="home-hero__lead">
+            After two weeks revisiting HTML and CSS, I'm building a small demo
+            app to consolidate what I've learned through practice, document my
+            notes as living pages, and discover new questions as I code.
+          </p>
+          <p class="home-hero__tip">
+            <span class="home-hero__tip-text">
+              Tip: Press <kbd>Tab</kbd> to see the focus styles.
+            </span>
+          </p>
+
+          <!-- Hero actions -->
+          <nav class="home-hero__links" aria-label="Playgrounds">
+            <a
+              class="home-hero__link"
+              href="./pages/playground/tokens-playground.html"
+            >
+              🎨Project Colors
+            </a>
+            <a
+              class="home-hero__link"
+              href="./pages/playground/skeleton-playground.html"
+            >
+              🩻Project Skeleton
+            </a>
+          </nav>
+        </div>
+      </section>
+
+      <!-- GATE (ONE unified section; responsive 1→2 columns) -->
+      <section class="home-gate">
+        <div class="l-container">
+          <div class="l-grid home-gate__row">
+            <a class="c-card home-gate__item" href="pages/html/index.html">
+              <h2 class="home-gate__title">Enter HTML</h2>
+              <p class="home-gate__desc">Elements, semantics, tables, forms…</p>
+            </a>
+            <a class="c-card home-gate__item" href="pages/css/index.html">
+              <h2 class="home-gate__title">Enter CSS</h2>
+              <p class="home-gate__desc">
+                Selectors, cascade, layout, animation…
+              </p>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="home-footer">
+      <div class="l-container">
+        <small
+          >© <span id="year"></span> Zoe · Last updated
+          <span id="updated"></span
+        ></small>
+      </div>
+    </footer>
+
+    <!-- Tiny JS: header scroll state + footer dates -->
+    <script>
+      (function () {
+        var nav = document.querySelector(".c-nav");
+        if (nav) {
+          var onScroll = function () {
+            nav.classList.toggle("is-scrolled", window.scrollY > 8);
+          };
+          onScroll();
+          document.addEventListener("scroll", onScroll, { passive: true });
+        }
+        var y = document.getElementById("year");
+        if (y) y.textContent = new Date().getFullYear();
+        var u = document.getElementById("updated");
+        if (u)
+          u.textContent = new Date(document.lastModified).toLocaleDateString();
+      })();
+    </script>
+  </body>
+</html>

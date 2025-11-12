@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>CSS · Chapter 1 — Basics & Cascade</title>
+    <meta
+      name="description"
+      content="Start here: external/internal/inline styles, the cascade, specificity, and validation."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link
+      rel="stylesheet"
+      href="../../styles/pages/css/01-basics-cascade.css"
+    />
+  </head>
+  <body class="page--css-ch1">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a class="c-nav__link" href="../html/index.html">HTML</a>
+          <a
+            class="c-nav__link is-active"
+            href="../css/index.html"
+            aria-current="page"
+            >CSS</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item">
+            <a href="../css/index.html">CSS</a>
+          </li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 1</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card hero">
+        <div class="l-cluster u-mb-2">
+          <span class="c-badge c-badge--b">CSS</span>
+          <span class="c-badge c-badge--a">Chapter 1</span>
+        </div>
+        <h1 class="hero__title">Basics &amp; Cascade (Start Here)</h1>
+        <p class="hero__lead">
+          Three ways to add CSS (external / internal / inline), when to use
+          each, and how the cascade decides “who wins”.
+        </p>
+      </header>
+
+      <!-- In-page quick nav -->
+      <!-- <nav class="c-card demo-nav" aria-label="In-page sections">
+        <h2 class="u-mb-2">Quick nav (live)</h2>
+        <ul class="demo-nav__list">
+          <li>
+            <a class="c-button c-button--subtle" href="#placement"
+              >Stylesheet placement</a
+            >
+          </li>
+          <li>
+            <a class="c-button c-button--subtle" href="#cascade"
+              >Cascade &amp; specificity</a
+            >
+          </li>
+          <li>
+            <a class="c-button c-button--subtle" href="#validation"
+              >Validation</a
+            >
+          </li>
+        </ul>
+      </nav> -->
+
+      <!-- 1) Stylesheet placement -->
+      <section class="c-card" id="placement">
+        <h2 class="u-mt-0">1) Stylesheet placement</h2>
+        <div class="l-grid l-grid--fit-300">
+          <!-- External -->
+          <article class="demo-card">
+            <h3 class="u-mt-0">External stylesheet</h3>
+            <p class="u-mb-2 u-text-left">
+              Best for real projects: clean separation, caching &amp; reuse.
+            </p>
+
+            <pre
+              class="code"
+            ><code>&lt;link rel="stylesheet" href="css/style.css"&gt;</code></pre>
+
+            <div class="c-card u-mt-4 demo demo-external">
+              <p class="demo-text">
+                This text is styled by <strong>external</strong> CSS (this
+                page’s .css file).
+              </p>
+            </div>
+          </article>
+
+          <!-- Internal -->
+          <article class="demo-card">
+            <h3 class="u-mt-0">Internal stylesheet</h3>
+            <p class="u-mb-2">Use sparingly for page-local tweaks or demos.</p>
+
+            <pre class="code"><code>&lt;style&gt;
+  .demo-internal .demo-text { color: blue; }
+&lt;/style&gt;</code></pre>
+
+            <!-- Scoped internal style: targets only .demo-internal -->
+            <style>
+              .demo-internal .demo-text {
+                color: blue;
+              }
+            </style>
+            <div class="c-card u-mt-4 demo demo-internal">
+              <p class="demo-text">
+                This text is styled by an
+                <strong>internal</strong> &lt;style&gt; block.
+              </p>
+            </div>
+          </article>
+
+          <!-- Inline -->
+          <article class="demo-card">
+            <h3 class="u-mt-0">Inline styles</h3>
+            <p class="u-mb-2">
+              Avoid in production; okay for tiny tests or quick overrides.
+            </p>
+
+            <pre
+              class="code"
+            ><code>&lt;p style="color: red"&gt;This is red text&lt;/p&gt;</code></pre>
+
+            <div class="c-card u-mt-4 demo">
+              <p class="demo-text" style="color: red">
+                This text is styled by an <strong>inline</strong> style.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 2) Cascade & specificity -->
+      <section class="c-card" id="cascade">
+        <h2 class="u-mt-0">2) Cascade &amp; specificity (who wins?)</h2>
+        <div class="l-grid l-grid--fit-300">
+          <article class="demo-card">
+            <h3 class="u-mt-0">Cascade order</h3>
+            <ol class="u-mb-0">
+              <li>
+                <strong>Origin &amp; importance</strong>: user agent &lt; author
+                &lt; <code>!important</code>
+              </li>
+              <li>
+                <strong>Specificity</strong>: inline &gt; ID &gt;
+                class/attr/pseudo-class &gt; element/pseudo-element
+              </li>
+              <li>
+                <strong>Source order</strong>: later rules override earlier ones
+                (if above tie)
+              </li>
+            </ol>
+          </article>
+
+          <article class="demo-card">
+            <h3 class="u-mt-0">Specificity scores</h3>
+            <pre class="code"><code>/* think: (inline, id, class, element) */
+p                 /* 0,0,0,1 */
+p.note            /* 0,0,1,1 */
+#intro            /* 0,1,0,0 */
+[aria-current]    /* 0,0,1,0 */
+a:hover           /* 0,0,1,1 */
+h1::first-line    /* 0,0,0,2 */
+style="..."       /* 1,0,0,0 */</code></pre>
+          </article>
+
+          <article class="demo-card">
+            <h3 class="u-mt-0">Tiebreak demo</h3>
+            <p class="u-mb-2">
+              Class vs element: class wins; later rule wins on equal
+              specificity.
+            </p>
+
+            <pre class="code"><code>/* earlier */
+p { color: slateblue; }
+/* later with same specificity (element) overrides */
+p { color: seagreen; }
+/* class beats element */
+.note { color: tomato; }</code></pre>
+
+            <div class="c-card u-mt-4 demo demo-cascade">
+              <p class="demo-text">I end up <em>seagreen</em>…</p>
+              <p class="demo-text note">
+                …but with <code>.note</code> class I turn <em>tomato</em>.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 3) Validation -->
+      <section class="c-card" id="validation">
+        <h2 class="u-mt-0">3) Validate your CSS</h2>
+        <p class="u-mb-2">
+          Use the W3C CSS Validator to catch typos and invalid properties:
+        </p>
+        <p class="u-mb-0">
+          <a
+            class="c-button c-button--outline"
+            href="https://jigsaw.w3.org/css-validator/"
+            target="_blank"
+            rel="noopener"
+            >Open W3C CSS Validator ↗</a
+          >
+        </p>
+      </section>
+
+      <!-- Pager -->
+      <nav class="c-pager u-mt-5" aria-label="Page navigation">
+        <a
+          class="c-button c-button--outline"
+          rel="prev"
+          href="../css/index.html"
+          >← Back to CSS Index</a
+        >
+        <a
+          class="c-button c-button--primary"
+          rel="next"
+          href="./02-selectors-pseudo.html"
+          >Next: Selectors →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · CSS · Chapter 1</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same on all pages)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

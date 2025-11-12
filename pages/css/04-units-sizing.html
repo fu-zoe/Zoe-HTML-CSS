@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>CSS · Chapter 4 — Units & Sizes</title>
+    <meta
+      name="description"
+      content="Absolute units (px/pt/in/cm/mm/Q/pc), percentages & CSS numeric types, rem/em/ch, vw/vh, and box-sizing resets."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link rel="stylesheet" href="../../styles/pages/css/04-units-sizing.css" />
+  </head>
+  <body class="page--css-ch4">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a class="c-nav__link" href="../html/index.html">HTML</a>
+          <a
+            class="c-nav__link is-active"
+            href="../css/index.html"
+            aria-current="page"
+            >CSS</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item">
+            <a href="../css/index.html">CSS</a>
+          </li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 4</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card hero">
+        <div class="l-cluster u-mb-2">
+          <span class="c-badge c-badge--b">CSS</span>
+          <span class="c-badge c-badge--a">Chapter 4</span>
+        </div>
+        <h1 class="hero__title">Units &amp; Sizes</h1>
+        <p class="hero__lead">
+          Absolute vs relative units, percentages &amp; CSS numeric types,
+          rem/em/ch, viewport units, and box-sizing resets.
+        </p>
+      </header>
+
+      <!-- 1) Absolute length units -->
+      <section class="c-card" id="absolute">
+        <h2 class="u-mt-0">1) Absolute length units</h2>
+        <p class="u-mb-2">
+          On screens, “physical” units are mapped to CSS pixels by the UA; use
+          them sparingly. Common ones:
+          <code>px</code> (CSS pixel), <code>pt</code> (1/72 in),
+          <code>pc</code> (12pt), <code>in</code>, <code>cm</code>,
+          <code>mm</code>, <code>Q</code> (quarter-mm).
+        </p>
+
+        <pre
+          class="code"
+        ><code>/* Squares sized in different absolute units (visual reference only) */
+.abs-in { width: 1in; height: 1in; }
+.abs-cm { width: 2cm; height: 2cm; }
+.abs-mm { width: 20mm; height: 20mm; }
+.abs-pt { width: 72pt; height: 72pt; }   /* ≈ 1 inch */
+.abs-pc { width: 6pc;  height: 6pc;  }   /* 1pc = 12pt; 6pc ≈ 1 inch */
+.abs-px { width: 96px; height: 96px; }   /* 96px ≈ 1 inch (typical mapping) */</code></pre>
+
+        <div class="abs-grid">
+          <div class="abs-swatch abs-in">1in</div>
+          <div class="abs-swatch abs-cm">2cm</div>
+          <div class="abs-swatch abs-mm">20mm</div>
+          <div class="abs-swatch abs-pt">72pt</div>
+          <div class="abs-swatch abs-pc">6pc</div>
+          <div class="abs-swatch abs-px">96px</div>
+        </div>
+      </section>
+
+      <!-- 2) Percentages & CSS numeric types -->
+      <section class="c-card" id="percentages">
+        <h2 class="u-mt-0">2) Percentages &amp; CSS numeric types</h2>
+        <p class="u-mb-2">
+          CSS uses data types like <code>&lt;integer&gt;</code> (e.g.
+          <code>z-index: 10</code>), <code>&lt;number&gt;</code> (unitless, e.g.
+          <code>line-height: 1.6</code>), <code>&lt;dimension&gt;</code> (=
+          <code>&lt;number&gt;</code> + unit, e.g. <code>2rem</code>), and
+          <code>&lt;percentage&gt;</code> (e.g. <code>width: 80%</code> relative
+          to containing block).
+        </p>
+        <pre
+          class="code"
+        ><code>.bar { width: 50%; }          /* % relative to parent content box */
+.opacity { opacity: .5; }     /* &lt;number&gt; (unitless) */
+.z { z-index: 10; }           /* &lt;integer&gt; */
+.pad { padding: 1.25rem; }    /* &lt;dimension&gt; */</code></pre>
+
+        <div class="percent-demo">
+          <div class="percent-wrap">
+            <div class="percent-rail" aria-hidden="true"></div>
+            <div class="bar" style="width: 50%"><span>50%</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3) Relative length units: rem vs em -->
+      <section class="c-card" id="rem-em">
+        <h2 class="u-mt-0">
+          3) Relative units: <code>rem</code> &amp; <code>em</code>
+        </h2>
+        <p class="u-mb-2">
+          <code>rem</code> is based on the root (<code>&lt;html&gt;</code>)
+          font-size; <code>em</code> is based on the element’s computed
+          font-size. On <em>font-size</em>, <code>em</code> compounds with
+          inheritance; on other properties (padding/margin/width) it uses the
+          element’s own font-size.
+        </p>
+
+        <pre class="code"><code>:root { font-size: 16px; }     /* 1rem = 16px */
+.scope { font-size: 125%; }    /* children now 20px (1.25 × 16) */
+.box-rem { padding: 1rem; }    /* always 16px */
+.box-em  { padding: 1em;  }    /* here = 20px, because element font-size is 20px */</code></pre>
+
+        <div class="rem-em-demo">
+          <div class="scope">
+            <div class="box box-rem">padding: 1rem (16px)</div>
+            <div class="box box-em">padding: 1em (20px here)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4) ch (measure by “0” width) -->
+      <section class="c-card" id="ch">
+        <h2 class="u-mt-0">4) <code>ch</code> (width of “0”)</h2>
+        <p class="u-mb-2">
+          Useful for readable text widths (e.g. 60–75ch). If glyph metrics are
+          unknown, UAs assume 0.5em × 1em.
+        </p>
+
+        <pre class="code"><code>.prose-30 { max-width: 30ch; }
+.prose-60 { max-width: 60ch; }</code></pre>
+
+        <div class="ch-demo">
+          <div class="prose prose-30">
+            <strong>30ch</strong> — shorter lines feel tighter but are easy to
+            scan on small viewports.
+          </div>
+          <div class="prose prose-60">
+            <strong>60ch</strong> — common target for comfortable reading at
+            desktop sizes.
+          </div>
+        </div>
+      </section>
+
+      <!-- 5) Viewport units: 100% vs 100vw -->
+      <section class="c-card" id="viewport">
+        <h2 class="u-mt-0">
+          5) Viewport units (<code>vw</code> / <code>vh</code>)
+        </h2>
+        <p class="u-mb-2">
+          <code>1vw</code> = 1% of viewport width; <code>100vw</code> includes
+          the scrollbar and can overflow. <strong>Prefer</strong>
+          <code>width: 100%</code> for layout inside containers.
+        </p>
+
+        <pre
+          class="code"
+        ><code>.box-100p { width: 100%; }      /* safe: relative to parent */
+.box-100vw { width: 100vw; }    /* may overflow parent and cause horizontal scroll */</code></pre>
+
+        <div class="vw-vs-percent">
+          <div class="wrap">
+            <div class="box-100p">100%</div>
+          </div>
+          <div class="wrap">
+            <div class="box-100vw">
+              100vw (notice it extends beyond the dashed parent)
+            </div>
+          </div>
+        </div>
+        <p class="u-help u-mb-0">
+          This demo scrolls horizontally inside the card only; the page stays
+          overflow-safe.
+        </p>
+      </section>
+
+      <!-- 6) Reset & box-sizing -->
+      <section class="c-card" id="box-sizing">
+        <h2 class="u-mt-0">6) Reset &amp; <code>box-sizing</code></h2>
+        <p class="u-mb-2">
+          A minimal reset often sets margins to zero and switches to
+          <code>border-box</code> so widths include padding/border. Our
+          project’s <code>base.css</code> already does this; below shows the
+          difference with <code>content-box</code>.
+        </p>
+
+        <pre class="code"><code>/* Common reset */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+
+/* Compare: same declared width, different real size */
+.cb  { box-sizing: content-box; width: 200px; padding: 20px; }
+.bb  { box-sizing: border-box;  width: 200px; padding: 20px; }</code></pre>
+
+        <div class="bx-demo">
+          <div class="bx cb">content-box (wider)</div>
+          <div class="bx bb">border-box (exact)</div>
+        </div>
+      </section>
+
+      <!-- Pager -->
+      <nav class="c-pager u-mt-5" aria-label="Page navigation">
+        <a
+          class="c-button c-button--outline"
+          rel="prev"
+          href="./03-colors-backgrounds.html"
+          >← Prev: Colors</a
+        >
+        <a
+          class="c-button c-button--primary"
+          rel="next"
+          href="./05-box-display-position.html"
+          >Next: Layout →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · CSS · Chapter 4</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same on all pages)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

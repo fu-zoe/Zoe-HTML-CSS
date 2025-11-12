@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>CSS · Chapter 11 — Responsive & Media Queries</title>
+    <meta
+      name="description"
+      content="Make pages responsive with the viewport meta tag, write media queries (min/max/range, orientation, aspect-ratio, high DPI), and respect user preferences such as dark mode and reduced motion."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link
+      rel="stylesheet"
+      href="../../styles/pages/css/11-responsive-media-queries.css"
+    />
+  </head>
+  <body class="page--css-ch11">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a class="c-nav__link" href="../html/index.html">HTML</a>
+          <a
+            class="c-nav__link is-active"
+            href="../css/index.html"
+            aria-current="page"
+            >CSS</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic nav) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item">
+            <a href="./index.html">CSS</a>
+          </li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 11</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card hero">
+        <div class="l-cluster u-mb-2">
+          <span class="c-badge c-badge--b">CSS</span>
+          <span class="c-badge c-badge--a">Chapter 11</span>
+        </div>
+        <h1 class="hero__title">Responsive &amp; Media Queries</h1>
+        <p class="hero__lead">
+          Use the viewport meta tag, write media queries (min/max/range,
+          orientation, aspect-ratio, high DPI) and respect user preferences
+          (dark mode, reduced motion).
+        </p>
+      </header>
+
+      <article class="l-stack">
+        <!-- 1) Viewport -->
+        <section class="c-card" id="viewport">
+          <h2 class="u-mt-0">1) Viewport meta (enable responsive layout)</h2>
+          <p class="u-mt-0">
+            Add this inside <code>&lt;head&gt;</code> so CSS pixel width maps to
+            the device width on phones/tablets:
+          </p>
+          <pre
+            class="code u-mb-0"
+          ><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></pre>
+        </section>
+
+        <!-- 2) Syntax -->
+        <section class="c-card" id="syntax">
+          <h2 class="u-mt-0">2) Media query syntax</h2>
+          <pre class="code"><code>/* Pattern */
+@media &lt;media-type&gt; and (&lt;feature&gt;) { /* rules */ }
+
+/* Common types (type is optional): screen | print */
+@media screen and (min-width: 48em) { /* ... */ }
+
+/* Features */
+@media (min-width: 481px) { /* width up from 481 */ }
+@media (max-width: 480px) { /* width up to 480 */ }
+@media (orientation: landscape) { /* wide orientation */ }
+@media (min-aspect-ratio: 16/9) { /* at least 16:9 */ }
+@media (min-resolution: 2dppx) { /* high DPI screens */ }
+
+/* User preferences */
+@media (prefers-color-scheme: dark) { /* dark mode styles */ }
+@media (prefers-reduced-motion: reduce) { /* limit motion */ }
+
+/* Modern range syntax (fallback below if needed) */
+@media (768px &lt;= width &lt;= 1024px) { /* tablet-ish range */ }
+/* Fallback: */
+@media (min-width: 768px) and (max-width: 1024px) { /* ... */ }</code></pre>
+        </section>
+
+        <!-- 3) Breakpoints live demo -->
+        <section class="c-card" id="breakpoints">
+          <h2 class="u-mt-0">3) Breakpoints (resize the window)</h2>
+          <div class="stage">
+            <div class="flags" aria-live="polite">
+              <span class="flag flag--max480">≤ 480px</span>
+              <span class="flag flag--min481">≥ 481px</span>
+              <span class="flag flag--min768">≥ 768px (tablet+)</span>
+              <span class="flag flag--range">768–1024px (range)</span>
+            </div>
+          </div>
+
+          <pre
+            class="code u-mt-2 u-mb-0"
+          ><code>/* Example breakpoints using em for zoom-resilience */
+@media (max-width: 30em) { /* ≤ 480px */ }
+@media (min-width: 30.063em) { /* ≥ 481px (approx) */ }
+@media (min-width: 48em) { /* ≥ 768px */ }
+@media (48em &lt;= width &lt;= 64em) { /* 768–1024px (modern) */ }
+@media (min-width: 48em) and (max-width: 64em) { /* fallback */ }</code></pre>
+        </section>
+
+        <!-- 4) Orientation & Aspect-ratio -->
+        <section class="c-card" id="orientation-aspect">
+          <h2 class="u-mt-0">4) Orientation &amp; aspect-ratio</h2>
+          <div class="stage">
+            <div class="flags" aria-live="polite">
+              <span class="flag flag--portrait">orientation: portrait</span>
+              <span class="flag flag--landscape">orientation: landscape</span>
+              <span class="flag flag--wide169">min-aspect-ratio: 16/9</span>
+              <span class="flag flag--tall43">max-aspect-ratio: 4/3</span>
+            </div>
+          </div>
+
+          <pre
+            class="code u-mt-2 u-mb-0"
+          ><code>@media (orientation: landscape) { /* ... */ }
+@media (orientation: portrait)  { /* ... */ }
+@media (min-aspect-ratio: 16/9) { /* screens ≥ 16:9 */ }
+@media (max-aspect-ratio: 4/3)  { /* screens ≤ 4:3  */ }</code></pre>
+        </section>
+
+        <!-- 5) High DPI -->
+        <section class="c-card" id="dpi">
+          <h2 class="u-mt-0">5) High DPI (retina-like)</h2>
+          <div class="stage">
+            <div class="flags" aria-live="polite">
+              <span class="flag flag--retina"
+                >min-resolution: 2dppx (retina)</span
+              >
+              <span class="flag flag--nonretina">standard DPI</span>
+            </div>
+          </div>
+
+          <p class="c-help u-mt-2 u-mb-0" role="note">
+            <strong>Note:</strong> On non-retina displays the “retina” flag will
+            stay hidden (that’s expected).
+          </p>
+        </section>
+
+        <!-- 6) User preferences -->
+        <section class="c-card" id="prefs">
+          <h2 class="u-mt-0">6) User preferences</h2>
+
+          <div class="l-grid l-grid--fit-300">
+            <div class="pref-card">
+              <h3 class="u-mt-0">prefers-color-scheme</h3>
+              <p class="u-mt-0 u-mb-2">
+                This card follows your system color scheme (light/dark).
+              </p>
+              <div class="swatch">System color preview</div>
+              <pre
+                class="code u-mt-2 u-mb-0"
+              ><code>@media (prefers-color-scheme: dark) {
+  .pref-card { background: #111; color: #eee; }
+}</code></pre>
+            </div>
+
+            <div class="pref-card">
+              <h3 class="u-mt-0">prefers-reduced-motion</h3>
+              <p class="u-mt-0 u-mb-2">
+                The dot animates unless the user prefers reduced motion.
+              </p>
+              <div class="motion-demo">
+                <span class="ball" aria-hidden="true"></span>
+              </div>
+              <pre
+                class="code u-mt-2 u-mb-0"
+              ><code>@media (prefers-reduced-motion: reduce) {
+  .ball { animation: none; }
+}</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7) Combine conditions -->
+        <section class="c-card" id="combine">
+          <h2 class="u-mt-0">7) Combine conditions</h2>
+          <div class="stage">
+            <div class="flags" aria-live="polite">
+              <span class="flag flag--and"
+                >AND: (min-width: 768px) &amp; (orientation: landscape)</span
+              >
+              <span class="flag flag--or"
+                >OR: (max-width: 480px), (orientation: portrait)</span
+              >
+              <span class="flag flag--range2">Range: 48em ≤ width ≤ 64em</span>
+            </div>
+          </div>
+
+          <pre
+            class="code u-mt-2 u-mb-0"
+          ><code>@media screen and (min-width: 768px) and (orientation: landscape) { /* ... */ }
+@media screen and (max-width: 480px), (orientation: portrait) { /* ... */ }
+@media (48em &lt;= width &lt;= 64em) { /* modern range */ }
+@media (min-width: 48em) and (max-width: 64em) { /* fallback */ }</code></pre>
+        </section>
+
+        <!-- 8) Patterns & links -->
+        <section class="c-card" id="patterns">
+          <h2 class="u-mt-0">8) Patterns</h2>
+          <ul class="u-mt-0">
+            <li>
+              Prefer <strong>em</strong> breakpoints (<code
+                >@media (min-width: 48em)</code
+              >) for better zoom resilience.
+            </li>
+            <li>
+              Start mobile-first (grow styles with
+              <code>min-width</code> queries).
+            </li>
+          </ul>
+
+          <div class="l-grid l-grid--fit-300">
+            <div>
+              <h3 class="u-mt-0">Breakpoint guides</h3>
+              <ul>
+                <li>
+                  <a
+                    href="https://www.browserstack.com/guide/responsive-design-breakpoints?utm_source=chatgpt.com"
+                    target="_blank"
+                    rel="noopener"
+                    >BrowserStack ↗</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://getbootstrap.com/docs/5.0/layout/breakpoints/?utm_source=chatgpt.com"
+                    target="_blank"
+                    rel="noopener"
+                    >Bootstrap ↗</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.lambdatest.com/blog/common-css-breakpoints/?utm_source=chatgpt.com"
+                    target="_blank"
+                    rel="noopener"
+                    >Lambdatest ↗</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="u-mt-0">Quick snippets</h3>
+              <pre class="code u-mt-0 u-mb-0"><code>/* Hide on small screens */
+@media (max-width: 30em) {
+  .sidebar { display: none; }
+}
+
+/* Scale text after tablet */
+@media (min-width: 48em) {
+  body { font-size: 1.125rem; }
+}
+
+/* Landscape-like control (short viewports) */
+@media (max-height: 26.5em) and (min-aspect-ratio: 7/4) {
+  /* ... */
+}</code></pre>
+            </div>
+          </div>
+
+          <p class="c-help u-mt-2 u-mb-0" role="note">
+            <strong>VS Code tip:</strong> Markdown files end with
+            <code>.md</code>. Install “Markdown All in One” and press
+            <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> to preview.
+          </p>
+        </section>
+      </article>
+
+      <!-- Pager (global component; no extra container) -->
+      <nav class="c-pager" aria-label="Page navigation">
+        <a
+          class="c-button c-button--subtle"
+          rel="prev"
+          href="./10-images-media.html"
+          >← Prev: Images &amp; Media</a
+        >
+        <a
+          class="c-button c-button--primary"
+          rel="next"
+          href="./12-variables-functions.html"
+          >Next: Variables &amp; Functions →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · CSS · Chapter 11</small>
+
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same pattern)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

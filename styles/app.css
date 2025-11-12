@@ -1,0 +1,226 @@
+/* ---------------------------------------------
+ * File: styles/app.css
+ * Purpose: Aggregate global layers + app layouts/utilities
+ * Layers: tokens, base, components, app
+ * --------------------------------------------- */
+
+@layer tokens, base, components, app;
+
+/* Global layers (do NOT add @layer inside the imported files) */
+@import url("./tokens.css") layer(tokens);
+@import url("./base.css") layer(base);
+@import url("./components.css") layer(components);
+
+/* ---------------------------------------------
+ * Layer: app — layouts & utilities
+ * --------------------------------------------- */
+@layer app {
+  /* ---------------------------------------------
+   * Section: Layout primitives (l-*)
+   * --------------------------------------------- */
+
+  /* Centered responsive container — aligned with nav via --page-pad */
+  .l-container {
+    width: 100%;
+    max-width: var(--container);
+    margin-inline: auto;
+    padding-inline: var(--page-pad);
+    min-width: 0; /* avoid overflow due to long children */
+  }
+
+  /* Slightly narrower prose */
+  .l-prose {
+    max-width: 70ch;
+    margin-inline: auto;
+  }
+
+  /* Vertical stack */
+  .l-stack {
+    display: grid;
+    gap: var(--space-5);
+  }
+  .l-stack--sm {
+    gap: var(--space-3);
+  }
+  .l-stack--lg {
+    gap: var(--space-6);
+  }
+
+  /* Responsive grids */
+  .l-grid {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+  .l-grid--fit-200 {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  .l-grid--fit-300 {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  .l-grid--2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .l-grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .l-grid--4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 900px) {
+    .l-grid--2,
+    .l-grid--3,
+    .l-grid--4 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Sidebar layout */
+  .l-sidebar {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: 280px 1fr;
+  }
+  @media (max-width: 900px) {
+    .l-sidebar {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Prevent grid/flex children from forcing overflow */
+  .l-grid > *,
+  .l-sidebar > * {
+    min-width: 0;
+  }
+
+  /* Clusters */
+  .l-cluster {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-4);
+    align-items: center;
+  }
+  .l-cluster--center {
+    justify-content: center;
+  }
+  .l-cluster--right {
+    justify-content: flex-end;
+  }
+
+  /* Centering helpers */
+  .l-center {
+    min-height: 100%;
+    display: grid;
+    place-items: center;
+  }
+  .l-center--vh {
+    min-height: 60vh;
+  }
+
+  /* Sticky vs Fixed header glue */
+  .has-sticky-header {
+    padding-top: 0 !important;
+  }
+  .has-fixed-header {
+    padding-top: calc(var(--nav-h));
+  }
+
+  /* ---------------------------------------------
+   * Section: Utilities (u-*)
+   * --------------------------------------------- */
+
+  .u-mt-0 {
+    margin-top: 0 !important;
+  }
+  .u-mt-2 {
+    margin-top: var(--space-2) !important;
+  }
+  .u-mt-4 {
+    margin-top: var(--space-4) !important;
+  }
+  .u-mt-5 {
+    margin-top: var(--space-5) !important;
+  }
+
+  .u-mb-0 {
+    margin-bottom: 0 !important;
+  }
+  .u-mb-2 {
+    margin-bottom: var(--space-2) !important;
+  }
+  .u-mb-4 {
+    margin-bottom: var(--space-4) !important;
+  }
+
+  .u-p-4 {
+    padding: var(--space-4) !important;
+  }
+  .u-p-5 {
+    padding: var(--space-5) !important;
+  }
+
+  .u-w-full {
+    width: 100% !important;
+  }
+  .u-mx-auto {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .u-text-left {
+    text-align: left !important;
+  }
+  .u-text-center {
+    text-align: center !important;
+  }
+  .u-text-right {
+    text-align: right !important;
+  }
+
+  .u-hidden {
+    display: none !important;
+  }
+
+  /* Screen-reader only */
+  .u-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Simple responsive show/hide helpers */
+  @media (max-width: 600px) {
+    .u-hide-sm {
+      display: none !important;
+    }
+  }
+  @media (max-width: 900px) {
+    .u-hide-md {
+      display: none !important;
+    }
+  }
+  @media (max-width: 1200px) {
+    .u-hide-lg {
+      display: none !important;
+    }
+  }
+
+  .u-divider {
+    border: 0;
+    border-top: 1px solid var(--color-border);
+    margin: var(--space-5) 0;
+  }
+  .u-shadow-1 {
+    box-shadow: var(--shadow-1) !important;
+  }
+  .u-shadow-2 {
+    box-shadow: var(--shadow-2) !important;
+  }
+}

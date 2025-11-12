@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Playground · Design Tokens</title>
+    <meta
+      name="description"
+      content="Visualize this project's design tokens: base palettes, semantic colors, gradients, and status hues — all rendered as live swatches."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link
+      rel="stylesheet"
+      href="../../styles/pages/playground/tokens-playground.css"
+    />
+  </head>
+  <body class="page--playground-tokens">
+    <!-- Global skip link -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a class="c-nav__link" href="../html/index.html">HTML</a>
+          <a class="c-nav__link" href="../css/index.html">CSS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item">Playground</li>
+          <li class="c-breadcrumbs__item" aria-current="page">Tokens</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card chapter__hero">
+        <div class="l-cluster">
+          <span class="c-badge c-badge--d">Playground</span>
+          <span class="c-badge c-badge--b">Tokens</span>
+        </div>
+        <h1 class="chapter__title">Design Tokens Preview</h1>
+        <p class="chapter__lead">
+          Base palettes (ocean/teal/slate), semantic colors (bg/surface/text,
+          primary/accent), gradients (primary/accent/sections/badges), and
+          status hues — rendered as live swatches. Toggle theme to inspect both
+          light &amp; dark mappings.
+        </p>
+      </header>
+
+      <!-- Theme toggle -->
+      <section class="c-card l-cluster u-justify-between" id="theme">
+        <div class="l-cluster">
+          <strong>Theme:</strong>
+          <button
+            type="button"
+            class="c-button c-button--subtle"
+            data-theme="system"
+          >
+            System
+          </button>
+          <button
+            type="button"
+            class="c-button c-button--subtle"
+            data-theme="light"
+          >
+            Light
+          </button>
+          <button
+            type="button"
+            class="c-button c-button--subtle"
+            data-theme="dark"
+          >
+            Dark
+          </button>
+        </div>
+        <p class="u-mb-0 u-text-left u-help">
+          Uses <code>.theme-ocean-light</code> /
+          <code>.theme-ocean-dark</code> helpers from tokens.
+        </p>
+      </section>
+
+      <article class="l-stack">
+        <!-- 1) Semantic colors -->
+        <section class="c-card" id="semantic">
+          <h2 class="u-mt-0">1) Semantic colors</h2>
+          <div class="swatches swatches--fit">
+            <figure class="swatch" style="--token: var(--color-bg)">
+              <figcaption>--color-bg</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--color-surface)">
+              <figcaption>--color-surface</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--color-text)">
+              <figcaption>--color-text</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--color-muted)">
+              <figcaption>--color-muted</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--color-border)">
+              <figcaption>--color-border</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--color-primary)">
+              <figcaption>--color-primary</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--color-accent)">
+              <figcaption>--color-accent</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <!-- 2) Base palettes -->
+        <section class="c-card" id="palettes">
+          <h2 class="u-mt-0">2) Base palettes</h2>
+
+          <h3 class="u-mt-0">Ocean</h3>
+          <div class="swatches">
+            <figure class="swatch" style="--token: var(--ocean-50)">
+              <figcaption>--ocean-50</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--ocean-100)">
+              <figcaption>--ocean-100</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--ocean-200)">
+              <figcaption>--ocean-200</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--ocean-300)">
+              <figcaption>--ocean-300</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--ocean-400)">
+              <figcaption>--ocean-400</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--ocean-500)">
+              <figcaption>--ocean-500</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--ocean-600)">
+              <figcaption>--ocean-600</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--ocean-700)">
+              <figcaption>--ocean-700</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--ocean-800)">
+              <figcaption>--ocean-800</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--ocean-900)">
+              <figcaption>--ocean-900</figcaption>
+            </figure>
+          </div>
+
+          <h3>Teal</h3>
+          <div class="swatches">
+            <figure class="swatch" style="--token: var(--teal-50)">
+              <figcaption>--teal-50</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--teal-100)">
+              <figcaption>--teal-100</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--teal-200)">
+              <figcaption>--teal-200</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--teal-300)">
+              <figcaption>--teal-300</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--teal-400)">
+              <figcaption>--teal-400</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--teal-500)">
+              <figcaption>--teal-500</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--teal-600)">
+              <figcaption>--teal-600</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--teal-700)">
+              <figcaption>--teal-700</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--teal-800)">
+              <figcaption>--teal-800</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--teal-900)">
+              <figcaption>--teal-900</figcaption>
+            </figure>
+          </div>
+
+          <h3>Slate</h3>
+          <div class="swatches">
+            <figure class="swatch" style="--token: var(--slate-50)">
+              <figcaption>--slate-50</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--slate-100)">
+              <figcaption>--slate-100</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--slate-200)">
+              <figcaption>--slate-200</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--slate-300)">
+              <figcaption>--slate-300</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--slate-400)">
+              <figcaption>--slate-400</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--slate-500)">
+              <figcaption>--slate-500</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--slate-600)">
+              <figcaption>--slate-600</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--slate-700)">
+              <figcaption>--slate-700</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--slate-800)">
+              <figcaption>--slate-800</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--slate-900)">
+              <figcaption>--slate-900</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <!-- 3) Gradients -->
+        <section class="c-card" id="gradients">
+          <h2 class="u-mt-0">3) Gradients</h2>
+
+          <h3 class="u-mt-0">Primary &amp; accent</h3>
+          <div class="swatches swatches--fit">
+            <figure
+              class="swatch swatch--gradient"
+              style="--token: var(--gradient-primary)"
+            >
+              <figcaption>--gradient-primary</figcaption>
+            </figure>
+            <figure
+              class="swatch swatch--gradient"
+              style="--token: var(--gradient-accent)"
+            >
+              <figcaption>--gradient-accent</figcaption>
+            </figure>
+          </div>
+
+          <h3>Sections</h3>
+          <div class="swatches swatches--fit">
+            <figure
+              class="swatch swatch--gradient"
+              style="--token: var(--gradient-section-a)"
+            >
+              <figcaption>--gradient-section-a</figcaption>
+            </figure>
+            <figure
+              class="swatch swatch--gradient"
+              style="--token: var(--gradient-section-b)"
+            >
+              <figcaption>--gradient-section-b</figcaption>
+            </figure>
+            <figure
+              class="swatch swatch--gradient"
+              style="--token: var(--gradient-section-c)"
+            >
+              <figcaption>--gradient-section-c</figcaption>
+            </figure>
+            <figure
+              class="swatch swatch--gradient"
+              style="--token: var(--gradient-section-d)"
+            >
+              <figcaption>--gradient-section-d</figcaption>
+            </figure>
+            <figure
+              class="swatch swatch--gradient"
+              style="--token: var(--gradient-section-e)"
+            >
+              <figcaption>--gradient-section-e</figcaption>
+            </figure>
+          </div>
+
+          <h3>Badges</h3>
+          <div class="swatches swatches--fit">
+            <figure
+              class="swatch swatch--gradient"
+              style="--token: var(--gradient-badge-a)"
+            >
+              <figcaption>--gradient-badge-a</figcaption>
+            </figure>
+            <figure
+              class="swatch swatch--gradient"
+              style="--token: var(--gradient-badge-b)"
+            >
+              <figcaption>--gradient-badge-b</figcaption>
+            </figure>
+            <figure
+              class="swatch swatch--gradient"
+              style="--token: var(--gradient-badge-c)"
+            >
+              <figcaption>--gradient-badge-c</figcaption>
+            </figure>
+            <figure
+              class="swatch swatch--gradient"
+              style="--token: var(--gradient-badge-d)"
+            >
+              <figcaption>--gradient-badge-d</figcaption>
+            </figure>
+            <figure
+              class="swatch swatch--gradient"
+              style="--token: var(--gradient-badge-e)"
+            >
+              <figcaption>--gradient-badge-e</figcaption>
+            </figure>
+          </div>
+
+          <h3>Page mist</h3>
+          <div class="mist-demo" aria-label="Background mist sample"></div>
+          <p class="u-mb-0 u-text-left u-help">
+            This simulates <code>--gradient-bg-mist</code> used on page
+            backgrounds.
+          </p>
+        </section>
+
+        <!-- 4) Status -->
+        <section class="c-card" id="status">
+          <h2 class="u-mt-0">4) Status colors</h2>
+          <div class="swatches swatches--fit">
+            <figure class="swatch" style="--token: var(--color-success)">
+              <figcaption>--color-success</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--color-warning)">
+              <figcaption>--color-warning</figcaption>
+            </figure>
+            <figure class="swatch" style="--token: var(--color-danger)">
+              <figcaption>--color-danger</figcaption>
+            </figure>
+          </div>
+        </section>
+      </article>
+
+      <!-- Pager -->
+      <nav class="c-pager c-pager--center u-mt-5" aria-label="Page navigation">
+        <a class="c-button c-button--primary" href="../../index.html"
+          >Back to Home</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · Playground · Tokens</small>
+      <script>
+        // Year (global)
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav on scroll (global)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+
+        // Theme toggle (applies helper classes defined in tokens)
+        (function () {
+          var html = document.documentElement;
+          var btns = document.querySelectorAll("[data-theme]");
+          function setTheme(v) {
+            if (v === "system") {
+              html.removeAttribute("data-theme");
+              localStorage.removeItem("theme");
+            } else {
+              html.setAttribute("data-theme", v);
+              localStorage.setItem("theme", v);
+            }
+            btns.forEach(function (b) {
+              b.classList.toggle(
+                "is-active",
+                (html.dataset.theme || "system") === b.dataset.theme
+              );
+            });
+          }
+          btns.forEach(function (b) {
+            b.addEventListener("click", function () {
+              setTheme(b.dataset.theme);
+            });
+          });
+          setTheme(localStorage.getItem("theme") || "system");
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

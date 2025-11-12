@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>CSS · Zoe's Study Hub</title>
+    <meta
+      name="description"
+      content="CSS notes: cascade, selectors, colors, layout, media queries, variables, and animations."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link rel="stylesheet" href="../../styles/pages/css/index.css" />
+  </head>
+  <body class="has-sticky-header page--css">
+    <!-- Global skip link component -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a class="c-nav__link" href="../html/">HTML</a>
+          <a class="c-nav__link is-active" href="./" aria-current="page">CSS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- Hero -->
+      <section class="hero l-container">
+        <div class="c-card hero__card">
+          <div class="l-cluster u-mb-2">
+            <span class="c-badge c-badge--a">CSS</span>
+            <span class="c-badge c-badge--c">Index</span>
+          </div>
+          <h1 class="hero__title">CSS Study Index</h1>
+          <p class="hero__lead">
+            From cascade and selectors to modern layout, responsive techniques,
+            and motion — a concise map for your CSS review.
+          </p>
+
+          <!-- Single TOC structure for all viewports -->
+          <details class="toc" open>
+            <summary class="toc__summary">
+              <span>Contents</span>
+              <svg
+                class="toc__chevron"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  d="M6 9l6 6 6-6"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </summary>
+
+            <ol class="toc__list">
+              <li>
+                <a href="./01-basics.html">Basics &amp; Cascade</a>
+              </li>
+              <li>
+                <a href="./02-selectors-pseudo.html">Selectors</a>
+              </li>
+              <li>
+                <a href="./03-colors-backgrounds.html"
+                  >Colors &amp; Backgrounds</a
+                >
+              </li>
+              <li><a href="./04-units-sizing.html">Units &amp; Sizing</a></li>
+              <li>
+                <a href="./05-box-display-position.html"
+                  >Layout (Box/Position)</a
+                >
+              </li>
+              <li><a href="./06-flexbox.html">Flexbox</a></li>
+              <li><a href="./07-grid.html">Grid</a></li>
+              <li>
+                <a href="./08-floats-columns.html">Floats &amp; Columns</a>
+              </li>
+              <li>
+                <a href="./09-typography-links-lists.html"
+                  >Typography &amp; Links &amp; Lists</a
+                >
+              </li>
+              <li><a href="./10-images-media.html">Images &amp; Media</a></li>
+              <li>
+                <a href="./11-responsive-media-queries.html">Responsive</a>
+              </li>
+              <li>
+                <a href="./12-variables-functions.html"
+                  >Variables &amp; Functions</a
+                >
+              </li>
+              <li>
+                <a href="./13-motion.html">Motion</a>
+              </li>
+            </ol>
+          </details>
+        </div>
+      </section>
+
+      <!-- Topic cards -->
+      <section class="topics l-container">
+        <div class="l-grid l-grid--fit-300 cards">
+          <article class="c-card card">
+            <h3 class="card__title">Basics &amp; Cascade</h3>
+            <p class="card__blurb">
+              Cascade, inheritance, specificity; when (not) to use
+              <code>!important</code>.
+            </p>
+            <a class="c-button c-button--subtle" href="./01-basics.html"
+              >Open</a
+            >
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Selectors &amp; Pseudo</h3>
+            <p class="card__blurb">
+              Attribute/relationship selectors; <code>:focus-visible</code>,
+              <code>::before</code>, <code>::marker</code>.
+            </p>
+            <a
+              class="c-button c-button--subtle"
+              href="./02-selectors-pseudo.html"
+              >Open</a
+            >
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Colors &amp; Backgrounds</h3>
+            <p class="card__blurb">
+              hex/rgb/hsl, multiple backgrounds, linear/radial gradients.
+            </p>
+            <a
+              class="c-button c-button--subtle"
+              href="./03-colors-backgrounds.html"
+              >Open</a
+            >
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Units &amp; Sizing</h3>
+            <p class="card__blurb">
+              px, em, rem, ch, vw/vh; <code>min/max</code>,
+              <code>clamp()</code>.
+            </p>
+            <a class="c-button c-button--subtle" href="./04-units-sizing.html"
+              >Open</a
+            >
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Box · Display · Position</h3>
+            <p class="card__blurb">
+              Box model, block/inline, relative/absolute/fixed/sticky, stacking
+              context.
+            </p>
+            <a
+              class="c-button c-button--subtle"
+              href="./05-box-display-position.html"
+              >Open</a
+            >
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Flexbox</h3>
+            <p class="card__blurb">
+              Axis, wrapping, alignment, <code>flex</code> shorthand patterns.
+            </p>
+            <a class="c-button c-button--subtle" href="./06-flexbox.html"
+              >Open</a
+            >
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Grid</h3>
+            <p class="card__blurb">
+              Tracks, gaps, areas; <code>minmax()</code> and common templates.
+            </p>
+            <a class="c-button c-button--subtle" href="./07-grid.html">Open</a>
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Floats &amp; Multicol</h3>
+            <p class="card__blurb">
+              Clear/flow-root; multi-column layout and breaks.
+            </p>
+            <a class="c-button c-button--subtle" href="./08-floats-columns.html"
+              >Open</a
+            >
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Typography · Links · Lists</h3>
+            <p class="card__blurb">
+              Type scale, spacing, link states (LVHA), list markers.
+            </p>
+            <a
+              class="c-button c-button--subtle"
+              href="./09-typography-links-lists.html"
+              >Open</a
+            >
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Images &amp; Media</h3>
+            <p class="card__blurb">
+              Responsive images, object-fit, filters and art direction basics.
+            </p>
+            <a class="c-button c-button--subtle" href="./10-images-media.html"
+              >Open</a
+            >
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Responsive &amp; MQ</h3>
+            <p class="card__blurb">
+              Breakpoints, feature queries, combined conditions.
+            </p>
+            <a
+              class="c-button c-button--subtle"
+              href="./11-responsive-media-queries.html"
+              >Open</a
+            >
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Custom Props · Functions</h3>
+            <p class="card__blurb">
+              Variables as tokens; <code>var()</code>,
+              <code>calc()/clamp()</code>, gradients/filters, grid helpers.
+            </p>
+            <a
+              class="c-button c-button--subtle"
+              href="./12-variables-functions.html"
+              >Open</a
+            >
+          </article>
+
+          <article class="c-card card">
+            <h3 class="card__title">Transforms · Transitions · Animations</h3>
+            <p class="card__blurb">
+              Transforms for performance, transitions for state changes,
+              keyframe animations for complex motion.
+            </p>
+            <a class="c-button c-button--subtle" href="./13-motion.html"
+              >Open</a
+            >
+          </article>
+        </div>
+      </section>
+
+      <!-- Labs (optional) -->
+      <section class="labs l-container">
+        <article class="c-card">
+          <h2 class="u-mt-0">Labs (Projects Summary)</h2>
+          <p class="u-mb-0">
+            A running list of lessons learned from mini/card projects—pitfalls
+            and best practices.
+          </p>
+          <div class="l-cluster u-mt-4">
+            <a class="c-button c-button--outline" href="./00-labs.html"
+              >Open Labs</a
+            >
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · CSS Index</small>
+      <script>
+        document.getElementById("y").textContent = new Date().getFullYear();
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

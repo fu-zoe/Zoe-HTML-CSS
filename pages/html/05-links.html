@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML · Chapter 5 · Links</title>
+    <meta
+      name="description"
+      content="HTML Chapter 5: absolute, relative, internal anchors, special link types (download/mailto/tel/new tab) with live demos."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link rel="stylesheet" href="../../styles/pages/html/05-links.css" />
+  </head>
+  <body class="page--html-ch5">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a
+            class="c-nav__link is-active"
+            href="./index.html"
+            aria-current="page"
+            >HTML</a
+          >
+          <a class="c-nav__link" href="../css/index.html">CSS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item"><a href="./index.html">HTML</a></li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 5</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card chapter__hero">
+        <div class="l-cluster">
+          <span class="c-badge c-badge--a">Chapter 5</span>
+          <span class="c-badge c-badge--c">Links</span>
+        </div>
+        <h1 class="chapter__title">Add Links</h1>
+        <p class="chapter__lead">
+          Absolute &amp; relative URLs, internal anchors, and special types
+          (download / mailto / tel / new tab). Code on the left, live behavior
+          on the right.
+        </p>
+      </header>
+
+      <!-- In-page navigation (live) -->
+      <nav class="c-card demo-nav" aria-label="In-page sections">
+        <h2 class="u-mb-2">Quick nav (live)</h2>
+        <ul class="demo-nav__list">
+          <li>
+            <a class="c-button c-button--subtle" href="#s1"
+              >Absolute reference</a
+            >
+          </li>
+          <li>
+            <a class="c-button c-button--subtle" href="#s2"
+              >Relative reference</a
+            >
+          </li>
+          <li>
+            <a class="c-button c-button--subtle" href="#s3">Internal anchors</a>
+          </li>
+          <li>
+            <a class="c-button c-button--subtle" href="#s4"
+              >Special link types</a
+            >
+          </li>
+        </ul>
+      </nav>
+
+      <article class="l-stack">
+        <!-- 1) Absolute reference -->
+        <section class="c-card" id="s1">
+          <h2>Absolute reference</h2>
+          <div class="demo-sbs">
+            <div class="demo__code">
+              <pre><code>&lt;!-- Absolute URL (full web address) --&gt;
+&lt;p&gt;
+  Jump to MDN:
+  &lt;a href="https://developer.mozilla.org/" target="_blank" rel="noopener"&gt;
+    Web Docs
+  &lt;/a&gt;
+&lt;/p&gt;</code></pre>
+            </div>
+            <div class="demo__render">
+              <p>
+                Jump to MDN:
+                <a
+                  href="https://developer.mozilla.org/"
+                  target="_blank"
+                  rel="noopener"
+                  >Web Docs</a
+                >
+                <small class="note">Opens in a new tab.</small>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2) Relative reference -->
+        <section class="c-card" id="s2">
+          <h2>Relative reference</h2>
+          <div class="demo-sbs">
+            <div class="demo__code">
+              <pre><code>&lt;!-- Relative URL (same folder) --&gt;
+&lt;a href="about.html"&gt;About (relative)&lt;/a&gt;</code></pre>
+            </div>
+            <div class="demo__render">
+              <p>
+                <a href="about.html" data-simulate="relative"
+                  >About (relative)</a
+                >
+                <small class="note"
+                  >Demo: this click is simulated (won't 404).</small
+                >
+              </p>
+              <div
+                id="demo-status"
+                class="demo-status"
+                aria-live="polite"
+              ></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3) Internal anchors (same page) -->
+        <section class="c-card" id="s3">
+          <h2>Internal anchors (same page)</h2>
+          <div class="demo-sbs">
+            <div class="demo__code">
+              <pre><code>&lt;!-- Jump to different areas of the same page --&gt;
+&lt;a href="#s1"&gt;Jump to Section 1&lt;/a&gt;
+&lt;a href="#top"&gt;Back to top&lt;/a&gt;</code></pre>
+            </div>
+            <div class="demo__render">
+              <p>
+                <a href="#s1">Jump to Section 1</a> ·
+                <a id="top" href="#">Back to top</a>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4) Special link types -->
+        <section class="c-card" id="s4">
+          <h2>Special link types</h2>
+          <div class="demo-sbs">
+            <div class="demo__code">
+              <pre><code>&lt;!-- Download a file --&gt;
+&lt;a href="/assets/html-5.png" download&gt;HTML5 icon (file)↓&lt;/a&gt;
+
+&lt;!-- Or: data URI (works without any file) --&gt;
+&lt;a href="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'&gt;&lt;rect width='64' height='64' fill='%236fb0d8'/&gt;&lt;text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-size='18' fill='white'&gt;HTML5&lt;/text&gt;&lt;/svg&gt;"
+   download="html5-demo.svg"&gt;Download embedded SVG↓&lt;/a&gt;
+
+&lt;!-- Email --&gt;
+&lt;a href="mailto:random@email.com"&gt;Contact me&lt;/a&gt;
+
+&lt;!-- Telephone --&gt;
+&lt;a href="tel:+123456789"&gt;Dial me&lt;/a&gt;
+
+&lt;!-- Open in new tab --&gt;
+&lt;a href="https://www.google.com/" target="_blank" rel="noopener"&gt;Google&lt;/a&gt;
+
+&lt;!-- Back to Index --&gt;
+&lt;a href="../../index.html">Back to home&lt;/a&gt;</code></pre>
+            </div>
+            <div class="demo__render">
+              <dl class="link-list">
+                <dt>Download</dt>
+                <dd>
+                  <a href="/assets/html-5-cat.png" download
+                    >Download a Cat (file)↓</a
+                  >
+                  <small class="note"
+                    >Requires <code>/assets/html-5-cat.png</code>.</small
+                  >
+                </dd>
+                <dd>
+                  <a
+                    href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><rect width='64' height='64' fill='%236fb0d8'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-size='18' fill='white'>HTML5</text></svg>"
+                    download="html5-demo.svg"
+                    >Download embedded SVG↓</a
+                  >
+                  <small class="note">Works without any file.</small>
+                </dd>
+
+                <dt>Email</dt>
+                <dd>
+                  Contact me at <a href="mailto:random@email.com">my email</a>
+                </dd>
+
+                <dt>Telephone</dt>
+                <dd>Dial <a href="tel:+123456789">+1 234 567 89</a></dd>
+
+                <dt>New tab</dt>
+                <dd>
+                  <a
+                    href="https://www.google.com/"
+                    target="_blank"
+                    rel="noopener"
+                    >Open Google ↗</a
+                  >
+                </dd>
+
+                <dt>Back to index</dt>
+                <dd><a href="../../index.html">Back to home</a></dd>
+              </dl>
+            </div>
+          </div>
+        </section>
+      </article>
+
+      <!-- Pager (global pattern) -->
+      <nav class="c-pager u-mt-5" aria-label="Page navigation">
+        <a class="c-button c-button--outline" rel="prev" href="./04-lists.html"
+          >← Prev: Lists</a
+        >
+        <a class="c-button c-button--primary" rel="next" href="./06-images.html"
+          >Next: Images →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer (global pattern) -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · HTML · Chapter 5</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same on all pages)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+
+        // Simulate relative link navigation to avoid 404 in the demo
+        (function () {
+          var status = document.getElementById("demo-status");
+          document
+            .querySelectorAll('[data-simulate="relative"]')
+            .forEach(function (a) {
+              a.addEventListener("click", function (e) {
+                e.preventDefault();
+                if (!status) return;
+                status.textContent =
+                  'Would navigate to "about.html" (same folder).';
+                status.classList.add("is-visible");
+                setTimeout(function () {
+                  status.classList.remove("is-visible");
+                }, 1800);
+              });
+            });
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

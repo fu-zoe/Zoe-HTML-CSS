@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML · Chapter 9 · Forms & Inputs</title>
+    <meta
+      name="description"
+      content="HTML Chapter 9: action/method, label-input binding & submission name, common controls, validation/help, mobile/autofill, and submit buttons (per-button overrides)."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link rel="stylesheet" href="../../styles/pages/html/09-forms.css" />
+  </head>
+  <body class="page--html-ch9">
+    <!-- Global skip link -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a
+            class="c-nav__link is-active"
+            href="./index.html"
+            aria-current="page"
+            >HTML</a
+          >
+          <a class="c-nav__link" href="../css/index.html">CSS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item"><a href="./index.html">HTML</a></li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 9</li>
+        </ol>
+      </nav>
+
+      <!-- Hero / intro -->
+      <header class="c-card chapter__hero">
+        <div class="l-cluster">
+          <span class="c-badge c-badge--a">Chapter 9</span>
+          <span class="c-badge c-badge--b">Forms</span>
+        </div>
+        <h1 class="chapter__title">Forms &amp; Inputs</h1>
+        <p class="chapter__lead">
+          From <code>action</code>/<code>method</code> and label–input binding
+          to common controls, validation/help text, mobile/autofill, and submit
+          buttons (with per-button overrides).
+        </p>
+      </header>
+
+      <article class="l-stack">
+        <!-- 1) Form basics -->
+        <section class="c-card" id="form-basics">
+          <h2 class="u-mt-0">1) Form basics</h2>
+          <ul>
+            <li>
+              <code>action</code>: destination URL. If omitted, submits to
+              current URL.
+            </li>
+            <li>
+              <code>method</code>: <strong>get</strong> (query string in URL;
+              shareable; avoid secrets) / <strong>post</strong> (data in request
+              body; typical for create/login).
+            </li>
+            <li>
+              Useful options:
+              <code>enctype="multipart/form-data"</code> (file upload),
+              <code>autocomplete="on|off"</code> (form-wide autofill).
+            </li>
+          </ul>
+          <pre><code>&lt;form action="/search" method="get"&gt;…&lt;/form&gt;
+&lt;form action="/signup" method="post" enctype="multipart/form-data"&gt;…&lt;/form&gt;</code></pre>
+        </section>
+
+        <!-- 2) Labels & names -->
+        <section class="c-card" id="labels-names">
+          <h2 class="u-mt-0">2) Labels &amp; names</h2>
+          <ul>
+            <li>
+              <strong>Label binding:</strong>
+              <code>&lt;label for="id"&gt;</code> must match
+              <code>&lt;input id="…" /&gt;</code> exactly for accessibility and
+              a larger click target.
+            </li>
+            <li>
+              <strong><code>name</code> is the submission key:</strong>
+              servers receive <code>name=value</code>; fields without
+              <code>name</code> aren’t sent.
+            </li>
+          </ul>
+          <pre><code>&lt;label for="email"&gt;Email&lt;/label&gt;
+&lt;input id="email" name="email" type="email" required autocomplete="email"&gt;</code></pre>
+        </section>
+
+        <!-- 3) Controls -->
+        <section class="c-card" id="controls">
+          <h2 class="u-mt-0">3) Input types (common controls)</h2>
+          <p class="u-mb-2">
+            These are values for the <code>type</code> attribute on
+            <code>&lt;input&gt;</code>. The type affects keyboard, built-in
+            validation, and UI.
+          </p>
+          <ul class="u-mb-2">
+            <li>
+              <strong>Text-like:</strong>
+              <code>text</code>, <code>password</code>, <code>email</code>,
+              <code>tel</code>, <code>url</code>, <code>search</code>
+            </li>
+            <li>
+              <strong>Numeric / time:</strong>
+              <code>number</code>
+              (<code>min</code>/<code>max</code>/<code>step</code>),
+              <code>range</code>, <code>date</code>, <code>time</code>,
+              <code>datetime-local</code>
+            </li>
+            <li>
+              <strong>Other single-field:</strong>
+              <code>color</code>,
+              <code>file</code>
+              (<em>POST with</em> <code>enctype="multipart/form-data"</code> to
+              upload)
+            </li>
+            <li class="u-mt-1">
+              <strong>Helpful attributes:</strong>
+              <code>placeholder</code> (hint only — keep a visible label),
+              <code>value</code> (default), <code>required</code> (must be
+              filled before submitting), <code>autofocus</code>(cursor starts
+              here when the page loads), <code>inputmode</code> (mobile keyboard
+              hint), <code>autocomplete</code> (autofill token)
+            </li>
+          </ul>
+
+          <pre><code>&lt;!-- Text-like --&gt;
+&lt;input id="email" name="email" type="email" autocomplete="email"&gt;
+&lt;input id="phone" name="phone" type="tel" inputmode="tel" placeholder="123-456-7890"&gt;
+
+&lt;!-- Numeric / time --&gt;
+&lt;input id="age" name="age" type="number" min="0" step="1"&gt;
+&lt;input id="meet" name="meet" type="datetime-local"&gt;
+
+&lt;!-- File upload (requires POST multipart to actually send files) --&gt;
+&lt;input id="avatar" name="avatar" type="file"&gt;</code></pre>
+        </section>
+
+        <!-- 4) Select & Datalist -->
+        <section class="c-card" id="select-datalist">
+          <h2 class="u-mt-0">4) Select &amp; datalist</h2>
+          <ul>
+            <li>
+              <code>&lt;select&gt;</code>: dropdown; <code>multiple</code> for
+              multi-select; <code>size</code> sets visible rows; use
+              <code>&lt;optgroup&gt;</code> to group.
+            </li>
+            <li>
+              <code>&lt;datalist&gt;</code>: suggestions for text inputs (not a
+              constrained list).
+            </li>
+          </ul>
+          <!-- Select: single-select with groups -->
+          <pre><code>&lt;!-- Single select with groups and a default selection --&gt;
+&lt;label for="country"&gt;Country&lt;/label&gt;
+&lt;select id="country" name="country"&gt;
+  &lt;optgroup label="Europe"&gt;
+    &lt;option value="fr"&gt;France&lt;/option&gt;
+    &lt;option value="de" selected&gt;Germany&lt;/option&gt; &lt;!-- default --&gt;
+  &lt;/optgroup&gt;
+  &lt;optgroup label="Asia"&gt;
+    &lt;option value="jp"&gt;Japan&lt;/option&gt;
+    &lt;option value="cn"&gt;China&lt;/option&gt;
+  &lt;/optgroup&gt;
+  &lt;option value="other"&gt;Other&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+          <!-- Select: multi-select -->
+          <pre><code>&lt;!-- Multi-select (hold Ctrl/Cmd to select multiple) --&gt;
+&lt;label for="skills"&gt;Skills&lt;/label&gt;
+&lt;select id="skills" name="skills" multiple size="4"&gt;
+  &lt;option value="html" selected&gt;HTML&lt;/option&gt;
+  &lt;option value="css"&gt;CSS&lt;/option&gt;
+  &lt;option value="js" selected&gt;JavaScript&lt;/option&gt;
+  &lt;option value="a11y"&gt;Accessibility&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+          <!-- Datalist -->
+          <pre><code>&lt;!-- Datalist: suggestions for a text input (not enforced) --&gt;
+&lt;label for="lang"&gt;Preferred language&lt;/label&gt;
+&lt;input id="lang" name="lang" list="langs" placeholder="Type to search…"&gt;
+&lt;datalist id="langs"&gt;
+  &lt;option value="English"&gt;&lt;/option&gt;
+  &lt;option value="Chinese"&gt;&lt;/option&gt;
+  &lt;option value="French"&gt;&lt;/option&gt;
+  &lt;option value="German"&gt;&lt;/option&gt;
+&lt;/datalist&gt;</code></pre>
+        </section>
+
+        <!-- 5) Radios & Checkboxes -->
+        <section class="c-card" id="radios-checkboxes">
+          <h2 class="u-mt-0">5) Radios &amp; checkboxes</h2>
+          <ul>
+            <li>
+              <strong>radio</strong>: inputs sharing the same
+              <code>name</code> are mutually exclusive.
+            </li>
+            <li>
+              <strong>checkbox</strong>: inputs sharing the same
+              <code>name</code> submit multiple values (some backends prefer
+              <code>name="hobby[]"</code> array style).
+            </li>
+          </ul>
+
+          <!-- Radios: one group, one value -->
+          <pre><code>&lt;!-- Radio group: same name =&gt; mutually exclusive --&gt;
+&lt;fieldset&gt;
+  &lt;legend&gt;Shipping&lt;/legend&gt;
+  &lt;input type="radio" id="ship_std" name="shipping" value="standard" checked&gt;
+  &lt;label for="ship_std"&gt;Standard&lt;/label&gt;
+
+  &lt;input type="radio" id="ship_exp" name="shipping" value="express"&gt;
+  &lt;label for="ship_exp"&gt;Express&lt;/label&gt;
+&lt;/fieldset&gt;
+&lt;!-- Submits like: shipping=standard --&gt;</code></pre>
+
+          <!-- Checkboxes: same name, multiple values -->
+          <pre><code>&lt;!-- Checkbox group: same name =&gt; multiple values --&gt;
+&lt;fieldset&gt;
+  &lt;legend&gt;Hobbies&lt;/legend&gt;
+  &lt;input type="checkbox" id="hb_run"  name="hobby" value="run"  checked&gt;
+  &lt;label for="hb_run"&gt;Run&lt;/label&gt;
+
+  &lt;input type="checkbox" id="hb_read" name="hobby" value="read"&gt;
+  &lt;label for="hb_read"&gt;Read&lt;/label&gt;
+
+  &lt;input type="checkbox" id="hb_ski"  name="hobby" value="ski"&gt;
+  &lt;label for="hb_ski"&gt;Ski&lt;/label&gt;
+&lt;/fieldset&gt;
+&lt;!-- Submits like: hobby=run&amp;hobby=read (or use name=&quot;hobby[]&quot;) --&gt;</code></pre>
+        </section>
+
+        <!-- 6) Validation & help -->
+        <section class="c-card" id="validation-help">
+          <h2 class="u-mt-0">6) Validation &amp; help</h2>
+          <ul>
+            <li>
+              Built-in constraints:
+              <code>required</code
+              >/<code>pattern</code>/<code>min</code>/<code>max</code>/<code>step</code>;
+              style invalid fields via <code>:invalid</code>.
+            </li>
+            <li>
+              Connect help text with <code>aria-describedby</code>; JS error
+              summaries can use <code>role="alert"</code> to announce updates.
+            </li>
+          </ul>
+          <pre><code>&lt;small id="phoneHelp"&gt;Format 123-456-7890&lt;/small&gt;
+&lt;input id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" aria-describedby="phoneHelp" required&gt;</code></pre>
+        </section>
+
+        <!-- 7) Mobile & autofill -->
+        <section class="c-card" id="mobile-autofill">
+          <h2 class="u-mt-0">7) Mobile &amp; autofill</h2>
+          <ul>
+            <li>
+              <code>inputmode</code> hints mobile keyboards (e.g.
+              <code>numeric</code>/<code>tel</code>).
+            </li>
+            <li>
+              Useful <code>autocomplete</code> tokens: <code>name</code>,
+              <code>email</code>, <code>tel</code>, <code>street-address</code>,
+              <code>postal-code</code>.
+            </li>
+          </ul>
+          <pre><code>&lt;input name="tel" type="tel" inputmode="tel" autocomplete="tel"&gt;
+&lt;input name="postal" inputmode="numeric" autocomplete="postal-code"&gt;</code></pre>
+        </section>
+
+        <!-- 8) Buttons & submit -->
+        <section class="c-card" id="buttons-submit">
+          <h2 class="u-mt-0">8) Buttons &amp; submit</h2>
+          <ul>
+            <li>
+              Types: <code>submit</code> / <code>reset</code> /
+              <code>button</code>.
+            </li>
+            <li>
+              Per-button overrides:
+              <code>formaction</code>/<code>formmethod</code>/<code
+                >formnovalidate</code
+              >
+              affect only the submission triggered by that button.
+            </li>
+          </ul>
+          <pre><code>&lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;button type="submit" formaction="/api" formmethod="post"&gt;Submit to API&lt;/button&gt;</code></pre>
+        </section>
+
+        <!-- 9) Full form + live request preview -->
+        <section class="c-card" id="full-demo">
+          <h2 class="u-mt-0">9) Full form (with live request preview)</h2>
+          <p class="u-mb-2">
+            Edit fields to see the generated <strong>GET</strong> URL and the
+            <strong>POST</strong> body preview update in real time.
+          </p>
+
+          <div class="l-grid l-grid--fit-300">
+            <!-- Full Form -->
+            <form
+              id="demoForm"
+              class="demo-form"
+              action="https://httpbin.org/get"
+              method="get"
+              autocomplete="on"
+              novalidate
+            >
+              <fieldset>
+                <legend>Account</legend>
+
+                <p class="c-field">
+                  <label class="c-label" for="email">Email</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    class="c-input"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    required
+                  />
+                </p>
+
+                <p class="c-field">
+                  <label class="c-label" for="pw">Password</label>
+                  <input
+                    id="pw"
+                    name="pw"
+                    type="password"
+                    class="c-input"
+                    autocomplete="new-password"
+                    required
+                  />
+                </p>
+              </fieldset>
+
+              <fieldset>
+                <legend>Profile</legend>
+
+                <p class="c-field">
+                  <label class="c-label" for="fullName">Full name</label>
+                  <input
+                    id="fullName"
+                    name="name"
+                    type="text"
+                    class="c-input"
+                    placeholder="Jane Doe"
+                    autocomplete="name"
+                    required
+                  />
+                </p>
+
+                <p class="c-field">
+                  <label class="c-label" for="phone">Mobile</label>
+                  <small id="phoneHelp" class="c-help"
+                    >Format 123-456-7890</small
+                  >
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    class="c-input"
+                    inputmode="tel"
+                    placeholder="123-456-7890"
+                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                    aria-describedby="phoneHelp"
+                    required
+                  />
+                </p>
+
+                <p class="c-field">
+                  <label class="c-label" for="birth">Birth Year</label>
+                  <input
+                    id="birth"
+                    name="birth"
+                    type="number"
+                    class="c-input"
+                    min="1950"
+                    max="2025"
+                    step="1"
+                    value="2000"
+                  />
+                </p>
+
+                <p class="c-field">
+                  <label class="c-label" for="country">Country</label>
+                  <select id="country" name="country" class="c-select">
+                    <optgroup label="Europe">
+                      <option value="fr">France</option>
+                      <option value="de">Germany</option>
+                    </optgroup>
+                    <optgroup label="Asia">
+                      <option value="jp">Japan</option>
+                      <option value="cn">China</option>
+                    </optgroup>
+                    <option value="other">Other</option>
+                  </select>
+                </p>
+
+                <p class="c-field">
+                  <label class="c-label" for="lang">Preferred Language</label>
+                  <input
+                    id="lang"
+                    name="lang"
+                    class="c-input"
+                    list="langs"
+                    placeholder="Type to search…"
+                  />
+                  <datalist id="langs">
+                    <option value="English"></option>
+                    <option value="Chinese"></option>
+                    <option value="French"></option>
+                    <option value="German"></option>
+                  </datalist>
+                </p>
+              </fieldset>
+
+              <fieldset>
+                <legend>Preferences</legend>
+
+                <p class="u-mb-1">Shipping</p>
+                <p class="c-checkrow u-mb-1">
+                  <input
+                    type="radio"
+                    id="ship_std"
+                    name="shipping"
+                    value="standard"
+                    checked
+                  />
+                  <label for="ship_std">Standard</label>
+                </p>
+                <p class="c-checkrow">
+                  <input
+                    type="radio"
+                    id="ship_exp"
+                    name="shipping"
+                    value="express"
+                  />
+                  <label for="ship_exp">Express</label>
+                </p>
+
+                <p class="u-mb-1 u-mt-3">Hobbies</p>
+                <p class="c-checkrow u-mb-1">
+                  <input type="checkbox" id="hb_ski" name="hobby" value="ski" />
+                  <label for="hb_ski">Ski</label>
+                </p>
+                <p class="c-checkrow u-mb-1">
+                  <input type="checkbox" id="hb_run" name="hobby" value="run" />
+                  <label for="hb_run">Run</label>
+                </p>
+                <p class="c-checkrow">
+                  <input
+                    type="checkbox"
+                    id="hb_read"
+                    name="hobby"
+                    value="read"
+                  />
+                  <label for="hb_read">Read</label>
+                </p>
+              </fieldset>
+
+              <fieldset>
+                <legend>Message</legend>
+                <p class="c-field">
+                  <label class="c-label" for="msg">Message</label>
+                  <textarea
+                    id="msg"
+                    name="message"
+                    class="c-textarea"
+                    rows="5"
+                    cols="30"
+                    placeholder="Your notes…"
+                  ></textarea>
+                </p>
+              </fieldset>
+
+              <fieldset>
+                <legend>Uploads (POST only)</legend>
+                <p class="u-mt-0 u-mb-1">
+                  <small class="c-help"
+                    >This field is ignored on GET preview.</small
+                  >
+                </p>
+                <input id="avatar" name="avatar" type="file" class="c-input" />
+              </fieldset>
+
+              <p class="u-mt-2 l-cluster">
+                <button type="reset" class="c-button c-button--outline">
+                  Reset
+                </button>
+                <button type="submit" class="c-button c-button--primary">
+                  Submit (GET)
+                </button>
+                <button
+                  type="submit"
+                  class="c-button"
+                  formaction="https://httpbin.org/post"
+                  formmethod="post"
+                >
+                  Submit (POST)
+                </button>
+                <button
+                  type="submit"
+                  class="c-button c-button--subtle"
+                  formaction="https://httpbin.org/post"
+                  formmethod="post"
+                  formenctype="multipart/form-data"
+                >
+                  Submit (POST multipart)
+                </button>
+              </p>
+
+              <!-- Non-visual live errors if needed -->
+              <div id="formAlert" role="alert" class="u-visually-hidden"></div>
+            </form>
+
+            <!-- Live Request Preview -->
+            <aside class="req">
+              <div class="req__card">
+                <h3 class="u-mt-0">GET preview</h3>
+                <p class="req__hint u-mt-0">
+                  URL with query string that would be requested by the current
+                  form.
+                </p>
+                <pre class="req__block" id="reqGetUrl"></pre>
+              </div>
+
+              <div class="req__card">
+                <h3 class="u-mt-0">POST preview</h3>
+                <p class="req__hint u-mt-0">
+                  Target URL and
+                  <code>application/x-www-form-urlencoded</code> body. File
+                  uploads require <code>multipart/form-data</code>.
+                </p>
+                <pre class="req__block" id="reqPostUrl"></pre>
+                <pre class="req__block" id="reqPostBody"></pre>
+                <details class="u-mt-1">
+                  <summary>As JSON (for illustration)</summary>
+                  <pre class="req__block" id="reqPostJson"></pre>
+                </details>
+              </div>
+
+              <div class="req__card">
+                <h3 class="u-mt-0">POST (multipart) preview</h3>
+                <p class="req__hint u-mt-0">
+                  Shows fields; binary files are listed by filename only.
+                </p>
+                <pre class="req__block" id="reqMultipartInfo"></pre>
+              </div>
+            </aside>
+          </div>
+
+          <!-- Code mirror of the form (optional) -->
+          <details class="u-mt-3">
+            <summary>View full form markup</summary>
+            <pre class="u-mt-2 u-mb-0"><code id="formSource"></code></pre>
+          </details>
+        </section>
+      </article>
+
+      <!-- Pager -->
+      <nav class="c-pager u-mt-5" aria-label="Page navigation">
+        <a class="c-button c-button--outline" rel="prev" href="./08-tables.html"
+          >← Prev: Tables</a
+        >
+        <a class="c-button c-button--primary" rel="next" href="./index.html"
+          >Back to HTML Index →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · HTML · Chapter 9</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same on all pages)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+
+        // ------------- Live Request Preview (GET/POST/multipart) -------------
+        (function () {
+          var form = document.getElementById("demoForm");
+          if (!form) return;
+
+          var elGet = document.getElementById("reqGetUrl");
+          var elPostUrl = document.getElementById("reqPostUrl");
+          var elPostBody = document.getElementById("reqPostBody");
+          var elPostJson = document.getElementById("reqPostJson");
+          var elMultipart = document.getElementById("reqMultipartInfo");
+          var alertBox = document.getElementById("formAlert");
+
+          function toObject(formData) {
+            var obj = {};
+            formData.forEach(function (v, k) {
+              if (obj[k] !== undefined) {
+                if (!Array.isArray(obj[k])) obj[k] = [obj[k]];
+                obj[k].push(v);
+              } else {
+                obj[k] = v;
+              }
+            });
+            return obj;
+          }
+
+          function updatePreview() {
+            alertBox.textContent = "";
+
+            var fd = new FormData(form);
+
+            // GET preview
+            var getBase = form.getAttribute("action") || location.href;
+            try {
+              var url = new URL(getBase, location.href);
+              var getParams = new URLSearchParams();
+              fd.forEach(function (v, k) {
+                if (v instanceof File) return;
+                getParams.append(k, v);
+              });
+              url.search = getParams.toString();
+              elGet.textContent = url.toString();
+            } catch (e) {
+              elGet.textContent =
+                getBase + "?" + new URLSearchParams(fd).toString();
+            }
+
+            // POST preview (x-www-form-urlencoded)
+            var postUrl = form.getAttribute("action") || location.href;
+            elPostUrl.textContent = (postUrl || "") + "  (POST)";
+            var bodyParams = new URLSearchParams();
+            fd.forEach(function (v, k) {
+              if (v instanceof File) return;
+              bodyParams.append(k, v);
+            });
+            elPostBody.textContent = bodyParams.toString();
+
+            // JSON illustration (not what browsers send by default)
+            var jsonObj = toObject(fd);
+            Object.keys(jsonObj).forEach(function (key) {
+              var val = jsonObj[key];
+              if (val instanceof File) jsonObj[key] = val.name || "(binary)";
+              if (Array.isArray(val)) {
+                jsonObj[key] = val.map(function (x) {
+                  return x instanceof File ? x.name || "(binary)" : x;
+                });
+              }
+            });
+            elPostJson.textContent = JSON.stringify(jsonObj, null, 2);
+
+            // Multipart summary preview
+            var lines = [];
+            fd.forEach(function (v, k) {
+              if (v instanceof File) {
+                lines.push(k + " = [File: " + (v.name || "unnamed") + "]");
+              } else {
+                lines.push(k + " = " + v);
+              }
+            });
+            elMultipart.textContent = lines.join("\n");
+          }
+
+          form.addEventListener("input", updatePreview);
+          form.addEventListener("change", updatePreview);
+          form.addEventListener("reset", function () {
+            setTimeout(updatePreview, 0);
+          });
+
+          // Initialize
+          updatePreview();
+
+          // --- Pretty, numbered full-form markup preview ---
+          (function () {
+            var form = document.getElementById("demoForm");
+            var codeHost = document.getElementById("formSource");
+            if (!form || !codeHost) return;
+
+            function escapeHTML(str) {
+              return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+            }
+
+            function prettyHTML(html) {
+              // 压掉标签间多余空白，方便分词
+              html = html.replace(/>\s+</g, "><");
+              var parts = html.split(/(?=<)/g); // 在每个 "<" 前断开
+              var indent = 0;
+              var out = [];
+              var VOID =
+                /^(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)$/i;
+
+              parts.forEach(function (raw) {
+                var t = raw.trim();
+                if (!t) return;
+
+                // 关闭标签先减缩进
+                if (/^<\/\w/.test(t)) indent = Math.max(0, indent - 1);
+
+                var pad = Array(indent + 1).join("  ");
+                out.push(pad + t);
+
+                // 判断是否需要增加缩进
+                var m = t.match(/^<(\w+)/);
+                if (m) {
+                  var tag = m[1].toLowerCase();
+                  var isSelfClose = /\/>$/.test(t);
+                  var isVoid = VOID.test(tag);
+                  var isSpecial = /^<!/.test(t); // doctype/comment
+                  var isClosing = /^<\/\w/.test(t);
+
+                  if (!isClosing && !isSelfClose && !isVoid && !isSpecial) {
+                    indent++;
+                  }
+                }
+              });
+              return out.join("\n");
+            }
+
+            // 1) 获取外层 HTML（去掉不必要的属性以简洁）
+            var html = form.outerHTML.replace(/\s+novalidate(="")?/i, "");
+
+            // 2) 漂亮缩进
+            var pretty = prettyHTML(html);
+
+            // 3) 生成带行号的行元素
+            var lines = pretty
+              .split("\n")
+              .map(function (line) {
+                return '<span class="line">' + escapeHTML(line) + "</span>";
+              })
+              .join("");
+
+            // 4) 应用样式类并写入
+            var pre = codeHost.closest("pre");
+            if (pre) pre.classList.add("c-codeblock", "c-codeblock--numbered");
+            codeHost.innerHTML = lines;
+          })();
+
+          // // Optional: show HTML source of the form
+          // var src = document.getElementById("formSource");
+          // if (src) {
+          //   var clone = form.cloneNode(true);
+          //   clone.removeAttribute("novalidate");
+          //   src.textContent = clone.outerHTML
+          //     .replace(/ autofocus/gi, "")
+          //     .replace(/\s{2,}/g, " ")
+          //     .replace(/></g, ">\n  <")
+          //     .replace(/<form /, "<form\n  ")
+          //     .replace(/<\/fieldset>/g, "</fieldset>\n");
+          // }
+        })();
+      </script>
+    </footer>
+  </body>
+</html>

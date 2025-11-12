@@ -1,0 +1,118 @@
+/* ---------------------------------------------
+ * CSS Index page-only styles — scoped under .page--css
+ * --------------------------------------------- */
+@layer pages {
+  /* Global background: one subtle gradient, fixed */
+  body.page--css {
+    background-color: var(--color-bg);
+    background-image: var(--gradient-bg-mist);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+
+  /* Hero */
+  .page--css .hero {
+    margin-block: var(--space-6);
+  }
+  .page--css .hero__card {
+    position: relative;
+    overflow: hidden;
+  }
+  .page--css .hero__title {
+    margin: 0 0 var(--space-2);
+  }
+  .page--css .hero__lead {
+    margin: 0 0 var(--space-4);
+    color: var(--color-muted);
+  }
+
+  /* TOC (single markup) */
+  .page--css .toc {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    padding: var(--space-4);
+  }
+  .page--css .toc__summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .page--css .toc__summary::-webkit-details-marker {
+    display: none;
+  }
+  .page--css .toc__chevron {
+    transition: transform var(--dur-2) var(--ease);
+  }
+  .page--css .toc[open] .toc__chevron {
+    transform: rotate(180deg);
+  }
+
+  .page--css .toc__list {
+    margin: var(--space-3) 0 0;
+    padding-left: 1.25rem; /* natural <ol> numbers */
+    columns: 1;
+  }
+  .page--css .toc__list a {
+    text-decoration: none;
+  }
+  .page--css .toc__list a:hover {
+    text-decoration: underline;
+  }
+
+  @media (min-width: 900px) {
+    .page--css .toc__list {
+      columns: 2;
+      column-gap: var(--space-6);
+    }
+  }
+
+  /* Topic cards */
+  .page--css .topics {
+    margin-block: var(--space-6);
+  }
+  .page--css .cards .card {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .page--css .card__title {
+    margin: 0;
+  }
+  .page--css .card__blurb {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* Labs */
+  .page--css .labs {
+    margin-block: var(--space-6);
+  }
+
+  /* No horizontal scroll on ultra-narrow widths */
+  .page--css main {
+    overflow-x: hidden;
+  }
+  .page--css .hero__card,
+  .page--css .toc,
+  .page--css .cards,
+  .page--css .labs {
+    max-width: 100%;
+  }
+  .page--css :where(p, li, code, pre) {
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 480px) {
+    .page--css .toc {
+      padding: var(--space-3);
+    }
+    .page--css .toc__list {
+      columns: 1;
+    }
+  }
+}

@@ -1,0 +1,206 @@
+/* ---------------------------------------------
+ * HTML · Chapter 8 — page-only styles
+ * --------------------------------------------- */
+@layer pages {
+  /* ---------------------------------------------
+   * Page background
+   * --------------------------------------------- */
+  body.page--html-ch8 {
+    background: var(--gradient-bg-mist) fixed;
+    background-color: var(--color-bg);
+  }
+
+  /* ---------------------------------------------
+   * Chapter layout
+   * --------------------------------------------- */
+  .chapter {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0; /* allow shrink on very narrow devices */
+  }
+
+  /* ---------------------------------------------
+   * Hero
+   * --------------------------------------------- */
+  .chapter__hero {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .chapter__title {
+    margin: 0;
+  }
+  .chapter__lead {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------------------------------------------
+   * Two-column demo (stack on small)
+   * --------------------------------------------- */
+  .demo-sbs {
+    display: grid;
+    gap: var(--space-4);
+    min-width: 0;
+  }
+  .demo-sbs > * {
+    min-width: 0;
+  }
+  @media (min-width: 900px) {
+    .demo-sbs {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+
+  /* Code pane */
+  .demo__code pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto; /* local scroll; no page overflow */
+  }
+
+  /* Render pane */
+  .demo__render {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    min-width: 0;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  /* ---------------------------------------------
+   * Table: local inner scroll (no page overflow)
+   * --------------------------------------------- */
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .table-scroll .c-table {
+    min-width: 560px;
+  }
+
+  /* ---------------------------------------------
+   * Aids: row highlight, column highlight, span badges
+   * --------------------------------------------- */
+
+  /* Row highlight (tbody rows) */
+  .c-table[data-aid-row] tbody tr:hover > * {
+    background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  }
+
+  /* Column highlight (active only when data-aid-col present)
+     data-highlight-col="1|2|3|..." is set on <table> via JS */
+  .c-table[data-aid-col][data-highlight-col="1"] tr > *:nth-child(1),
+  .c-table[data-aid-col][data-highlight-col="2"] tr > *:nth-child(2),
+  .c-table[data-aid-col][data-highlight-col="3"] tr > *:nth-child(3),
+  .c-table[data-aid-col][data-highlight-col="4"] tr > *:nth-child(4),
+  .c-table[data-aid-col][data-highlight-col="5"] tr > *:nth-child(5) {
+    background-color: color-mix(in srgb, var(--color-primary) 16%, transparent);
+  }
+
+  /* Span badges */
+  .c-table[data-aid-span] th[colspan],
+  .c-table[data-aid-span] td[colspan],
+  .c-table[data-aid-span] th[rowspan],
+  .c-table[data-aid-span] td[rowspan] {
+    position: relative;
+  }
+  .c-table[data-aid-span] th[colspan]::after,
+  .c-table[data-aid-span] td[colspan]::after {
+    content: "↔ colspan " attr(colspan);
+    position: absolute;
+    top: 0.35rem;
+    right: 0.45rem;
+    font-size: var(--fs-5);
+    padding: 2px 6px;
+    border-radius: var(--radius-pill);
+    background: var(--gradient-badge-b);
+    color: var(--badge-text);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: var(--shadow-1);
+    pointer-events: none;
+  }
+  .c-table[data-aid-span] th[rowspan]::after,
+  .c-table[data-aid-span] td[rowspan]::after {
+    content: "↕ rowspan " attr(rowspan);
+    position: absolute;
+    bottom: 0.35rem;
+    right: 0.45rem;
+    font-size: var(--fs-5);
+    padding: 2px 6px;
+    border-radius: var(--radius-pill);
+    background: var(--gradient-badge-c);
+    color: var(--badge-text);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: var(--shadow-1);
+    pointer-events: none;
+  }
+
+  .note {
+    color: var(--color-muted);
+    font-size: var(--fs-5);
+  }
+
+  /* ---------------------------------------------
+   * Cards / code blocks
+   * --------------------------------------------- */
+  .chapter .c-card {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .chapter .c-card pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+  .chapter .c-card code {
+    word-break: normal;
+  }
+
+  /* ---------------------------------------------
+   * Ultra-narrow safety (<= 360px)
+   * --------------------------------------------- */
+  @media (max-width: 360px) {
+    .chapter .c-card pre,
+    .demo__code pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .c-button {
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+  }
+
+  /* ---------------------------------------------
+   * Anchor jump safety (sticky nav offset)
+   * --------------------------------------------- */
+  .chapter section[id] {
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+  }
+
+  /* ---------------------------------------------
+   * Responsive type scale
+   * --------------------------------------------- */
+  .chapter h1 {
+    font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+  }
+  .chapter h2 {
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+  }
+  .chapter p,
+  .chapter li,
+  .chapter td,
+  .chapter th {
+    font-size: clamp(0.95rem, 1.8vw, 1rem);
+  }
+
+  /* ---------------------------------------------
+   * Horizontal overflow guard (belt-and-suspenders)
+   * --------------------------------------------- */
+  .page--html-ch8 main {
+    overflow-x: hidden;
+  }
+}

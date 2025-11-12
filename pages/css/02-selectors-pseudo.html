@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>CSS · Chapter 2 — Selectors & Pseudo</title>
+    <meta
+      name="description"
+      content="Element/class/attribute/id/universal selectors; cascade & specificity; interactive pseudo-classes and pseudo-elements."
+    />
+
+    <!-- Global bundle -->
+    <link rel="stylesheet" href="../../styles/app.css" />
+    <!-- Page-only CSS -->
+    <link
+      rel="stylesheet"
+      href="../../styles/pages/css/02-selectors-pseudo.css"
+    />
+  </head>
+  <body class="page--css-ch2">
+    <!-- Skip link (fixed; takes no layout space) -->
+    <a class="c-skiplink" href="#main">Skip to main content</a>
+
+    <!-- Glassy sticky navbar (global component) -->
+    <header class="c-nav" role="banner">
+      <div class="c-nav__inner">
+        <a class="c-nav__brand" href="../../index.html"
+          >Zoe · HTML/CSS Review</a
+        >
+        <nav class="c-nav__links" aria-label="Primary">
+          <a class="c-nav__link" href="../../index.html">Home</a>
+          <a class="c-nav__link" href="../html/index.html">HTML</a>
+          <a
+            class="c-nav__link is-active"
+            href="../css/index.html"
+            aria-current="page"
+            >CSS</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="l-container chapter">
+      <!-- Breadcrumbs (semantic) -->
+      <nav class="c-breadcrumbs u-mt-4" aria-label="Breadcrumb">
+        <ol class="c-breadcrumbs__list">
+          <li class="c-breadcrumbs__item">
+            <a href="../../index.html">Home</a>
+          </li>
+          <li class="c-breadcrumbs__item">
+            <a href="../css/index.html">CSS</a>
+          </li>
+          <li class="c-breadcrumbs__item" aria-current="page">Chapter 2</li>
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <header class="c-card hero">
+        <div class="l-cluster u-mb-2">
+          <span class="c-badge c-badge--b">CSS</span>
+          <span class="c-badge c-badge--a">Chapter 2</span>
+        </div>
+        <h1 class="hero__title">Selectors &amp; Pseudo</h1>
+        <p class="hero__lead">
+          Element, class, attribute, id, universal — then cascade &amp;
+          specificity. Plus interactive pseudo-classes and pseudo-elements for
+          real-world UI.
+        </p>
+      </header>
+
+      <!-- In-page quick nav -->
+      <!-- <nav class="c-card demo-nav" aria-label="In-page sections">
+        <h2 class="u-mb-2">Quick nav (live)</h2>
+        <ul class="demo-nav__list">
+          <li>
+            <a class="c-button c-button--subtle" href="#selectors"
+              >Core selectors</a
+            >
+          </li>
+          <li>
+            <a class="c-button c-button--subtle" href="#cascade"
+              >Cascade &amp; inheritance</a
+            >
+          </li>
+          <li>
+            <a class="c-button c-button--subtle" href="#pseudo-classes"
+              >Pseudo-classes</a
+            >
+          </li>
+          <li>
+            <a class="c-button c-button--subtle" href="#pseudo-elements"
+              >Pseudo-elements</a
+            >
+          </li>
+        </ul>
+      </nav> -->
+
+      <!-- 1) Selectors -->
+      <section class="c-card" id="selectors">
+        <h2 class="u-mt-0">1) Core selectors</h2>
+        <div class="l-grid l-grid--fit-300 demos">
+          <!-- Element / group / descendant -->
+          <article class="demo-card" id="elem-group-desc">
+            <h3 class="u-mt-0">Element / group / descendant</h3>
+            <p class="u-text-left u-mb-2">
+              Rule of thumb: <strong>comma</strong> = “either”;
+              <strong>space</strong> = “inside (descendant)”.<br />
+              Note: <code>h1 h2</code> means “an <code>h2</code> inside an
+              <code>h1</code>” — that’s practically never valid; use
+              <code>article h2</code> or <code>p span</code> as realistic
+              examples.
+            </p>
+
+            <pre class="code"><code>/* element: match all &lt;p&gt; */
+p { margin-block: 1rem; }
+
+/* group (comma): style both h1 and h2 */
+h2, h3 { color: var(--color-primary); }
+
+/* descendant (space): only &lt;span&gt; inside &lt;p&gt; */
+p span {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* FYI: h1 h2 = an &lt;h2&gt; inside an &lt;h1&gt; (rare/invalid in practice).
+   Prefer: article h2  or  p span. */</code></pre>
+
+            <div class="demo demo-el">
+              <h2>Section title: &lt;h2&gt;</h2>
+              <h3>Subheading: &lt;h3&gt;</h3>
+              <p>
+                A paragraph with a <span>descendant span</span> used for
+                highlighting. Prefer a semantic class (e.g.,
+                <code>.highlight</code>) when your intent is “highlight”, not
+                “any <code>span</code> in <code>p</code>”.
+              </p>
+            </div>
+          </article>
+
+          <!-- Class -->
+          <article class="demo-card">
+            <h3 class="u-mt-0">Class selector</h3>
+            <pre class="code"><code>&lt;p class="note"&gt;Marked text&lt;/p&gt;
+/* CSS */ .note { color: slategray; font-style: italic; }</code></pre>
+            <div class="demo">
+              <p class="note">
+                This paragraph is styled by a <strong>.note</strong> class.
+              </p>
+            </div>
+          </article>
+
+          <!-- Attribute -->
+          <article class="demo-card" id="attr-selectors">
+            <h3 class="u-mt-0">Attribute selectors</h3>
+            <p class="u-text-left u-mb-2">
+              Match elements by <em>attributes</em> — works for native
+              attributes (e.g., <code>type</code>) and custom
+              <code>data-*</code> attributes. Tip:
+              <strong
+                >custom attributes must start with <code>data-</code></strong
+              >
+              to validate and be usable in CSS/JS.
+            </p>
+
+            <pre
+              class="code"
+            ><code>&lt;input type="text" placeholder="text field"&gt;
+&lt;button data-role="admin"&gt;Admin&lt;/button&gt;
+&lt;button data-role="user"&gt;User&lt;/button&gt;
+
+/* CSS */ 
+/* Native attribute (exact match) */
+input[type="text"] { outline: 2px dashed var(--color-primary); }
+
+/* Custom data- attribute (exact match) */
+button[data-role="admin"] {
+  background: color-mix(in srgb, var(--color-primary) 15%, transparent);
+}
+
+/* Presence: any element that has data-role */
+[data-role] { border: 3px solid var(--color-border); }
+
+/* Starts-with / ends-with / contains (use when helpful) */
+[data-role^="ad"] { font-weight: 700; }   /* starts with "ad" */
+[data-role$="er"] { text-decoration: underline; } /* ends with "er" */
+[data-role*="se"] { letter-spacing: .2px; } /* contains "se" */</code></pre>
+
+            <div class="demo demo-attr">
+              <input class="demo-input" type="text" placeholder="type=text" />
+              <button class="c-button" data-role="admin" type="button">
+                Admin
+              </button>
+              <button class="c-button" data-role="user" type="button">
+                User
+              </button>
+            </div>
+
+            <p class="u-mt-2 u-mb-0 u-text-left u-help">
+              Use attribute selectors for <em>structural</em> hooks. Prefer
+              classes for pure styling intent (<code>.btn--primary</code>,
+              <code>.is-active</code>, etc.).
+            </p>
+          </article>
+
+          <!-- ID (rare) -->
+          <article class="demo-card">
+            <h3 class="u-mt-0">ID selector (rare)</h3>
+            <pre class="code"><code>&lt;p id="second"&gt;Hi&lt;/p&gt;
+/* CSS */ #second { border: 1px solid var(--color-border); padding: .25rem .5rem; }</code></pre>
+            <div class="demo">
+              <p>First (does not has id)</p>
+              <p id="second">Second (matched by <code>#second</code>)</p>
+            </div>
+            <p class="u-help u-mb-0">
+              IDs should be unique; prefer classes for reusable styling.
+            </p>
+          </article>
+
+          <!-- Universal -->
+          <article class="demo-card">
+            <h3 class="u-mt-0">Universal selector</h3>
+            <pre
+              class="code"
+            ><code>.universal-demo > * { outline: 1px dotted var(--color-border); padding: .25rem; }</code></pre>
+            <div class="demo universal-demo">
+              <em>Every child</em>
+              <strong>gets outlined</strong>
+              <span>via <code>*</code></span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 2) Cascade / Specificity / Inheritance -->
+      <section class="c-card" id="cascade">
+        <h2 class="u-mt-0">2) Cascade, specificity, inheritance</h2>
+        <div class="l-grid l-grid--fit-300 demos">
+          <!-- Specificity & source order -->
+          <article class="demo-card">
+            <h3 class="u-mt-0">Specificity &amp; source order</h3>
+            <pre
+              class="code"
+            ><code>/* same specificity (element) — later wins */
+p { color: seagreen; }
+p { color: steelblue; }
+
+/* class beats element */
+.note { color: tomato; }</code></pre>
+            <div class="demo spec-demo">
+              <p class="demo-text">
+                Equal specificity: later rule wins (→ steelblue)
+              </p>
+              <p class="demo-text note">Class beats element (→ tomato)</p>
+            </div>
+          </article>
+
+          <!-- Inheritance -->
+          <article class="demo-card">
+            <h3 class="u-mt-0">Inheritance &amp; form controls</h3>
+            <pre
+              class="code"
+            ><code>/* Text properties inherit to children, but many form controls don't.
+   In this project, base.css sets:
+   button, input, textarea, select { font: inherit; } */</code></pre>
+            <div class="demo inherit-demo">
+              <div class="box" aria-label="Parent sets font family">
+                <p>Parent defines a custom font-size; the button inherits.</p>
+                <button class="c-button c-button--subtle" type="button">
+                  I inherit font
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- !important -->
+          <article class="demo-card">
+            <h3 class="u-mt-0">Avoid <code>!important</code></h3>
+            <pre class="code"><code>.chip { background: var(--color-surface); }
+.chip.urgent { background: tomato !important; }  /* last resort */</code></pre>
+            <div class="demo">
+              <span class="chip">Normal</span>
+              <span class="chip urgent">Urgent (!important)</span>
+            </div>
+            <p class="u-help u-mb-0">
+              Prefer good structure &amp; specificity strategy over
+              <code>!important</code>.
+            </p>
+          </article>
+
+          <!-- Calculator link -->
+          <article class="demo-card">
+            <h3 class="u-mt-0">Specificity calculator</h3>
+            <p class="u-mb-2">Handy when debugging complex selectors:</p>
+            <p class="u-mb-0">
+              <a
+                class="c-button c-button--outline"
+                target="_blank"
+                rel="noopener"
+                href="https://specificity.keegan.st/"
+              >
+                Open Specificity Calculator ↗
+              </a>
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- 3) Pseudo-classes -->
+      <section class="c-card" id="pseudo-classes">
+        <h2 class="u-mt-0">3) Pseudo-classes</h2>
+        <div class="l-grid l-grid--fit-300 demos">
+          <!-- Interactive states -->
+          <article class="demo-card">
+            <h3 class="u-mt-0">Interactive states</h3>
+            <pre
+              class="code"
+            ><code>.chip:is(:hover, :focus) { transform: translateY(-1px); }
+.chip:active { transform: translateY(0); }</code></pre>
+            <div class="demo">
+              <a href="#" class="chip" role="button">Hover / Focus / Active</a>
+            </div>
+          </article>
+
+          <!-- :target -->
+          <article class="demo-card">
+            <h3 class="u-mt-0"><code>:target</code></h3>
+            <pre
+              class="code"
+            ><code>&lt;a href="#target-box"&gt;Focus the box&lt;/a&gt;
+#target-box:target { outline: 2px solid var(--color-accent); }</code></pre>
+            <div class="demo">
+              <a class="c-button c-button--subtle" href="#target-box"
+                >Jump &amp; highlight</a
+              >
+              <div id="target-box" class="target-box" tabindex="-1">
+                Target me via URL hash
+              </div>
+            </div>
+          </article>
+
+          <!-- :is() / :where() -->
+          <article class="demo-card">
+            <h3 class="u-mt-0">
+              <code>:is()</code> &amp; <code>:where()</code>
+            </h3>
+            <pre
+              class="code"
+            ><code>/* :is merges multiple selectors (keeps highest specificity among them) */
+.menu :is(a, button):is(:hover, :focus) { text-decoration: underline; }
+
+/* :where has zero specificity — great for default spacing */
+.cards :where(h3, p) { margin: 0; }</code></pre>
+            <div class="demo">
+              <div class="menu">
+                <a href="#">Link</a>
+                <button class="c-button c-button--subtle" type="button">
+                  Button
+                </button>
+              </div>
+              <div class="cards">
+                <div class="mini-card">
+                  <h3>Zero-specificity spacing</h3>
+                  <p>Using <code>:where()</code> to avoid fights.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Link states -->
+          <article class="demo-card">
+            <h3 class="u-mt-0">Link states</h3>
+            <pre
+              class="code"
+            ><code>a:any-link { color: var(--color-primary); } /* both :link and :visited */
+a:focus { outline: 2px solid var(--color-accent); outline-offset: 2px; }</code></pre>
+            <div class="demo">
+              <p>
+                <a href="https://developer.mozilla.org/">External link</a> ·
+                <a href="#target-box">Internal link</a>
+              </p>
+              <p class="u-help u-mb-0">
+                Browsers restrict styling of <code>:visited</code> for privacy;
+                expect limited effects.
+              </p>
+            </div>
+          </article>
+
+          <!-- Attribute presence & :not() -->
+          <article class="demo-card">
+            <h3 class="u-mt-0">Attribute presence &amp; <code>:not()</code></h3>
+            <pre class="code"><code>img[alt] { outline: 2px solid #69b; }
+img:not([alt]) { outline: 2px solid tomato; }</code></pre>
+            <div class="demo img-demo">
+              <!-- Tiny inline SVGs to avoid external files -->
+              <img
+                width="64"
+                height="40"
+                alt="has alt"
+                src="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='64' height='40'&gt;&lt;rect width='64' height='40' fill='%236fb0d8'/&gt;&lt;/svg&gt;"
+              />
+              <img
+                width="64"
+                height="40"
+                src="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='64' height='40'&gt;&lt;rect width='64' height='40' fill='%235fd1c2'/&gt;&lt;/svg&gt;"
+              />
+            </div>
+          </article>
+
+          <!-- nth-child vs nth-of-type -->
+          <article class="demo-card" id="nth-selectors">
+            <h3 class="u-mt-0">
+              <code>:nth-child</code> vs <code>:nth-of-type</code>
+            </h3>
+            <p class="u-text-left u-mb-2">
+              <code>:nth-child(n)</code> counts an element among
+              <em>all</em> siblings. <code>:nth-of-type(n)</code> counts only
+              among siblings of the <em>same tag</em>. (Both are 1-based.)
+            </p>
+
+            <pre
+              class="code"
+            ><code>.mix :nth-child(2) { background: color-mix(in srgb, var(--color-primary) 15%, transparent);}
+.mix p:nth-of-type(2) {background: color-mix(in srgb, var(--color-accent) 20%, transparent);}
+
+/* Tips */
+li:nth-child(even) { /* every even item */ }
+p:nth-of-type(3n) {  /* every 3rd &lt;p&gt; */ }</code></pre>
+
+            <div class="demo mix">
+              <p>p[1]</p>
+              <span>span[2] ← selected by <code>:nth-child(2)</code></span>
+              <p>p[2] ← selected by <code>p:nth-of-type(2)</code></p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 4) Pseudo-elements -->
+      <section class="c-card" id="pseudo-elements">
+        <h2 class="u-mt-0">4) Pseudo-elements</h2>
+        <div class="l-grid l-grid--fit-300 demos">
+          <article class="demo-card">
+            <h3 class="u-mt-0">
+              <code>::before</code> &amp; <code>::after</code>
+            </h3>
+            <pre class="code"><code>.tag::before { content: "★ "; }
+.tag::after  { content: " · badge"; }</code></pre>
+            <div class="demo">
+              <p class="tag">Generated content appears before/after.</p>
+            </div>
+          </article>
+
+          <article class="demo-card">
+            <h3 class="u-mt-0">
+              <code>::first-letter</code> &amp; <code>::first-line</code>
+            </h3>
+            <pre
+              class="code"
+            ><code>.dropcap::first-letter { font-size: 180%; font-weight: 700; }
+.excerpt::first-line { text-transform: uppercase; letter-spacing: .03em; }</code></pre>
+            <div class="demo">
+              <p class="dropcap">Drop caps are classic for intros.</p>
+              <p class="excerpt">
+                first line emphasizes the opening of a paragraph to draw
+                attention.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Pager -->
+      <nav class="c-pager u-mt-5" aria-label="Page navigation">
+        <a class="c-button c-button--outline" rel="prev" href="./01-basics.html"
+          >← Prev: Basics</a
+        >
+        <a
+          class="c-button c-button--primary"
+          rel="next"
+          href="./03-colors-backgrounds.html"
+          >Next: Colors →</a
+        >
+      </nav>
+    </main>
+
+    <!-- Unified footer -->
+    <footer class="l-container u-text-center u-mt-5 u-mb-4">
+      <small>© <span id="y"></span> Zoe · CSS · Chapter 2</small>
+      <script>
+        // Year
+        (function () {
+          var y = document.getElementById("y");
+          if (y) y.textContent = new Date().getFullYear();
+        })();
+
+        // Glassy nav: keep slightly darker after scroll (same on all pages)
+        (function () {
+          var nav = document.querySelector(".c-nav");
+          if (!nav) return;
+          var onScroll = function () {
+            if (window.scrollY > 6) nav.classList.add("is-scrolled");
+            else nav.classList.remove("is-scrolled");
+          };
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        })();
+      </script>
+    </footer>
+  </body>
+</html>
