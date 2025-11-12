@@ -1,0 +1,9 @@
+# macOS junk
+.DS_Store
+
+# IntelliJ IDEA project settings
+.idea/
+*.iml
+
+# node modules (future-proof)
+node_modules/
